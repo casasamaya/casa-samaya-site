@@ -6,13 +6,10 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
       - name: Deploy to server
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            cd /var/www/casasamaya
-            git pull origin main
+          script: /opt/deploy-site.sh
