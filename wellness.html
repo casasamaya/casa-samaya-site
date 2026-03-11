@@ -445,33 +445,91 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             loadSessions();
             </script>
 
-            <!-- Blocs de présentation dynamiques par type -->
-            <div id="types-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:1.5rem; margin:2rem 0 3rem 0; text-align:left;"></div>
 
-            <script>
-            // Charger les types depuis le back office et construire la grille
-            async function loadTypes() {
-              try {
-                const r = await fetch('https://cockpit.casasamaya.com/api/wellness/types');
-                const data = await r.json();
-                const grid = document.getElementById('types-grid');
-                if (!data.types || !data.types.length) return;
-                grid.innerHTML = data.types.map(t => `
-                  <div style="background:#fff; border-radius:16px; padding:2rem; border:1px solid #e8ddd4; transition:box-shadow 0.2s;" 
-                       onmouseover="this.style.boxShadow='0 8px 32px rgba(71,44,21,0.1)'" 
-                       onmouseout="this.style.boxShadow='none'">
-                    <div style="width:52px; height:52px; border-radius:12px; background:${t.bg_color||'#f5ede4'}; display:flex; align-items:center; justify-content:center; font-size:24px; margin-bottom:1rem;">${t.emoji||'✨'}</div>
-                    <h3 style="font-size:1.1rem; color:var(--color-primary); margin:0 0 0.75rem 0; font-family:'Cormorant Garamond',serif;">${t.label}</h3>
-                    <p style="font-size:0.9rem; color:#7a5c3e; line-height:1.6; margin:0;">${t.description||''}</p>
-                  </div>
-                `).join('');
-              } catch(e) {
-                console.warn('Could not load session types:', e);
-              }
-            }
-            loadTypes();
-            </script>
 </section>
+
+<!-- SESSION TYPES -->
+<style>
+.massage-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+.massage-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 28px;
+    border: 1px solid #e8ddd4;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: box-shadow 0.25s, transform 0.25s;
+}
+.massage-card:hover {
+    box-shadow: 0 10px 36px rgba(71,44,21,0.10);
+    transform: translateY(-2px);
+}
+.massage-card-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+.massage-emoji {
+    width: 52px; height: 52px;
+    border-radius: 12px;
+    background: #f5ede4;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px;
+    flex-shrink: 0;
+}
+.massage-card h3 {
+    font-size: 1.05rem;
+    color: #472C15;
+    margin: 0;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    line-height: 1.3;
+}
+.massage-desc {
+    font-size: 0.875rem;
+    color: #7a5c3e;
+    line-height: 1.75;
+    margin: 0;
+    flex: 1;
+}
+</style>
+
+<section class="content-section alt">
+    <div class="container" style="max-width:1100px;">
+        <h2 style="text-align:center;margin-bottom:0.5rem;">Our Practices</h2>
+        <p style="text-align:center;color:#7a5c3e;margin-bottom:3rem;font-size:0.9rem;font-family:'Open Sans',sans-serif;">Each session is designed to reconnect body, breath and mind</p>
+        <div class="massage-grid" id="types-grid"></div>
+    </div>
+</section>
+
+<script>
+const TYPES_API = window.location.hostname === 'localhost' ? 'http://localhost:8000/api' : 'https://cockpit.casasamaya.com/api';
+async function loadTypes() {
+  try {
+    const r = await fetch(TYPES_API + '/wellness/types');
+    const data = await r.json();
+    const grid = document.getElementById('types-grid');
+    if (!data.types || !data.types.length) { grid.closest('section').style.display='none'; return; }
+    grid.innerHTML = data.types.map(t => `
+      <div class="massage-card">
+        <div class="massage-card-header">
+          <div class="massage-emoji" style="background:${t.bg_color||'#f5ede4'};">${t.emoji||'✨'}</div>
+          <h3>${t.label}</h3>
+        </div>
+        <p class="massage-desc">${t.description||''}</p>
+      </div>
+    `).join('');
+  } catch(e) {
+    console.warn('Could not load session types:', e);
+  }
+}
+loadTypes();
+</script>
 
 
 

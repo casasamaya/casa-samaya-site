@@ -25,6 +25,7 @@
         flex-direction: column;
         gap: 14px;
         transition: box-shadow 0.25s, transform 0.25s;
+        cursor: pointer;
     }
     .massage-card:hover {
         box-shadow: 0 10px 36px rgba(71,44,21,0.10);
@@ -65,6 +66,24 @@
     .massage-prices > div:last-child {
         border-bottom: none !important;
     }
+    .card-book-btn {
+        width: 100%;
+        padding: 10px;
+        background: transparent;
+        border: 1.5px solid #c9a96e;
+        border-radius: 8px;
+        color: #c9a96e;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-family: 'Open Sans', sans-serif;
+        letter-spacing: 0.02em;
+    }
+    .massage-card:hover .card-book-btn {
+        background: #c9a96e;
+        color: #fff;
+    }
 
     /* ── Widget wrapper ── */
     .widget-wrap {
@@ -74,7 +93,6 @@
         overflow: hidden;
     }
 
-    
     * { margin:0; padding:0; box-sizing:border-box; }
     body { background:#faf9f7; font-family:'Inter',sans-serif; color:#1a1a1a; }
     .cs-wrap { max-width:960px; margin:0 auto; padding:40px 24px; }
@@ -144,7 +162,50 @@
       .cs-steps { gap:0; }
       .cs-step-label { display:none; }
     }
-  
+
+    /* ── Booking Modal ── */
+    #spa-modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(71, 44, 21, 0.55);
+        z-index: 9000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        backdrop-filter: blur(4px);
+    }
+    #spa-modal-panel {
+        background: #faf9f7;
+        border-radius: 16px;
+        width: 100%;
+        max-width: 700px;
+        max-height: 90vh;
+        overflow-y: auto;
+        position: relative;
+        box-shadow: 0 24px 80px rgba(71, 44, 21, 0.25);
+    }
+    #spa-modal-close {
+        position: sticky;
+        top: 16px;
+        float: right;
+        margin: 16px 16px 0 0;
+        width: 36px; height: 36px;
+        border-radius: 50%;
+        border: 1.5px solid #e8ddd4;
+        background: #fff;
+        font-size: 20px;
+        line-height: 1;
+        color: #472C15;
+        cursor: pointer;
+        display: flex; align-items: center; justify-content: center;
+        z-index: 1;
+        flex-shrink: 0;
+    }
+    #spa-modal-close:hover { background: #f5ede4; }
+    #spa-modal-panel .cs-wrap { padding: 24px; }
+    #spa-modal-panel .cs-header { margin-bottom: 28px; }
+    #spa-modal-panel .cs-header h1 { font-size: 26px; }
     </style>
 </head>
 <body>
@@ -164,8 +225,7 @@
         </nav>
         <div class="nav-cta">
             <a href="https://live.ipms247.com/booking/book-rooms-casasamayaweligama" class="btn nav-btn"
-                target="_blank">Book
-                Now</a>
+                target="_blank">Book Now</a>
         </div>
         <div class="mobile-menu-btn" onclick="toggleMenu()">☰</div>
     </div>
@@ -187,7 +247,6 @@
         <p style="max-width:650px;margin:0 auto 1.5rem;line-height:1.9;">
             At Calma Samaya, our skilled therapists draw from traditional Sri Lankan techniques and modern therapeutic practices to create deeply restorative experiences. Each treatment is tailored to your needs — whether you seek relief from tension, recovery from activity, or simply a moment of profound rest.
         </p>
-
     </div>
 </section>
 
@@ -195,72 +254,89 @@
 <section class="content-section alt">
     <div class="container" style="max-width:1100px;">
         <h2 style="text-align:center;margin-bottom:0.5rem;">Our Treatments</h2>
-        <p style="text-align:center;color:#7a5c3e;margin-bottom:3rem;font-size:0.9rem;font-family:'Open Sans',sans-serif;">All prices in Sri Lankan Rupees · Oils and materials included</p>
+        <p style="text-align:center;color:#7a5c3e;margin-bottom:3rem;font-size:0.9rem;font-family:'Open Sans',sans-serif;">All prices in Sri Lankan Rupees · Oils and materials included · Click to book</p>
         <div class="massage-grid">
-            <div class="massage-card">
-                  <div class="massage-card-header">
+
+            <div class="massage-card" data-treatment="Sports Massage">
+                <div class="massage-card-header">
                     <div class="massage-emoji">🏃</div>
                     <h3>Sports Massage</h3>
-                  </div>
-                  <p class="massage-desc">Targeted deep-tissue work to release muscle tension, improve flexibility and accelerate recovery. Ideal for athletes and active guests.</p>
-                  <div class="massage-prices"><div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f0e8e0;"><span style="font-size:13px;color:#7a5c3e;">⏱ 60 min</span><span style="font-size:14px;font-weight:700;color:#472C15;">LKR 9,000</span></div><div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f0e8e0;"><span style="font-size:13px;color:#7a5c3e;">⏱ 90 min</span><span style="font-size:14px;font-weight:700;color:#472C15;">LKR 11,000</span></div></div>
                 </div>
-<div class="massage-card">
-                  <div class="massage-card-header">
+                <p class="massage-desc">Targeted deep-tissue work to release muscle tension, improve flexibility and accelerate recovery. Ideal for athletes and active guests.</p>
+                <div class="massage-prices"><div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f0e8e0;"><span style="font-size:13px;color:#7a5c3e;">⏱ 60 min</span><span style="font-size:14px;font-weight:700;color:#472C15;">LKR 9,000</span></div><div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f0e8e0;"><span style="font-size:13px;color:#7a5c3e;">⏱ 90 min</span><span style="font-size:14px;font-weight:700;color:#472C15;">LKR 11,000</span></div></div>
+                <button class="card-book-btn">Book this treatment →</button>
+            </div>
+
+            <div class="massage-card" data-treatment="Relaxing Full Body Massage">
+                <div class="massage-card-header">
                     <div class="massage-emoji">🌿</div>
                     <h3>Relaxing Full Body Massage</h3>
-                  </div>
-                  <p class="massage-desc">A full-body treatment using long, flowing strokes to melt away stress, ease tired muscles and restore a profound sense of calm.</p>
-                  <div class="massage-prices"><div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f0e8e0;"><span style="font-size:13px;color:#7a5c3e;">⏱ 60 min</span><span style="font-size:14px;font-weight:700;color:#472C15;">LKR 8,000</span></div><div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f0e8e0;"><span style="font-size:13px;color:#7a5c3e;">⏱ 90 min</span><span style="font-size:14px;font-weight:700;color:#472C15;">LKR 10,000</span></div></div>
                 </div>
-<div class="massage-card">
-                  <div class="massage-card-header">
+                <p class="massage-desc">A full-body treatment using long, flowing strokes to melt away stress, ease tired muscles and restore a profound sense of calm.</p>
+                <div class="massage-prices"><div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f0e8e0;"><span style="font-size:13px;color:#7a5c3e;">⏱ 60 min</span><span style="font-size:14px;font-weight:700;color:#472C15;">LKR 8,000</span></div><div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f0e8e0;"><span style="font-size:13px;color:#7a5c3e;">⏱ 90 min</span><span style="font-size:14px;font-weight:700;color:#472C15;">LKR 10,000</span></div></div>
+                <button class="card-book-btn">Book this treatment →</button>
+            </div>
+
+            <div class="massage-card" data-treatment="Neck Relaxation Massage">
+                <div class="massage-card-header">
                     <div class="massage-emoji">🫶</div>
                     <h3>Neck Relaxation Massage</h3>
-                  </div>
-                  <p class="massage-desc">Focused relief for the neck and shoulder area, releasing chronic tension and stiffness caused by travel or screen time.</p>
-                  <div class="massage-prices"><div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f0e8e0;"><span style="font-size:13px;color:#7a5c3e;">⏱ 30 min</span><span style="font-size:14px;font-weight:700;color:#472C15;">LKR 4,500</span></div></div>
                 </div>
-<div class="massage-card">
-                  <div class="massage-card-header">
+                <p class="massage-desc">Focused relief for the neck and shoulder area, releasing chronic tension and stiffness caused by travel or screen time.</p>
+                <div class="massage-prices"><div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f0e8e0;"><span style="font-size:13px;color:#7a5c3e;">⏱ 30 min</span><span style="font-size:14px;font-weight:700;color:#472C15;">LKR 4,500</span></div></div>
+                <button class="card-book-btn">Book this treatment →</button>
+            </div>
+
+            <div class="massage-card" data-treatment="Foot Reflections Massage">
+                <div class="massage-card-header">
                     <div class="massage-emoji">🦶</div>
                     <h3>Foot Reflections Massage</h3>
-                  </div>
-                  <p class="massage-desc">A therapeutic foot massage working reflex points to stimulate circulation, reduce tension and rebalance the whole body.</p>
-                  <div class="massage-prices"><div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f0e8e0;"><span style="font-size:13px;color:#7a5c3e;">⏱ 45 min</span><span style="font-size:14px;font-weight:700;color:#472C15;">LKR 5,500</span></div></div>
                 </div>
-<div class="massage-card">
-                  <div class="massage-card-header">
+                <p class="massage-desc">A therapeutic foot massage working reflex points to stimulate circulation, reduce tension and rebalance the whole body.</p>
+                <div class="massage-prices"><div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f0e8e0;"><span style="font-size:13px;color:#7a5c3e;">⏱ 45 min</span><span style="font-size:14px;font-weight:700;color:#472C15;">LKR 5,500</span></div></div>
+                <button class="card-book-btn">Book this treatment →</button>
+            </div>
+
+            <div class="massage-card" data-treatment="Head Relaxation Massage">
+                <div class="massage-card-header">
                     <div class="massage-emoji">🧠</div>
                     <h3>Head Relaxation Massage</h3>
-                  </div>
-                  <p class="massage-desc">Gentle yet powerful scalp and head massage to relieve headaches, quiet the mind and encourage deep relaxation.</p>
-                  <div class="massage-prices"><div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f0e8e0;"><span style="font-size:13px;color:#7a5c3e;">⏱ 30 min</span><span style="font-size:14px;font-weight:700;color:#472C15;">LKR 4,500</span></div></div>
                 </div>
-<div class="massage-card">
-                  <div class="massage-card-header">
+                <p class="massage-desc">Gentle yet powerful scalp and head massage to relieve headaches, quiet the mind and encourage deep relaxation.</p>
+                <div class="massage-prices"><div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f0e8e0;"><span style="font-size:13px;color:#7a5c3e;">⏱ 30 min</span><span style="font-size:14px;font-weight:700;color:#472C15;">LKR 4,500</span></div></div>
+                <button class="card-book-btn">Book this treatment →</button>
+            </div>
+
+            <div class="massage-card" data-treatment="Back Pain Relaxation Massage">
+                <div class="massage-card-header">
                     <div class="massage-emoji">🔙</div>
                     <h3>Back Pain Relaxation Massage</h3>
-                  </div>
-                  <p class="massage-desc">Specialised techniques targeting the lower back to relieve chronic pain, improve posture and restore freedom of movement.</p>
-                  <div class="massage-prices"><div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f0e8e0;"><span style="font-size:13px;color:#7a5c3e;">⏱ 45 min</span><span style="font-size:14px;font-weight:700;color:#472C15;">LKR 6,000</span></div></div>
                 </div>
-<div class="massage-card">
-                  <div class="massage-card-header">
+                <p class="massage-desc">Specialised techniques targeting the lower back to relieve chronic pain, improve posture and restore freedom of movement.</p>
+                <div class="massage-prices"><div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f0e8e0;"><span style="font-size:13px;color:#7a5c3e;">⏱ 45 min</span><span style="font-size:14px;font-weight:700;color:#472C15;">LKR 6,000</span></div></div>
+                <button class="card-book-btn">Book this treatment →</button>
+            </div>
+
+            <div class="massage-card" data-treatment="Sport Therapy, Sport Stretching">
+                <div class="massage-card-header">
                     <div class="massage-emoji">🤸</div>
                     <h3>Sport Therapy, Sport Stretching</h3>
-                  </div>
-                  <p class="massage-desc">A combination of sports massage and assisted stretching to increase range of motion, release fascia and leave the body feeling light.</p>
-                  <div class="massage-prices"><div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f0e8e0;"><span style="font-size:13px;color:#7a5c3e;">⏱ 60 min</span><span style="font-size:14px;font-weight:700;color:#472C15;">LKR 7,500</span></div></div>
                 </div>
-<div class="massage-card">
-                  <div class="massage-card-header">
+                <p class="massage-desc">A combination of sports massage and assisted stretching to increase range of motion, release fascia and leave the body feeling light.</p>
+                <div class="massage-prices"><div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f0e8e0;"><span style="font-size:13px;color:#7a5c3e;">⏱ 60 min</span><span style="font-size:14px;font-weight:700;color:#472C15;">LKR 7,500</span></div></div>
+                <button class="card-book-btn">Book this treatment →</button>
+            </div>
+
+            <div class="massage-card" data-treatment="Cupping Therapy">
+                <div class="massage-card-header">
                     <div class="massage-emoji">🔵</div>
                     <h3>Cupping Therapy</h3>
-                  </div>
-                  <p class="massage-desc">Ancient cupping therapy that lifts and separates tissue to improve blood flow, reduce inflammation and deeply detoxify the body.</p>
-                  <div class="massage-prices"><div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f0e8e0;"><span style="font-size:13px;color:#7a5c3e;">⏱ 60 min</span><span style="font-size:14px;font-weight:700;color:#472C15;">LKR 9,000</span></div></div>
                 </div>
+                <p class="massage-desc">Ancient cupping therapy that lifts and separates tissue to improve blood flow, reduce inflammation and deeply detoxify the body.</p>
+                <div class="massage-prices"><div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f0e8e0;"><span style="font-size:13px;color:#7a5c3e;">⏱ 60 min</span><span style="font-size:14px;font-weight:700;color:#472C15;">LKR 9,000</span></div></div>
+                <button class="card-book-btn">Book this treatment →</button>
+            </div>
+
         </div>
     </div>
 </section>
@@ -271,411 +347,444 @@
         <h2>Book Your Treatment</h2>
         <p style="max-width:540px;margin:0 auto 2.5rem;font-family:'Open Sans',sans-serif;font-size:0.95rem;color:#7a5c3e;">Choose your date, select your treatment and confirm in a few steps. No advance payment required.</p>
         <div class="widget-wrap">
-            <div class="cs-wrap">
-  <div class="cs-header">
-    <h1>Book a Spa Treatment</h1>
-    <p>Calma Samaya · Casa Samaya, Weligama, Sri Lanka</p>
-  </div>
-
-  <div class="cs-steps">
-    <div class="cs-step"><div class="cs-step-num active" id="step-num-1">1</div><span class="cs-step-label">Choose a slot</span></div>
-    <div class="cs-step-sep"></div>
-    <div class="cs-step"><div class="cs-step-num" id="step-num-2">2</div><span class="cs-step-label">Choose treatment</span></div>
-    <div class="cs-step-sep"></div>
-    <div class="cs-step"><div class="cs-step-num" id="step-num-3">3</div><span class="cs-step-label">Your details</span></div>
-  </div>
-
-  <div id="view-slots">
-    <div id="slots-container"><div class="cs-empty">Loading available slots...</div></div>
-  </div>
-
-  <div id="view-treatments" style="display:none">
-    <p style="font-size:13px;color:#8a6f50;margin-bottom:20px;">Select the treatment you'd like for your <strong id="slot-label"></strong> appointment.</p>
-    <div id="treatments-container"></div>
-    <button class="cs-btn-back" onclick="goStep(1)">← Back to slots</button>
-  </div>
-
-  <div id="view-form" style="display:none">
-    <div class="cs-summary" id="booking-summary"></div>
-    <div class="cs-form-grid">
-      <div class="cs-field"><label>FULL NAME *</label><input id="f-name" placeholder="Your name" /></div>
-      <div class="cs-field"><label>EMAIL *</label><input id="f-email" type="email" placeholder="your@email.com" /></div>
-      <div class="cs-field"><label>WHATSAPP</label><input id="f-whatsapp" placeholder="+94 77 000 0000" /></div>
-      <div class="cs-field"><label>ROOM NUMBER</label><input id="f-room" placeholder="If staying with us" /></div>
-      <div class="cs-field full"><label>SPECIAL REQUESTS</label><textarea id="f-notes" rows="3" placeholder="Any allergies, preferences or notes..."></textarea></div>
-    </div>
-    <button class="cs-btn" id="btn-confirm" onclick="confirmBooking()">Confirm Appointment</button>
-    <button class="cs-btn-back" onclick="goStep(2)">← Back to treatments</button>
-  </div>
-
-  <div id="view-success" style="display:none">
-    <div class="cs-success">
-      <div class="cs-success-icon">✨</div>
-      <h2>Your appointment is confirmed!</h2>
-      <p>A confirmation email has been sent to you. Please arrive 10 minutes before your appointment.<br>We look forward to welcoming you.</p>
-      <div class="cs-social">
-        <a href="https://instagram.com/calmasamaya" target="_blank">@calmasamaya</a>
-        <a href="https://instagram.com/casa.samaya" target="_blank">@casa.samaya</a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script>
-const API_URL = "https://cockpit.casasamaya.com/api";
-let allSlots = [], allTreatments = [], selectedSlot = null, selectedTreatment = null;
-const MONTH_NAMES = ["January","February","March","April","May","June","July","August","September","October","November","December"];
-const DAY_NAMES = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-
-async function load() {
-  const [sr, tr] = await Promise.all([
-    fetch(API_URL+"/spa/availability?upcoming_only=true"),
-    fetch(API_URL+"/spa/treatments")
-  ]);
-  const sd = await sr.json();
-  const td = await tr.json();
-  allSlots = (sd.availability||[]).filter(s=>!s.is_booked);
-  allTreatments = td.treatments||[];
-  renderSlots();
-}
-
-function renderSlots() {
-  const byDate = {};
-  allSlots.forEach(s => { if(!byDate[s.date]) byDate[s.date]=[]; byDate[s.date].push(s); });
-  const container = document.getElementById("slots-container");
-  if (Object.keys(byDate).length===0) {
-    container.innerHTML = '<div class="cs-empty">No available slots at the moment.<br>Please check back soon or contact us directly.</div>';
-    return;
-  }
-  let html = "";
-  Object.keys(byDate).sort().forEach(date => {
-    const d = new Date(date+"T00:00:00");
-    const label = DAY_NAMES[d.getDay()]+", "+d.getDate()+" "+MONTH_NAMES[d.getMonth()];
-    html += '<div class="cs-date-group"><div class="cs-date-label">'+label+'</div><div class="cs-slots">';
-    byDate[date].forEach(slot => {
-      html += '<div class="cs-slot" id="slot-'+slot.id+'" onclick="selectSlot('+slot.id+')">';
-      html += '<div class="cs-slot-time">'+slot.time_start+' – '+slot.time_end+'</div>';
-      html += '<div class="cs-slot-therapist">'+slot.therapist_name+'</div>';
-      html += '</div>';
-    });
-    html += '</div></div>';
-  });
-  container.innerHTML = html;
-}
-
-function selectSlot(id) {
-  selectedSlot = allSlots.find(s=>s.id===id);
-  document.querySelectorAll(".cs-slot").forEach(el=>el.classList.remove("selected"));
-  const el = document.getElementById("slot-"+id);
-  if(el) el.classList.add("selected");
-  setTimeout(()=>goStep(2), 200);
-}
-
-function renderTreatments() {
-  const container = document.getElementById("treatments-container");
-  const d = new Date(selectedSlot.date+"T00:00:00");
-  document.getElementById("slot-label").textContent = DAY_NAMES[d.getDay()]+" "+d.getDate()+" "+MONTH_NAMES[d.getMonth()]+" at "+selectedSlot.time_start+" with "+selectedSlot.therapist_name;
-  let html = "";
-  allTreatments.forEach(t => {
-    html += '<div class="cs-treatment" id="tr-'+t.id+'" onclick="selectTreatment('+t.id+')">';
-    html += '<div class="cs-treatment-icon">💆</div>';
-    html += '<div><div class="cs-treatment-name">'+t.name+'</div>';
-    html += '<div class="cs-treatment-meta">'+t.duration_minutes+' min'+( t.description ? ' · '+t.description.slice(0,60)+'...' : '')+'</div></div>';
-    html += '<div class="cs-treatment-price">LKR '+t.price_lkr.toLocaleString()+'</div>';
-    html += '</div>';
-  });
-  container.innerHTML = html;
-}
-
-function selectTreatment(id) {
-  selectedTreatment = allTreatments.find(t=>t.id===id);
-  document.querySelectorAll(".cs-treatment").forEach(el=>el.classList.remove("selected"));
-  const el = document.getElementById("tr-"+id);
-  if(el) el.classList.add("selected");
-  setTimeout(()=>goStep(3), 200);
-}
-
-function renderSummary() {
-  const d = new Date(selectedSlot.date+"T00:00:00");
-  const dateLabel = DAY_NAMES[d.getDay()]+", "+d.getDate()+" "+MONTH_NAMES[d.getMonth()];
-  document.getElementById("booking-summary").innerHTML = `
-    <div class="cs-summary-row"><span class="cs-summary-label">Treatment</span><strong>${selectedTreatment.name}</strong></div>
-    <div class="cs-summary-row"><span class="cs-summary-label">Date</span><span>${dateLabel}</span></div>
-    <div class="cs-summary-row"><span class="cs-summary-label">Time</span><span>${selectedSlot.time_start} – ${selectedSlot.time_end}</span></div>
-    <div class="cs-summary-row"><span class="cs-summary-label">Therapist</span><span>${selectedSlot.therapist_name}</span></div>
-    <div class="cs-summary-row"><span class="cs-summary-label">Total</span><span>LKR ${selectedTreatment.price_lkr.toLocaleString()}</span></div>
-  `;
-}
-
-function goStep(step) {
-  document.getElementById("view-slots").style.display = step===1?"block":"none";
-  document.getElementById("view-treatments").style.display = step===2?"block":"none";
-  document.getElementById("view-form").style.display = step===3?"block":"none";
-  document.getElementById("view-success").style.display = "none";
-  [1,2,3].forEach(i => {
-    const el = document.getElementById("step-num-"+i);
-    el.className = "cs-step-num"+(i<step?" done":i===step?" active":"");
-  });
-  if(step===2) renderTreatments();
-  if(step===3) renderSummary();
-  window.scrollTo({top:0, behavior:"smooth"});
-}
-
-async function confirmBooking() {
-  const name = document.getElementById("f-name").value.trim();
-  const email = document.getElementById("f-email").value.trim();
-  if(!name || !email) return alert("Please fill in your name and email.");
-  const btn = document.getElementById("btn-confirm");
-  btn.disabled = true; btn.textContent = "Confirming...";
-  try {
-    const room = document.getElementById("f-room").value.trim();
-    const res = await fetch(API_URL+"/spa/bookings", {
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body: JSON.stringify({
-        availability_id: selectedSlot.id,
-        treatment_id: selectedTreatment.id,
-        guest_name: name,
-        email: email,
-        whatsapp: document.getElementById("f-whatsapp").value.trim()||null,
-        is_hotel_guest: room.length>0,
-        room_number: room||null,
-        notes: document.getElementById("f-notes").value.trim()||null
-      })
-    });
-    if(!res.ok) { const d=await res.json(); alert(d.detail||"Error"); btn.disabled=false; btn.textContent="Confirm Appointment"; return; }
-    document.getElementById("view-form").style.display="none";
-    document.getElementById("view-success").style.display="block";
-    [1,2,3].forEach(i=>{ document.getElementById("step-num-"+i).className="cs-step-num done"; });
-  } catch(e) {
-    alert("Connection error. Please try again.");
-    btn.disabled=false; btn.textContent="Confirm Appointment";
-  }
-}
-
-load();
-</script>
+            <div class="cs-wrap" id="page-widget">
+                <div class="cs-header">
+                    <h1>Book a Spa Treatment</h1>
+                    <p>Calma Samaya · Casa Samaya, Weligama, Sri Lanka</p>
+                </div>
+                <div class="cs-steps">
+                    <div class="cs-step"><div class="cs-step-num active" data-w="step-num-1">1</div><span class="cs-step-label">Choose a slot</span></div>
+                    <div class="cs-step-sep"></div>
+                    <div class="cs-step"><div class="cs-step-num" data-w="step-num-2">2</div><span class="cs-step-label">Choose treatment</span></div>
+                    <div class="cs-step-sep"></div>
+                    <div class="cs-step"><div class="cs-step-num" data-w="step-num-3">3</div><span class="cs-step-label">Your details</span></div>
+                </div>
+                <div data-w="view-slots">
+                    <div data-w="slots-container"><div class="cs-empty">Loading available slots...</div></div>
+                </div>
+                <div data-w="view-treatments" style="display:none">
+                    <p style="font-size:13px;color:#8a6f50;margin-bottom:20px;">Select the treatment you'd like for your <strong data-w="slot-label"></strong> appointment.</p>
+                    <div data-w="treatments-container"></div>
+                    <button class="cs-btn-back" data-w="btn-back-treatments">← Back to slots</button>
+                </div>
+                <div data-w="view-form" style="display:none">
+                    <div class="cs-summary" data-w="booking-summary"></div>
+                    <div class="cs-form-grid">
+                        <div class="cs-field"><label>FULL NAME *</label><input data-w="f-name" placeholder="Your name" /></div>
+                        <div class="cs-field"><label>EMAIL *</label><input data-w="f-email" type="email" placeholder="your@email.com" /></div>
+                        <div class="cs-field"><label>WHATSAPP</label><input data-w="f-whatsapp" placeholder="+94 77 000 0000" /></div>
+                        <div class="cs-field"><label>ROOM NUMBER</label><input data-w="f-room" placeholder="If staying with us" /></div>
+                        <div class="cs-field full"><label>SPECIAL REQUESTS</label><textarea data-w="f-notes" rows="3" placeholder="Any allergies, preferences or notes..."></textarea></div>
+                    </div>
+                    <button class="cs-btn" data-w="btn-confirm">Confirm Appointment</button>
+                    <button class="cs-btn-back" data-w="btn-back-form">← Back to treatments</button>
+                </div>
+                <div data-w="view-success" style="display:none">
+                    <div class="cs-success">
+                        <div class="cs-success-icon">✨</div>
+                        <h2>Your appointment is confirmed!</h2>
+                        <p>A confirmation email has been sent to you. Please arrive 10 minutes before your appointment.<br>We look forward to welcoming you.</p>
+                        <div class="cs-social">
+                            <a href="https://instagram.com/calmasamaya" target="_blank">@calmasamaya</a>
+                            <a href="https://instagram.com/casa.samaya" target="_blank">@casa.samaya</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
 
+<!-- MODAL BOOKING -->
+<div id="spa-modal-overlay" style="display:none" aria-modal="true" role="dialog">
+    <div id="spa-modal-panel">
+        <button id="spa-modal-close" aria-label="Close modal">&times;</button>
+        <div class="cs-wrap" id="modal-widget">
+            <div class="cs-header">
+                <h1>Book a Spa Treatment</h1>
+                <p>Calma Samaya · Casa Samaya, Weligama, Sri Lanka</p>
+            </div>
+            <!-- Steps 3 (normal flow) -->
+            <div class="cs-steps" data-w="steps-3">
+                <div class="cs-step"><div class="cs-step-num active" data-w="step-num-1">1</div><span class="cs-step-label">Choose a slot</span></div>
+                <div class="cs-step-sep"></div>
+                <div class="cs-step"><div class="cs-step-num" data-w="step-num-2">2</div><span class="cs-step-label">Choose treatment</span></div>
+                <div class="cs-step-sep"></div>
+                <div class="cs-step"><div class="cs-step-num" data-w="step-num-3">3</div><span class="cs-step-label">Your details</span></div>
+            </div>
+            <!-- Steps 2 (pre-selected treatment flow) -->
+            <div class="cs-steps" data-w="steps-2" style="display:none">
+                <div class="cs-step"><div class="cs-step-num active" data-w="step2-num-1">1</div><span class="cs-step-label">Choose a slot</span></div>
+                <div class="cs-step-sep"></div>
+                <div class="cs-step"><div class="cs-step-num" data-w="step2-num-2">2</div><span class="cs-step-label">Your details</span></div>
+            </div>
+            <div data-w="view-slots">
+                <div data-w="slots-container"><div class="cs-empty">Loading available slots...</div></div>
+            </div>
+            <div data-w="view-treatments" style="display:none">
+                <p style="font-size:13px;color:#8a6f50;margin-bottom:20px;">Select the treatment you'd like for your <strong data-w="slot-label"></strong> appointment.</p>
+                <div data-w="treatments-container"></div>
+                <button class="cs-btn-back" data-w="btn-back-treatments">← Back to slots</button>
+            </div>
+            <div data-w="view-form" style="display:none">
+                <div class="cs-summary" data-w="booking-summary"></div>
+                <div class="cs-form-grid">
+                    <div class="cs-field"><label>FULL NAME *</label><input data-w="f-name" placeholder="Your name" /></div>
+                    <div class="cs-field"><label>EMAIL *</label><input data-w="f-email" type="email" placeholder="your@email.com" /></div>
+                    <div class="cs-field"><label>WHATSAPP</label><input data-w="f-whatsapp" placeholder="+94 77 000 0000" /></div>
+                    <div class="cs-field"><label>ROOM NUMBER</label><input data-w="f-room" placeholder="If staying with us" /></div>
+                    <div class="cs-field full"><label>SPECIAL REQUESTS</label><textarea data-w="f-notes" rows="3" placeholder="Any allergies, preferences or notes..."></textarea></div>
+                </div>
+                <button class="cs-btn" data-w="btn-confirm">Confirm Appointment</button>
+                <button class="cs-btn-back" data-w="btn-back-form">← Back to treatments</button>
+            </div>
+            <div data-w="view-success" style="display:none">
+                <div class="cs-success">
+                    <div class="cs-success-icon">✨</div>
+                    <h2>Your appointment is confirmed!</h2>
+                    <p>A confirmation email has been sent to you. Please arrive 10 minutes before your appointment.<br>We look forward to welcoming you.</p>
+                    <div class="cs-social">
+                        <a href="https://instagram.com/calmasamaya" target="_blank">@calmasamaya</a>
+                        <a href="https://instagram.com/casa.samaya" target="_blank">@casa.samaya</a>
+                    </div>
+                    <button class="cs-btn" onclick="closeBookingModal()" style="max-width:280px;margin:24px auto 0;">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <footer
     style="background-color: var(--color-primary); padding: 4rem 0 2rem 0; margin-top: auto; color: var(--color-bg-light); font-size: 0.9rem;">
     <div class="container">
-
-        <!-- Top Section: Logo & CTA -->
-        <div
-            style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 2rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 2rem;">
             <h2 style="font-size: 2rem; margin-bottom: 0; color: var(--color-bg-light);">Casa Samaya</h2>
-            <a href="https://live.ipms247.com/booking/book-rooms-casasamayaweligama" class="btn footer-btn"
-                target="_blank">Book Now</a>
+            <a href="https://live.ipms247.com/booking/book-rooms-casasamayaweligama" class="btn footer-btn" target="_blank">Book Now</a>
         </div>
-
-        <!-- Links Grid -->
-        <div
-            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 2rem; margin-bottom: 3rem; text-align: left;">
-
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 2rem; margin-bottom: 3rem; text-align: left;">
             <div>
                 <h4 style="color: var(--color-bg-light); margin-bottom: 1rem; font-size: 1rem;">Explore</h4>
                 <ul style="list-style: none; padding: 0; line-height: 2;">
                     <li><a href="rooms.html" style="color: rgba(255,255,255,0.8); text-decoration: none;">Rooms</a></li>
-                    <li><a href="experiences.html"
-                            style="color: rgba(255,255,255,0.8); text-decoration: none;">Experiences</a></li>
-                    <li><a href="offers.html" style="color: rgba(255,255,255,0.8); text-decoration: none;">Offers</a>
-                    </li>
-                    <li><a href="weligama.html" style="color: rgba(255,255,255,0.8); text-decoration: none;">Weligama
-                            Guide</a></li>
-                    <li><a href="gallery.html" style="color: rgba(255,255,255,0.8); text-decoration: none;">Gallery</a>
-                    </li>
+                    <li><a href="experiences.html" style="color: rgba(255,255,255,0.8); text-decoration: none;">Experiences</a></li>
+                    <li><a href="offers.html" style="color: rgba(255,255,255,0.8); text-decoration: none;">Offers</a></li>
+                    <li><a href="weligama.html" style="color: rgba(255,255,255,0.8); text-decoration: none;">Weligama Guide</a></li>
+                    <li><a href="gallery.html" style="color: rgba(255,255,255,0.8); text-decoration: none;">Gallery</a></li>
                 </ul>
             </div>
-
             <div>
                 <h4 style="color: var(--color-bg-light); margin-bottom: 1rem; font-size: 1rem;">Samaya</h4>
                 <ul style="list-style: none; padding: 0; line-height: 2;">
-                    <li><a href="restaurant.html"
-                            style="color: rgba(255,255,255,0.8); text-decoration: none;">Restaurant</a></li>
-                    <li><a href="wellness.html"
-                            style="color: rgba(255,255,255,0.8); text-decoration: none;">Wellness</a></li>
-                    <li><a href="vision.html" style="color: rgba(255,255,255,0.8); text-decoration: none;">Vision</a>
-                    </li>
+                    <li><a href="restaurant.html" style="color: rgba(255,255,255,0.8); text-decoration: none;">Restaurant</a></li>
+                    <li><a href="wellness.html" style="color: rgba(255,255,255,0.8); text-decoration: none;">Wellness</a></li>
+                    <li><a href="vision.html" style="color: rgba(255,255,255,0.8); text-decoration: none;">Vision</a></li>
                 </ul>
             </div>
-
             <div>
                 <h4 style="color: var(--color-bg-light); margin-bottom: 1rem; font-size: 1rem;">Contact</h4>
                 <ul style="list-style: none; padding: 0; line-height: 2;">
-                    <li style="color: rgba(255,255,255,0.8);">Kanakamage Watha,<br>Weligama By Pass Rd<br>Weligama
-                        81700, LK</li>
-                    <li style="margin-top: 0.5rem;"><a href="mailto:welcome@casasamaya.com"
-                            style="color: rgba(255,255,255,0.8); text-decoration: none;">welcome@casasamaya.com</a></li>
-                    <li><a href="https://wa.me/94773395212" target="_blank"
-                            style="color: rgba(255,255,255,0.8); text-decoration: none;">WhatsApp: +94 77 339 5212</a>
-                    </li>
+                    <li style="color: rgba(255,255,255,0.8);">Kanakamage Watha,<br>Weligama By Pass Rd<br>Weligama 81700, LK</li>
+                    <li style="margin-top: 0.5rem;"><a href="mailto:welcome@casasamaya.com" style="color: rgba(255,255,255,0.8); text-decoration: none;">welcome@casasamaya.com</a></li>
+                    <li><a href="https://wa.me/94773395212" target="_blank" style="color: rgba(255,255,255,0.8); text-decoration: none;">WhatsApp: +94 77 339 5212</a></li>
                 </ul>
             </div>
-
             <div>
                 <h4 style="color: var(--color-bg-light); margin-bottom: 1rem; font-size: 1rem;">Social & Legal</h4>
                 <ul style="list-style: none; padding: 0; line-height: 2;">
-                    <li><a href="https://instagram.com/casa.samaya" target="_blank"
-                            style="color: rgba(255,255,255,0.8); text-decoration: none;">@casa.samaya</a></li>
-                    <li><a href="https://instagram.com/cafesamaya" target="_blank"
-                            style="color: rgba(255,255,255,0.8); text-decoration: none;">@cafesamaya</a></li>
-                    <li><a href="https://instagram.com/calmasamaya" target="_blank"
-                            style="color: rgba(255,255,255,0.8); text-decoration: none;">@calmasamaya</a></li>
-                    <li style="margin-top: 1rem;"><a href="#"
-                            style="color: rgba(255,255,255,0.6); font-size: 0.8rem; text-decoration: none;">Privacy
-                            Policy</a></li>
-                    <li><a href="#"
-                            style="color: rgba(255,255,255,0.6); font-size: 0.8rem; text-decoration: none;">Terms &
-                            Conditions</a></li>
+                    <li><a href="https://instagram.com/casa.samaya" target="_blank" style="color: rgba(255,255,255,0.8); text-decoration: none;">@casa.samaya</a></li>
+                    <li><a href="https://instagram.com/cafesamaya" target="_blank" style="color: rgba(255,255,255,0.8); text-decoration: none;">@cafesamaya</a></li>
+                    <li><a href="https://instagram.com/calmasamaya" target="_blank" style="color: rgba(255,255,255,0.8); text-decoration: none;">@calmasamaya</a></li>
+                    <li style="margin-top: 1rem;"><a href="#" style="color: rgba(255,255,255,0.6); font-size: 0.8rem; text-decoration: none;">Privacy Policy</a></li>
+                    <li><a href="#" style="color: rgba(255,255,255,0.6); font-size: 0.8rem; text-decoration: none;">Terms & Conditions</a></li>
                 </ul>
             </div>
-
         </div>
-
-        <!-- Copyright -->
         <div style="border-top: 1px solid rgba(255,255,255,0.2); padding-top: 1.5rem; text-align: center;">
             <p style="color: rgba(255,255,255,0.5); font-size: 0.8rem;">&copy; Casa Samaya. All rights reserved.</p>
         </div>
-
     </div>
 </footer>
 
 <script>
-const API_URL = "https://cockpit.casasamaya.com/api";
-let allSlots = [], allTreatments = [], selectedSlot = null, selectedTreatment = null;
-const MONTH_NAMES = ["January","February","March","April","May","June","July","August","September","October","November","December"];
-const DAY_NAMES = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+const API_URL = window.location.hostname === 'localhost'
+  ? 'http://localhost:8000/api'
+  : 'https://cockpit.casasamaya.com/api';
 
-async function load() {
-  const [sr, tr] = await Promise.all([
-    fetch(API_URL+"/spa/availability?upcoming_only=true"),
-    fetch(API_URL+"/spa/treatments")
-  ]);
-  const sd = await sr.json();
-  const td = await tr.json();
-  allSlots = (sd.availability||[]).filter(s=>!s.is_booked);
-  allTreatments = td.treatments||[];
-  renderSlots();
+const MONTH_NAMES = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+const DAY_NAMES   = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+
+// ── Shared data (loaded once) ──────────────────────────────
+let allSlots = [], allTreatments = [];
+let dataPromise = null;
+
+function ensureData() {
+  if (dataPromise) return dataPromise;
+  dataPromise = Promise.all([
+    fetch(API_URL + '/spa/availability?upcoming_only=true').then(r => r.json()),
+    fetch(API_URL + '/spa/treatments').then(r => r.json())
+  ]).then(([sd, td]) => {
+    allSlots      = (sd.availability || []).filter(s => !s.is_booked);
+    allTreatments = td.treatments || [];
+  });
+  return dataPromise;
 }
 
-function renderSlots() {
-  const byDate = {};
-  allSlots.forEach(s => { if(!byDate[s.date]) byDate[s.date]=[]; byDate[s.date].push(s); });
-  const container = document.getElementById("slots-container");
-  if (Object.keys(byDate).length===0) {
-    container.innerHTML = '<div class="cs-empty">No available slots at the moment.<br>Please check back soon or contact us directly.</div>';
-    return;
+// ── SpaWidget class ────────────────────────────────────────
+class SpaWidget {
+  constructor(rootEl, isModal) {
+    this.root         = rootEl;
+    this.isModal      = !!isModal;
+    this.selectedSlot      = null;
+    this.selectedTreatment = null;
+    this.preselectedName   = null;
   }
-  let html = "";
-  Object.keys(byDate).sort().forEach(date => {
-    const d = new Date(date+"T00:00:00");
-    const label = DAY_NAMES[d.getDay()]+", "+d.getDate()+" "+MONTH_NAMES[d.getMonth()];
-    html += '<div class="cs-date-group"><div class="cs-date-label">'+label+'</div><div class="cs-slots">';
-    byDate[date].forEach(slot => {
-      html += '<div class="cs-slot" id="slot-'+slot.id+'" onclick="selectSlot('+slot.id+')">';
-      html += '<div class="cs-slot-time">'+slot.time_start+' – '+slot.time_end+'</div>';
-      html += '<div class="cs-slot-therapist">'+slot.therapist_name+'</div>';
+
+  q(key) {
+    return this.root.querySelector('[data-w="' + key + '"]');
+  }
+
+  // Attach static event listeners (called once on init)
+  init() {
+    this.q('btn-confirm').addEventListener('click', () => this.confirmBooking());
+    this.q('btn-back-treatments').addEventListener('click', () => this.goStep(1));
+    // btn-back-form handler is dynamic (set in goStep)
+  }
+
+  renderSlots() {
+    const container = this.q('slots-container');
+    if (!allSlots.length) {
+      container.innerHTML = '<div class="cs-empty">No available slots at the moment.<br>Please check back soon or contact us directly.</div>';
+      return;
+    }
+    const byDate = {};
+    allSlots.forEach(s => { if (!byDate[s.date]) byDate[s.date] = []; byDate[s.date].push(s); });
+    let html = '';
+    Object.keys(byDate).sort().forEach(date => {
+      const d = new Date(date + 'T00:00:00');
+      const label = DAY_NAMES[d.getDay()] + ', ' + d.getDate() + ' ' + MONTH_NAMES[d.getMonth()];
+      html += '<div class="cs-date-group"><div class="cs-date-label">' + label + '</div><div class="cs-slots">';
+      byDate[date].forEach(slot => {
+        html += '<div class="cs-slot" data-slot-id="' + slot.id + '">';
+        html += '<div class="cs-slot-time">' + slot.time_start + ' – ' + slot.time_end + '</div>';
+        html += '<div class="cs-slot-therapist">' + slot.therapist_name + '</div>';
+        html += '</div>';
+      });
+      html += '</div></div>';
+    });
+    container.innerHTML = html;
+    container.querySelectorAll('.cs-slot').forEach(el => {
+      el.addEventListener('click', () => this.selectSlot(parseInt(el.dataset.slotId)));
+    });
+  }
+
+  selectSlot(id) {
+    this.selectedSlot = allSlots.find(s => s.id === id);
+    this.q('slots-container').querySelectorAll('.cs-slot').forEach(el => el.classList.remove('selected'));
+    const el = this.q('slots-container').querySelector('[data-slot-id="' + id + '"]');
+    if (el) el.classList.add('selected');
+    // If treatment already pre-matched, skip step 2
+    setTimeout(() => this.goStep(this.selectedTreatment ? 3 : 2), 200);
+  }
+
+  renderTreatments() {
+    const container = this.q('treatments-container');
+    const d = new Date(this.selectedSlot.date + 'T00:00:00');
+    this.q('slot-label').textContent =
+      DAY_NAMES[d.getDay()] + ' ' + d.getDate() + ' ' + MONTH_NAMES[d.getMonth()] +
+      ' at ' + this.selectedSlot.time_start + ' with ' + this.selectedSlot.therapist_name;
+    let html = '';
+    allTreatments.forEach(t => {
+      html += '<div class="cs-treatment" data-treatment-id="' + t.id + '">';
+      html += '<div class="cs-treatment-icon">💆</div>';
+      html += '<div><div class="cs-treatment-name">' + t.name + '</div>';
+      html += '<div class="cs-treatment-meta">' + t.duration_minutes + ' min' +
+              (t.description ? ' · ' + t.description.slice(0, 60) + '...' : '') + '</div></div>';
+      html += '<div class="cs-treatment-price">LKR ' + t.price_lkr.toLocaleString() + '</div>';
       html += '</div>';
     });
-    html += '</div></div>';
-  });
-  container.innerHTML = html;
-}
-
-function selectSlot(id) {
-  selectedSlot = allSlots.find(s=>s.id===id);
-  document.querySelectorAll(".cs-slot").forEach(el=>el.classList.remove("selected"));
-  const el = document.getElementById("slot-"+id);
-  if(el) el.classList.add("selected");
-  setTimeout(()=>goStep(2), 200);
-}
-
-function renderTreatments() {
-  const container = document.getElementById("treatments-container");
-  const d = new Date(selectedSlot.date+"T00:00:00");
-  document.getElementById("slot-label").textContent = DAY_NAMES[d.getDay()]+" "+d.getDate()+" "+MONTH_NAMES[d.getMonth()]+" at "+selectedSlot.time_start+" with "+selectedSlot.therapist_name;
-  let html = "";
-  allTreatments.forEach(t => {
-    html += '<div class="cs-treatment" id="tr-'+t.id+'" onclick="selectTreatment('+t.id+')">';
-    html += '<div class="cs-treatment-icon">💆</div>';
-    html += '<div><div class="cs-treatment-name">'+t.name+'</div>';
-    html += '<div class="cs-treatment-meta">'+t.duration_minutes+' min'+( t.description ? ' · '+t.description.slice(0,60)+'...' : '')+'</div></div>';
-    html += '<div class="cs-treatment-price">LKR '+t.price_lkr.toLocaleString()+'</div>';
-    html += '</div>';
-  });
-  container.innerHTML = html;
-}
-
-function selectTreatment(id) {
-  selectedTreatment = allTreatments.find(t=>t.id===id);
-  document.querySelectorAll(".cs-treatment").forEach(el=>el.classList.remove("selected"));
-  const el = document.getElementById("tr-"+id);
-  if(el) el.classList.add("selected");
-  setTimeout(()=>goStep(3), 200);
-}
-
-function renderSummary() {
-  const d = new Date(selectedSlot.date+"T00:00:00");
-  const dateLabel = DAY_NAMES[d.getDay()]+", "+d.getDate()+" "+MONTH_NAMES[d.getMonth()];
-  document.getElementById("booking-summary").innerHTML = `
-    <div class="cs-summary-row"><span class="cs-summary-label">Treatment</span><strong>${selectedTreatment.name}</strong></div>
-    <div class="cs-summary-row"><span class="cs-summary-label">Date</span><span>${dateLabel}</span></div>
-    <div class="cs-summary-row"><span class="cs-summary-label">Time</span><span>${selectedSlot.time_start} – ${selectedSlot.time_end}</span></div>
-    <div class="cs-summary-row"><span class="cs-summary-label">Therapist</span><span>${selectedSlot.therapist_name}</span></div>
-    <div class="cs-summary-row"><span class="cs-summary-label">Total</span><span>LKR ${selectedTreatment.price_lkr.toLocaleString()}</span></div>
-  `;
-}
-
-function goStep(step) {
-  document.getElementById("view-slots").style.display = step===1?"block":"none";
-  document.getElementById("view-treatments").style.display = step===2?"block":"none";
-  document.getElementById("view-form").style.display = step===3?"block":"none";
-  document.getElementById("view-success").style.display = "none";
-  [1,2,3].forEach(i => {
-    const el = document.getElementById("step-num-"+i);
-    el.className = "cs-step-num"+(i<step?" done":i===step?" active":"");
-  });
-  if(step===2) renderTreatments();
-  if(step===3) renderSummary();
-  window.scrollTo({top:0, behavior:"smooth"});
-}
-
-async function confirmBooking() {
-  const name = document.getElementById("f-name").value.trim();
-  const email = document.getElementById("f-email").value.trim();
-  if(!name || !email) return alert("Please fill in your name and email.");
-  const btn = document.getElementById("btn-confirm");
-  btn.disabled = true; btn.textContent = "Confirming...";
-  try {
-    const room = document.getElementById("f-room").value.trim();
-    const res = await fetch(API_URL+"/spa/bookings", {
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body: JSON.stringify({
-        availability_id: selectedSlot.id,
-        treatment_id: selectedTreatment.id,
-        guest_name: name,
-        email: email,
-        whatsapp: document.getElementById("f-whatsapp").value.trim()||null,
-        is_hotel_guest: room.length>0,
-        room_number: room||null,
-        notes: document.getElementById("f-notes").value.trim()||null
-      })
+    container.innerHTML = html;
+    container.querySelectorAll('.cs-treatment').forEach(el => {
+      el.addEventListener('click', () => this.selectTreatment(parseInt(el.dataset.treatmentId)));
     });
-    if(!res.ok) { const d=await res.json(); alert(d.detail||"Error"); btn.disabled=false; btn.textContent="Confirm Appointment"; return; }
-    document.getElementById("view-form").style.display="none";
-    document.getElementById("view-success").style.display="block";
-    [1,2,3].forEach(i=>{ document.getElementById("step-num-"+i).className="cs-step-num done"; });
-  } catch(e) {
-    alert("Connection error. Please try again.");
-    btn.disabled=false; btn.textContent="Confirm Appointment";
+  }
+
+  selectTreatment(id) {
+    this.selectedTreatment = allTreatments.find(t => t.id === id);
+    this.q('treatments-container').querySelectorAll('.cs-treatment').forEach(el => el.classList.remove('selected'));
+    const el = this.q('treatments-container').querySelector('[data-treatment-id="' + id + '"]');
+    if (el) el.classList.add('selected');
+    setTimeout(() => this.goStep(3), 200);
+  }
+
+  renderSummary() {
+    const d = new Date(this.selectedSlot.date + 'T00:00:00');
+    const dateLabel = DAY_NAMES[d.getDay()] + ', ' + d.getDate() + ' ' + MONTH_NAMES[d.getMonth()];
+    this.q('booking-summary').innerHTML = `
+      <div class="cs-summary-row"><span class="cs-summary-label">Treatment</span><strong>${this.selectedTreatment.name}</strong></div>
+      <div class="cs-summary-row"><span class="cs-summary-label">Date</span><span>${dateLabel}</span></div>
+      <div class="cs-summary-row"><span class="cs-summary-label">Time</span><span>${this.selectedSlot.time_start} – ${this.selectedSlot.time_end}</span></div>
+      <div class="cs-summary-row"><span class="cs-summary-label">Therapist</span><span>${this.selectedSlot.therapist_name}</span></div>
+      <div class="cs-summary-row"><span class="cs-summary-label">Total</span><span>LKR ${this.selectedTreatment.price_lkr.toLocaleString()}</span></div>
+    `;
+  }
+
+  goStep(step) {
+    this.q('view-slots').style.display      = step === 1 ? 'block' : 'none';
+    this.q('view-treatments').style.display = step === 2 ? 'block' : 'none';
+    this.q('view-form').style.display       = step === 3 ? 'block' : 'none';
+    this.q('view-success').style.display    = 'none';
+
+    // Update back button in step 3
+    const backBtn = this.q('btn-back-form');
+    if (this.preselectedName) {
+      backBtn.textContent = '← Back to slots';
+      backBtn.onclick = () => this.goStep(1);
+    } else {
+      backBtn.textContent = '← Back to treatments';
+      backBtn.onclick = () => this.goStep(2);
+    }
+
+    [1, 2, 3].forEach(i => {
+      this.q('step-num-' + i).className = 'cs-step-num' + (i < step ? ' done' : i === step ? ' active' : '');
+    });
+    // 2-step indicator (modal with preselected treatment): step 3 maps to visual step 2
+    if (this.isModal && this.selectedTreatment) {
+      const v1 = step === 1 ? ' active' : ' done';
+      const v2 = step <= 2 ? '' : ' active';
+      this.q('step2-num-1').className = 'cs-step-num' + v1;
+      this.q('step2-num-2').className = 'cs-step-num' + v2;
+    }
+
+    if (step === 1) this.renderSlots();
+    if (step === 2) this.renderTreatments();
+    if (step === 3) this.renderSummary();
+
+    if (this.isModal) {
+      document.getElementById('spa-modal-panel').scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      const bookSection = document.getElementById('book');
+      if (bookSection) window.scrollTo({ top: bookSection.offsetTop - 80, behavior: 'smooth' });
+    }
+  }
+
+  async confirmBooking() {
+    const name  = this.q('f-name').value.trim();
+    const email = this.q('f-email').value.trim();
+    if (!name || !email) { alert('Please fill in your name and email.'); return; }
+    const btn = this.q('btn-confirm');
+    btn.disabled = true; btn.textContent = 'Confirming...';
+    try {
+      const room = this.q('f-room').value.trim();
+      const res = await fetch(API_URL + '/spa/bookings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          availability_id: this.selectedSlot.id,
+          treatment_id:    this.selectedTreatment.id,
+          guest_name:  name,
+          email:       email,
+          whatsapp:    this.q('f-whatsapp').value.trim() || null,
+          is_hotel_guest: room.length > 0,
+          room_number: room || null,
+          notes:       this.q('f-notes').value.trim() || null
+        })
+      });
+      if (!res.ok) {
+        const d = await res.json();
+        alert(d.detail || 'Error');
+        btn.disabled = false; btn.textContent = 'Confirm Appointment';
+        return;
+      }
+      this.q('view-form').style.display    = 'none';
+      this.q('view-success').style.display = 'block';
+      [1, 2, 3].forEach(i => { this.q('step-num-' + i).className = 'cs-step-num done'; });
+      if (this.isModal) {
+        ['step2-num-1','step2-num-2'].forEach(k => { this.q(k).className = 'cs-step-num done'; });
+      }
+      // Refresh slot data so just-booked slot is no longer available
+      dataPromise = null;
+      ensureData();
+    } catch(e) {
+      alert('Connection error. Please try again.');
+      btn.disabled = false; btn.textContent = 'Confirm Appointment';
+    }
+  }
+
+  reset(preselectedName) {
+    this.selectedSlot      = null;
+    this.selectedTreatment = null;
+    this.preselectedName   = preselectedName || null;
+    // Pre-match treatment from API data
+    if (preselectedName && allTreatments.length) {
+      const norm = s => s.toLowerCase().replace(/[^a-z0-9]/g, '');
+      this.selectedTreatment = allTreatments.find(t => norm(t.name) === norm(preselectedName)) || null;
+    }
+    this.q('f-name').value     = '';
+    this.q('f-email').value    = '';
+    this.q('f-whatsapp').value = '';
+    this.q('f-room').value     = '';
+    this.q('f-notes').value    = '';
+    this.q('view-success').style.display = 'none';
+    // Switch step indicator based on pre-selection
+    if (this.isModal) {
+      const hasPreselect = !!this.selectedTreatment;
+      this.q('steps-3').style.display = hasPreselect ? 'none' : 'flex';
+      this.q('steps-2').style.display = hasPreselect ? 'flex' : 'none';
+    }
+    this.goStep(1);
   }
 }
 
-load();
+// ── Instantiate widgets ────────────────────────────────────
+const pageWidget  = new SpaWidget(document.getElementById('page-widget'),  false);
+const modalWidget = new SpaWidget(document.getElementById('modal-widget'), true);
+
+pageWidget.init();
+modalWidget.init();
+
+// Load data and render page widget
+ensureData().then(() => pageWidget.renderSlots());
+
+// ── Modal open / close ─────────────────────────────────────
+function openBookingModal(treatmentName) {
+  const overlay = document.getElementById('spa-modal-overlay');
+  overlay.style.display = 'flex';
+  // Block background scroll (iOS-safe)
+  window._scrollY = window.scrollY;
+  document.body.style.position = 'fixed';
+  document.body.style.top = '-' + window._scrollY + 'px';
+  document.body.style.width = '100%';
+
+  ensureData().then(() => modalWidget.reset(treatmentName));
+  document.getElementById('spa-modal-close').focus();
+}
+
+function closeBookingModal() {
+  document.getElementById('spa-modal-overlay').style.display = 'none';
+  // Restore background scroll
+  document.body.style.position = '';
+  document.body.style.top = '';
+  document.body.style.width = '';
+  window.scrollTo(0, window._scrollY || 0);
+}
+
+// Close on overlay click
+document.getElementById('spa-modal-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeBookingModal();
+});
+document.getElementById('spa-modal-close').addEventListener('click', closeBookingModal);
+
+// Close on Escape
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && document.getElementById('spa-modal-overlay').style.display !== 'none') {
+    closeBookingModal();
+  }
+});
+
+// ── Card click listeners ───────────────────────────────────
+document.querySelectorAll('.massage-card').forEach(card => {
+  card.addEventListener('click', () => openBookingModal(card.dataset.treatment));
+});
 </script>
 
 </body>
