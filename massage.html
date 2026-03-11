@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Massage & Spa | Casa Samaya · Weligama</title>
+    <meta name="description" content="Therapeutic massages and spa treatments at Calma Samaya rooftop spa, Weligama. Book online.">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="assets/favicon.ico">
+    <style>
+    /* ── Massage Cards ── */
+    .massage-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1.5rem;
+    }
+    .massage-card {
+        background: #fff;
+        border-radius: 16px;
+        padding: 28px;
+        border: 1px solid #e8ddd4;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        transition: box-shadow 0.25s, transform 0.25s;
+    }
+    .massage-card:hover {
+        box-shadow: 0 10px 36px rgba(71,44,21,0.10);
+        transform: translateY(-2px);
+    }
+    .massage-card-header {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+    .massage-emoji {
+        width: 52px; height: 52px;
+        border-radius: 12px;
+        background: #f5ede4;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 24px;
+        flex-shrink: 0;
+    }
+    .massage-card h3 {
+        font-size: 1.05rem;
+        color: #472C15;
+        margin: 0;
+        font-family: 'Cormorant Garamond', serif;
+        font-weight: 600;
+        line-height: 1.3;
+    }
+    .massage-desc {
+        font-size: 0.875rem;
+        color: #7a5c3e;
+        line-height: 1.75;
+        margin: 0;
+        flex: 1;
+    }
+    .massage-prices {
+        border-top: 1px solid #e8ddd4;
+        padding-top: 12px;
+    }
+    .massage-prices > div:last-child {
+        border-bottom: none !important;
+    }
+
+    /* ── Widget wrapper ── */
+    .widget-wrap {
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 5px 30px rgba(71,44,21,0.08);
+        overflow: hidden;
+    }
+
+    
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { background:#faf9f7; font-family:'Inter',sans-serif; color:#1a1a1a; }
+    .cs-wrap { max-width:960px; margin:0 auto; padding:40px 24px; }
+    .cs-header { text-align:center; margin-bottom:40px; }
+    .cs-header h1 { font-family:'Cormorant Garamond',serif; font-size:36px; font-weight:600; color:#1a1a1a; letter-spacing:0.02em; }
+    .cs-header p { color:#8a6f50; font-size:14px; margin-top:8px; }
+
+    /* STEPS */
+    .cs-steps { display:flex; align-items:center; justify-content:center; gap:0; margin-bottom:40px; }
+    .cs-step { display:flex; align-items:center; gap:8px; }
+    .cs-step-num { width:28px; height:28px; border-radius:50%; background:#e8e3dd; color:#8a6f50; font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; transition:all 0.3s; }
+    .cs-step-num.active { background:#c9a96e; color:#fff; }
+    .cs-step-num.done { background:#5a7a5a; color:#fff; }
+    .cs-step-label { font-size:12px; color:#8a6f50; font-weight:500; }
+    .cs-step-sep { width:40px; height:1px; background:#e8e3dd; margin:0 8px; }
+
+    /* SLOTS */
+    .cs-date-group { margin-bottom:28px; }
+    .cs-date-label { font-size:11px; font-weight:700; color:#8a6f50; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:12px; padding-bottom:8px; border-bottom:1px solid #e8e3dd; }
+    .cs-slots { display:flex; flex-wrap:wrap; gap:10px; }
+    .cs-slot { padding:12px 18px; border:1.5px solid #e8e3dd; border-radius:8px; background:#fff; cursor:pointer; transition:all 0.2s; min-width:120px; text-align:center; }
+    .cs-slot:hover { border-color:#c9a96e; background:#fefcf8; }
+    .cs-slot.selected { border-color:#c9a96e; background:#fdf8f0; }
+    .cs-slot-time { font-size:15px; font-weight:600; color:#1a1a1a; }
+    .cs-slot-therapist { font-size:11px; color:#8a6f50; margin-top:3px; }
+
+    /* TREATMENTS */
+    .cs-treatment { border:1.5px solid #e8e3dd; border-radius:10px; background:#fff; padding:18px 20px; cursor:pointer; transition:all 0.2s; margin-bottom:12px; display:flex; align-items:center; gap:16px; }
+    .cs-treatment:hover { border-color:#c9a96e; background:#fefcf8; }
+    .cs-treatment.selected { border-color:#c9a96e; background:#fdf8f0; }
+    .cs-treatment-icon { width:48px; height:48px; border-radius:8px; background:#f5f0ea; display:flex; align-items:center; justify-content:center; font-size:24px; flex-shrink:0; }
+    .cs-treatment-name { font-size:15px; font-weight:600; color:#1a1a1a; }
+    .cs-treatment-meta { font-size:12px; color:#8a6f50; margin-top:3px; }
+    .cs-treatment-price { margin-left:auto; font-size:16px; font-weight:700; color:#c9a96e; white-space:nowrap; }
+
+    /* FORM */
+    .cs-form-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px; }
+    .cs-field label { display:block; font-size:11px; font-weight:600; color:#8a6f50; letter-spacing:0.06em; margin-bottom:6px; }
+    .cs-field input, .cs-field textarea, .cs-field select { width:100%; padding:10px 14px; border:1.5px solid #e8e3dd; border-radius:8px; font-size:14px; font-family:'Inter',sans-serif; background:#fff; color:#1a1a1a; outline:none; transition:border 0.2s; }
+    .cs-field input:focus, .cs-field textarea:focus { border-color:#c9a96e; }
+    .cs-field.full { grid-column:1/-1; }
+
+    /* SUMMARY BOX */
+    .cs-summary { background:#fff; border:1.5px solid #e8e3dd; border-radius:10px; padding:20px; margin-bottom:24px; }
+    .cs-summary-row { display:flex; justify-content:space-between; align-items:center; padding:6px 0; border-bottom:1px solid #f5f0ea; font-size:13px; }
+    .cs-summary-row:last-child { border-bottom:none; font-weight:700; font-size:15px; color:#c9a96e; }
+    .cs-summary-label { color:#8a6f50; }
+
+    /* BUTTONS */
+    .cs-btn { width:100%; padding:14px; background:#c9a96e; color:#fff; border:none; border-radius:8px; font-family:'Inter',sans-serif; font-size:15px; font-weight:600; cursor:pointer; transition:background 0.2s; letter-spacing:0.02em; margin-top:8px; }
+    .cs-btn:hover { background:#b8935a; }
+    .cs-btn:disabled { background:#ccc; cursor:default; }
+    .cs-btn-back { width:100%; padding:12px; background:transparent; color:#8a6f50; border:1.5px solid #e8e3dd; border-radius:8px; font-family:'Inter',sans-serif; font-size:14px; font-weight:500; cursor:pointer; margin-top:8px; }
+    .cs-btn-back:hover { border-color:#c9a96e; }
+
+    /* SUCCESS */
+    .cs-success { text-align:center; padding:60px 20px; }
+    .cs-success-icon { font-size:60px; margin-bottom:20px; }
+    .cs-success h2 { font-family:'Cormorant Garamond',serif; font-size:28px; color:#1a1a1a; margin-bottom:12px; }
+    .cs-success p { color:#8a6f50; font-size:14px; line-height:1.7; max-width:420px; margin:0 auto 24px; }
+    .cs-social { display:flex; gap:12px; justify-content:center; }
+    .cs-social a { padding:10px 20px; background:#1a1a1a; color:#fff; border-radius:6px; font-size:13px; text-decoration:none; font-weight:500; }
+
+    .cs-empty { text-align:center; padding:40px 0; color:#8a6f50; font-size:14px; }
+    @media(max-width:600px) {
+      .cs-form-grid { grid-template-columns:1fr; }
+      .cs-steps { gap:0; }
+      .cs-step-label { display:none; }
+    }
+  
+    </style>
+</head>
+<body>
+
+<header class="scrolled" id="main-header">
+    <div class="container nav-container">
+        <a href="index.html" class="logo">
+            <img src="assets/images/logo_icon.png" alt="Casa Samaya">
+        </a>
+        <nav class="nav-links">
+            <a href="rooms.html">Rooms</a>
+            <a href="restaurant.html">Restaurant</a>
+            <a href="wellness.html">Wellness</a>
+            <a href="massage.html" class="active">Massage</a>
+            <a href="vision.html">Vision</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+        <div class="nav-cta">
+            <a href="https://live.ipms247.com/booking/book-rooms-casasamayaweligama" class="btn nav-btn"
+                target="_blank">Book
+                Now</a>
+        </div>
+        <div class="mobile-menu-btn" onclick="toggleMenu()">☰</div>
+    </div>
+</header>
+
+<section class="parallax-section"
+        style="background-image: url('assets/images/massage-hero.jpg'); background-color: #3a2010;">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>Spa & Massage</h1>
+            <p>Therapeutic treatments on our rooftop, overlooking the Indian Ocean</p>
+        </div>
+    </section>
+
+<!-- INTRO -->
+<section class="content-section text-center">
+    <div class="container" style="max-width:780px;">
+        <h2>The Art of Touch</h2>
+        <p style="max-width:650px;margin:0 auto 1.5rem;line-height:1.9;">
+            At Calma Samaya, our skilled therapists draw from traditional Sri Lankan techniques and modern therapeutic practices to create deeply restorative experiences. Each treatment is tailored to your needs — whether you seek relief from tension, recovery from activity, or simply a moment of profound rest.
+        </p>
+
+    </div>
+</section>
+
+<!-- TRAITEMENTS -->
+<section class="content-section alt">
+    <div class="container" style="max-width:1100px;">
+        <h2 style="text-align:center;margin-bottom:0.5rem;">Our Treatments</h2>
+        <p style="text-align:center;color:#7a5c3e;margin-bottom:3rem;font-size:0.9rem;font-family:'Open Sans',sans-serif;">All prices in Sri Lankan Rupees · Oils and materials included</p>
+        <div class="massage-grid">
+            <div class="massage-card">
+                  <div class="massage-card-header">
+                    <div class="massage-emoji">🏃</div>
+                    <h3>Sports Massage</h3>
+                  </div>
+                  <p class="massage-desc">Targeted deep-tissue work to release muscle tension, improve flexibility and accelerate recovery. Ideal for athletes and active guests.</p>
+                  <div class="massage-prices"><div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f0e8e0;"><span style="font-size:13px;color:#7a5c3e;">⏱ 60 min</span><span style="font-size:14px;font-weight:700;color:#472C15;">LKR 9,000</span></div><div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f0e8e0;"><span style="font-size:13px;color:#7a5c3e;">⏱ 90 min</span><span style="font-size:14px;font-weight:700;color:#472C15;">LKR 11,000</span></div></div>
+                </div>
+<div class="massage-card">
+                  <div class="massage-card-header">
+                    <div class="massage-emoji">🌿</div>
+                    <h3>Relaxing Full Body Massage</h3>
+                  </div>
+                  <p class="massage-desc">A full-body treatment using long, flowing strokes to melt away stress, ease tired muscles and restore a profound sense of calm.</p>
+                  <div class="massage-prices"><div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f0e8e0;"><span style="font-size:13px;color:#7a5c3e;">⏱ 60 min</span><span style="font-size:14px;font-weight:700;color:#472C15;">LKR 8,000</span></div><div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f0e8e0;"><span style="font-size:13px;color:#7a5c3e;">⏱ 90 min</span><span style="font-size:14px;font-weight:700;color:#472C15;">LKR 10,000</span></div></div>
+                </div>
+<div class="massage-card">
+                  <div class="massage-card-header">
+                    <div class="massage-emoji">🫶</div>
+                    <h3>Neck Relaxation Massage</h3>
+                  </div>
+                  <p class="massage-desc">Focused relief for the neck and shoulder area, releasing chronic tension and stiffness caused by travel or screen time.</p>
+                  <div class="massage-prices"><div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f0e8e0;"><span style="font-size:13px;color:#7a5c3e;">⏱ 30 min</span><span style="font-size:14px;font-weight:700;color:#472C15;">LKR 4,500</span></div></div>
+                </div>
+<div class="massage-card">
+                  <div class="massage-card-header">
+                    <div class="massage-emoji">🦶</div>
+                    <h3>Foot Reflections Massage</h3>
+                  </div>
+                  <p class="massage-desc">A therapeutic foot massage working reflex points to stimulate circulation, reduce tension and rebalance the whole body.</p>
+                  <div class="massage-prices"><div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f0e8e0;"><span style="font-size:13px;color:#7a5c3e;">⏱ 45 min</span><span style="font-size:14px;font-weight:700;color:#472C15;">LKR 5,500</span></div></div>
+                </div>
+<div class="massage-card">
+                  <div class="massage-card-header">
+                    <div class="massage-emoji">🧠</div>
+                    <h3>Head Relaxation Massage</h3>
+                  </div>
+                  <p class="massage-desc">Gentle yet powerful scalp and head massage to relieve headaches, quiet the mind and encourage deep relaxation.</p>
+                  <div class="massage-prices"><div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f0e8e0;"><span style="font-size:13px;color:#7a5c3e;">⏱ 30 min</span><span style="font-size:14px;font-weight:700;color:#472C15;">LKR 4,500</span></div></div>
+                </div>
+<div class="massage-card">
+                  <div class="massage-card-header">
+                    <div class="massage-emoji">🔙</div>
+                    <h3>Back Pain Relaxation Massage</h3>
+                  </div>
+                  <p class="massage-desc">Specialised techniques targeting the lower back to relieve chronic pain, improve posture and restore freedom of movement.</p>
+                  <div class="massage-prices"><div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f0e8e0;"><span style="font-size:13px;color:#7a5c3e;">⏱ 45 min</span><span style="font-size:14px;font-weight:700;color:#472C15;">LKR 6,000</span></div></div>
+                </div>
+<div class="massage-card">
+                  <div class="massage-card-header">
+                    <div class="massage-emoji">🤸</div>
+                    <h3>Sport Therapy, Sport Stretching</h3>
+                  </div>
+                  <p class="massage-desc">A combination of sports massage and assisted stretching to increase range of motion, release fascia and leave the body feeling light.</p>
+                  <div class="massage-prices"><div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f0e8e0;"><span style="font-size:13px;color:#7a5c3e;">⏱ 60 min</span><span style="font-size:14px;font-weight:700;color:#472C15;">LKR 7,500</span></div></div>
+                </div>
+<div class="massage-card">
+                  <div class="massage-card-header">
+                    <div class="massage-emoji">🔵</div>
+                    <h3>Cupping Therapy</h3>
+                  </div>
+                  <p class="massage-desc">Ancient cupping therapy that lifts and separates tissue to improve blood flow, reduce inflammation and deeply detoxify the body.</p>
+                  <div class="massage-prices"><div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f0e8e0;"><span style="font-size:13px;color:#7a5c3e;">⏱ 60 min</span><span style="font-size:14px;font-weight:700;color:#472C15;">LKR 9,000</span></div></div>
+                </div>
+        </div>
+    </div>
+</section>
+
+<!-- BOOKING -->
+<section class="content-section text-center" id="book">
+    <div class="container" style="max-width:960px;">
+        <h2>Book Your Treatment</h2>
+        <p style="max-width:540px;margin:0 auto 2.5rem;font-family:'Open Sans',sans-serif;font-size:0.95rem;color:#7a5c3e;">Choose your date, select your treatment and confirm in a few steps. No advance payment required.</p>
+        <div class="widget-wrap">
+            <div class="cs-wrap">
+  <div class="cs-header">
+    <h1>Book a Spa Treatment</h1>
+    <p>Calma Samaya · Casa Samaya, Weligama, Sri Lanka</p>
+  </div>
+
+  <div class="cs-steps">
+    <div class="cs-step"><div class="cs-step-num active" id="step-num-1">1</div><span class="cs-step-label">Choose a slot</span></div>
+    <div class="cs-step-sep"></div>
+    <div class="cs-step"><div class="cs-step-num" id="step-num-2">2</div><span class="cs-step-label">Choose treatment</span></div>
+    <div class="cs-step-sep"></div>
+    <div class="cs-step"><div class="cs-step-num" id="step-num-3">3</div><span class="cs-step-label">Your details</span></div>
+  </div>
+
+  <div id="view-slots">
+    <div id="slots-container"><div class="cs-empty">Loading available slots...</div></div>
+  </div>
+
+  <div id="view-treatments" style="display:none">
+    <p style="font-size:13px;color:#8a6f50;margin-bottom:20px;">Select the treatment you'd like for your <strong id="slot-label"></strong> appointment.</p>
+    <div id="treatments-container"></div>
+    <button class="cs-btn-back" onclick="goStep(1)">← Back to slots</button>
+  </div>
+
+  <div id="view-form" style="display:none">
+    <div class="cs-summary" id="booking-summary"></div>
+    <div class="cs-form-grid">
+      <div class="cs-field"><label>FULL NAME *</label><input id="f-name" placeholder="Your name" /></div>
+      <div class="cs-field"><label>EMAIL *</label><input id="f-email" type="email" placeholder="your@email.com" /></div>
+      <div class="cs-field"><label>WHATSAPP</label><input id="f-whatsapp" placeholder="+94 77 000 0000" /></div>
+      <div class="cs-field"><label>ROOM NUMBER</label><input id="f-room" placeholder="If staying with us" /></div>
+      <div class="cs-field full"><label>SPECIAL REQUESTS</label><textarea id="f-notes" rows="3" placeholder="Any allergies, preferences or notes..."></textarea></div>
+    </div>
+    <button class="cs-btn" id="btn-confirm" onclick="confirmBooking()">Confirm Appointment</button>
+    <button class="cs-btn-back" onclick="goStep(2)">← Back to treatments</button>
+  </div>
+
+  <div id="view-success" style="display:none">
+    <div class="cs-success">
+      <div class="cs-success-icon">✨</div>
+      <h2>Your appointment is confirmed!</h2>
+      <p>A confirmation email has been sent to you. Please arrive 10 minutes before your appointment.<br>We look forward to welcoming you.</p>
+      <div class="cs-social">
+        <a href="https://instagram.com/calmasamaya" target="_blank">@calmasamaya</a>
+        <a href="https://instagram.com/casa.samaya" target="_blank">@casa.samaya</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const API_URL = "http://localhost:8000/api";
+let allSlots = [], allTreatments = [], selectedSlot = null, selectedTreatment = null;
+const MONTH_NAMES = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+const DAY_NAMES = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+
+async function load() {
+  const [sr, tr] = await Promise.all([
+    fetch(API_URL+"/spa/availability?upcoming_only=true"),
+    fetch(API_URL+"/spa/treatments")
+  ]);
+  const sd = await sr.json();
+  const td = await tr.json();
+  allSlots = (sd.availability||[]).filter(s=>!s.is_booked);
+  allTreatments = td.treatments||[];
+  renderSlots();
+}
+
+function renderSlots() {
+  const byDate = {};
+  allSlots.forEach(s => { if(!byDate[s.date]) byDate[s.date]=[]; byDate[s.date].push(s); });
+  const container = document.getElementById("slots-container");
+  if (Object.keys(byDate).length===0) {
+    container.innerHTML = '<div class="cs-empty">No available slots at the moment.<br>Please check back soon or contact us directly.</div>';
+    return;
+  }
+  let html = "";
+  Object.keys(byDate).sort().forEach(date => {
+    const d = new Date(date+"T00:00:00");
+    const label = DAY_NAMES[d.getDay()]+", "+d.getDate()+" "+MONTH_NAMES[d.getMonth()];
+    html += '<div class="cs-date-group"><div class="cs-date-label">'+label+'</div><div class="cs-slots">';
+    byDate[date].forEach(slot => {
+      html += '<div class="cs-slot" id="slot-'+slot.id+'" onclick="selectSlot('+slot.id+')">';
+      html += '<div class="cs-slot-time">'+slot.time_start+' – '+slot.time_end+'</div>';
+      html += '<div class="cs-slot-therapist">'+slot.therapist_name+'</div>';
+      html += '</div>';
+    });
+    html += '</div></div>';
+  });
+  container.innerHTML = html;
+}
+
+function selectSlot(id) {
+  selectedSlot = allSlots.find(s=>s.id===id);
+  document.querySelectorAll(".cs-slot").forEach(el=>el.classList.remove("selected"));
+  const el = document.getElementById("slot-"+id);
+  if(el) el.classList.add("selected");
+  setTimeout(()=>goStep(2), 200);
+}
+
+function renderTreatments() {
+  const container = document.getElementById("treatments-container");
+  const d = new Date(selectedSlot.date+"T00:00:00");
+  document.getElementById("slot-label").textContent = DAY_NAMES[d.getDay()]+" "+d.getDate()+" "+MONTH_NAMES[d.getMonth()]+" at "+selectedSlot.time_start+" with "+selectedSlot.therapist_name;
+  let html = "";
+  allTreatments.forEach(t => {
+    html += '<div class="cs-treatment" id="tr-'+t.id+'" onclick="selectTreatment('+t.id+')">';
+    html += '<div class="cs-treatment-icon">💆</div>';
+    html += '<div><div class="cs-treatment-name">'+t.name+'</div>';
+    html += '<div class="cs-treatment-meta">'+t.duration_minutes+' min'+( t.description ? ' · '+t.description.slice(0,60)+'...' : '')+'</div></div>';
+    html += '<div class="cs-treatment-price">LKR '+t.price_lkr.toLocaleString()+'</div>';
+    html += '</div>';
+  });
+  container.innerHTML = html;
+}
+
+function selectTreatment(id) {
+  selectedTreatment = allTreatments.find(t=>t.id===id);
+  document.querySelectorAll(".cs-treatment").forEach(el=>el.classList.remove("selected"));
+  const el = document.getElementById("tr-"+id);
+  if(el) el.classList.add("selected");
+  setTimeout(()=>goStep(3), 200);
+}
+
+function renderSummary() {
+  const d = new Date(selectedSlot.date+"T00:00:00");
+  const dateLabel = DAY_NAMES[d.getDay()]+", "+d.getDate()+" "+MONTH_NAMES[d.getMonth()];
+  document.getElementById("booking-summary").innerHTML = `
+    <div class="cs-summary-row"><span class="cs-summary-label">Treatment</span><strong>${selectedTreatment.name}</strong></div>
+    <div class="cs-summary-row"><span class="cs-summary-label">Date</span><span>${dateLabel}</span></div>
+    <div class="cs-summary-row"><span class="cs-summary-label">Time</span><span>${selectedSlot.time_start} – ${selectedSlot.time_end}</span></div>
+    <div class="cs-summary-row"><span class="cs-summary-label">Therapist</span><span>${selectedSlot.therapist_name}</span></div>
+    <div class="cs-summary-row"><span class="cs-summary-label">Total</span><span>LKR ${selectedTreatment.price_lkr.toLocaleString()}</span></div>
+  `;
+}
+
+function goStep(step) {
+  document.getElementById("view-slots").style.display = step===1?"block":"none";
+  document.getElementById("view-treatments").style.display = step===2?"block":"none";
+  document.getElementById("view-form").style.display = step===3?"block":"none";
+  document.getElementById("view-success").style.display = "none";
+  [1,2,3].forEach(i => {
+    const el = document.getElementById("step-num-"+i);
+    el.className = "cs-step-num"+(i<step?" done":i===step?" active":"");
+  });
+  if(step===2) renderTreatments();
+  if(step===3) renderSummary();
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+async function confirmBooking() {
+  const name = document.getElementById("f-name").value.trim();
+  const email = document.getElementById("f-email").value.trim();
+  if(!name || !email) return alert("Please fill in your name and email.");
+  const btn = document.getElementById("btn-confirm");
+  btn.disabled = true; btn.textContent = "Confirming...";
+  try {
+    const room = document.getElementById("f-room").value.trim();
+    const res = await fetch(API_URL+"/spa/bookings", {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({
+        availability_id: selectedSlot.id,
+        treatment_id: selectedTreatment.id,
+        guest_name: name,
+        email: email,
+        whatsapp: document.getElementById("f-whatsapp").value.trim()||null,
+        is_hotel_guest: room.length>0,
+        room_number: room||null,
+        notes: document.getElementById("f-notes").value.trim()||null
+      })
+    });
+    if(!res.ok) { const d=await res.json(); alert(d.detail||"Error"); btn.disabled=false; btn.textContent="Confirm Appointment"; return; }
+    document.getElementById("view-form").style.display="none";
+    document.getElementById("view-success").style.display="block";
+    [1,2,3].forEach(i=>{ document.getElementById("step-num-"+i).className="cs-step-num done"; });
+  } catch(e) {
+    alert("Connection error. Please try again.");
+    btn.disabled=false; btn.textContent="Confirm Appointment";
+  }
+}
+
+load();
+</script>
+        </div>
+    </div>
+</section>
+
+<footer
+    style="background-color: var(--color-primary); padding: 4rem 0 2rem 0; margin-top: auto; color: var(--color-bg-light); font-size: 0.9rem;">
+    <div class="container">
+
+        <!-- Top Section: Logo & CTA -->
+        <div
+            style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 2rem;">
+            <h2 style="font-size: 2rem; margin-bottom: 0; color: var(--color-bg-light);">Casa Samaya</h2>
+            <a href="https://live.ipms247.com/booking/book-rooms-casasamayaweligama" class="btn footer-btn"
+                target="_blank">Book Now</a>
+        </div>
+
+        <!-- Links Grid -->
+        <div
+            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 2rem; margin-bottom: 3rem; text-align: left;">
+
+            <div>
+                <h4 style="color: var(--color-bg-light); margin-bottom: 1rem; font-size: 1rem;">Explore</h4>
+                <ul style="list-style: none; padding: 0; line-height: 2;">
+                    <li><a href="rooms.html" style="color: rgba(255,255,255,0.8); text-decoration: none;">Rooms</a></li>
+                    <li><a href="experiences.html"
+                            style="color: rgba(255,255,255,0.8); text-decoration: none;">Experiences</a></li>
+                    <li><a href="offers.html" style="color: rgba(255,255,255,0.8); text-decoration: none;">Offers</a>
+                    </li>
+                    <li><a href="weligama.html" style="color: rgba(255,255,255,0.8); text-decoration: none;">Weligama
+                            Guide</a></li>
+                    <li><a href="gallery.html" style="color: rgba(255,255,255,0.8); text-decoration: none;">Gallery</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="color: var(--color-bg-light); margin-bottom: 1rem; font-size: 1rem;">Samaya</h4>
+                <ul style="list-style: none; padding: 0; line-height: 2;">
+                    <li><a href="restaurant.html"
+                            style="color: rgba(255,255,255,0.8); text-decoration: none;">Restaurant</a></li>
+                    <li><a href="wellness.html"
+                            style="color: rgba(255,255,255,0.8); text-decoration: none;">Wellness</a></li>
+                    <li><a href="vision.html" style="color: rgba(255,255,255,0.8); text-decoration: none;">Vision</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="color: var(--color-bg-light); margin-bottom: 1rem; font-size: 1rem;">Contact</h4>
+                <ul style="list-style: none; padding: 0; line-height: 2;">
+                    <li style="color: rgba(255,255,255,0.8);">Kanakamage Watha,<br>Weligama By Pass Rd<br>Weligama
+                        81700, LK</li>
+                    <li style="margin-top: 0.5rem;"><a href="mailto:welcome@casasamaya.com"
+                            style="color: rgba(255,255,255,0.8); text-decoration: none;">welcome@casasamaya.com</a></li>
+                    <li><a href="https://wa.me/94773395212" target="_blank"
+                            style="color: rgba(255,255,255,0.8); text-decoration: none;">WhatsApp: +94 77 339 5212</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="color: var(--color-bg-light); margin-bottom: 1rem; font-size: 1rem;">Social & Legal</h4>
+                <ul style="list-style: none; padding: 0; line-height: 2;">
+                    <li><a href="https://instagram.com/casa.samaya" target="_blank"
+                            style="color: rgba(255,255,255,0.8); text-decoration: none;">@casa.samaya</a></li>
+                    <li><a href="https://instagram.com/cafesamaya" target="_blank"
+                            style="color: rgba(255,255,255,0.8); text-decoration: none;">@cafesamaya</a></li>
+                    <li><a href="https://instagram.com/calmasamaya" target="_blank"
+                            style="color: rgba(255,255,255,0.8); text-decoration: none;">@calmasamaya</a></li>
+                    <li style="margin-top: 1rem;"><a href="#"
+                            style="color: rgba(255,255,255,0.6); font-size: 0.8rem; text-decoration: none;">Privacy
+                            Policy</a></li>
+                    <li><a href="#"
+                            style="color: rgba(255,255,255,0.6); font-size: 0.8rem; text-decoration: none;">Terms &
+                            Conditions</a></li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- Copyright -->
+        <div style="border-top: 1px solid rgba(255,255,255,0.2); padding-top: 1.5rem; text-align: center;">
+            <p style="color: rgba(255,255,255,0.5); font-size: 0.8rem;">&copy; Casa Samaya. All rights reserved.</p>
+        </div>
+
+    </div>
+</footer>
+
+<script>
+const API_URL = "http://localhost:8000/api";
+let allSlots = [], allTreatments = [], selectedSlot = null, selectedTreatment = null;
+const MONTH_NAMES = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+const DAY_NAMES = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+
+async function load() {
+  const [sr, tr] = await Promise.all([
+    fetch(API_URL+"/spa/availability?upcoming_only=true"),
+    fetch(API_URL+"/spa/treatments")
+  ]);
+  const sd = await sr.json();
+  const td = await tr.json();
+  allSlots = (sd.availability||[]).filter(s=>!s.is_booked);
+  allTreatments = td.treatments||[];
+  renderSlots();
+}
+
+function renderSlots() {
+  const byDate = {};
+  allSlots.forEach(s => { if(!byDate[s.date]) byDate[s.date]=[]; byDate[s.date].push(s); });
+  const container = document.getElementById("slots-container");
+  if (Object.keys(byDate).length===0) {
+    container.innerHTML = '<div class="cs-empty">No available slots at the moment.<br>Please check back soon or contact us directly.</div>';
+    return;
+  }
+  let html = "";
+  Object.keys(byDate).sort().forEach(date => {
+    const d = new Date(date+"T00:00:00");
+    const label = DAY_NAMES[d.getDay()]+", "+d.getDate()+" "+MONTH_NAMES[d.getMonth()];
+    html += '<div class="cs-date-group"><div class="cs-date-label">'+label+'</div><div class="cs-slots">';
+    byDate[date].forEach(slot => {
+      html += '<div class="cs-slot" id="slot-'+slot.id+'" onclick="selectSlot('+slot.id+')">';
+      html += '<div class="cs-slot-time">'+slot.time_start+' – '+slot.time_end+'</div>';
+      html += '<div class="cs-slot-therapist">'+slot.therapist_name+'</div>';
+      html += '</div>';
+    });
+    html += '</div></div>';
+  });
+  container.innerHTML = html;
+}
+
+function selectSlot(id) {
+  selectedSlot = allSlots.find(s=>s.id===id);
+  document.querySelectorAll(".cs-slot").forEach(el=>el.classList.remove("selected"));
+  const el = document.getElementById("slot-"+id);
+  if(el) el.classList.add("selected");
+  setTimeout(()=>goStep(2), 200);
+}
+
+function renderTreatments() {
+  const container = document.getElementById("treatments-container");
+  const d = new Date(selectedSlot.date+"T00:00:00");
+  document.getElementById("slot-label").textContent = DAY_NAMES[d.getDay()]+" "+d.getDate()+" "+MONTH_NAMES[d.getMonth()]+" at "+selectedSlot.time_start+" with "+selectedSlot.therapist_name;
+  let html = "";
+  allTreatments.forEach(t => {
+    html += '<div class="cs-treatment" id="tr-'+t.id+'" onclick="selectTreatment('+t.id+')">';
+    html += '<div class="cs-treatment-icon">💆</div>';
+    html += '<div><div class="cs-treatment-name">'+t.name+'</div>';
+    html += '<div class="cs-treatment-meta">'+t.duration_minutes+' min'+( t.description ? ' · '+t.description.slice(0,60)+'...' : '')+'</div></div>';
+    html += '<div class="cs-treatment-price">LKR '+t.price_lkr.toLocaleString()+'</div>';
+    html += '</div>';
+  });
+  container.innerHTML = html;
+}
+
+function selectTreatment(id) {
+  selectedTreatment = allTreatments.find(t=>t.id===id);
+  document.querySelectorAll(".cs-treatment").forEach(el=>el.classList.remove("selected"));
+  const el = document.getElementById("tr-"+id);
+  if(el) el.classList.add("selected");
+  setTimeout(()=>goStep(3), 200);
+}
+
+function renderSummary() {
+  const d = new Date(selectedSlot.date+"T00:00:00");
+  const dateLabel = DAY_NAMES[d.getDay()]+", "+d.getDate()+" "+MONTH_NAMES[d.getMonth()];
+  document.getElementById("booking-summary").innerHTML = `
+    <div class="cs-summary-row"><span class="cs-summary-label">Treatment</span><strong>${selectedTreatment.name}</strong></div>
+    <div class="cs-summary-row"><span class="cs-summary-label">Date</span><span>${dateLabel}</span></div>
+    <div class="cs-summary-row"><span class="cs-summary-label">Time</span><span>${selectedSlot.time_start} – ${selectedSlot.time_end}</span></div>
+    <div class="cs-summary-row"><span class="cs-summary-label">Therapist</span><span>${selectedSlot.therapist_name}</span></div>
+    <div class="cs-summary-row"><span class="cs-summary-label">Total</span><span>LKR ${selectedTreatment.price_lkr.toLocaleString()}</span></div>
+  `;
+}
+
+function goStep(step) {
+  document.getElementById("view-slots").style.display = step===1?"block":"none";
+  document.getElementById("view-treatments").style.display = step===2?"block":"none";
+  document.getElementById("view-form").style.display = step===3?"block":"none";
+  document.getElementById("view-success").style.display = "none";
+  [1,2,3].forEach(i => {
+    const el = document.getElementById("step-num-"+i);
+    el.className = "cs-step-num"+(i<step?" done":i===step?" active":"");
+  });
+  if(step===2) renderTreatments();
+  if(step===3) renderSummary();
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+async function confirmBooking() {
+  const name = document.getElementById("f-name").value.trim();
+  const email = document.getElementById("f-email").value.trim();
+  if(!name || !email) return alert("Please fill in your name and email.");
+  const btn = document.getElementById("btn-confirm");
+  btn.disabled = true; btn.textContent = "Confirming...";
+  try {
+    const room = document.getElementById("f-room").value.trim();
+    const res = await fetch(API_URL+"/spa/bookings", {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({
+        availability_id: selectedSlot.id,
+        treatment_id: selectedTreatment.id,
+        guest_name: name,
+        email: email,
+        whatsapp: document.getElementById("f-whatsapp").value.trim()||null,
+        is_hotel_guest: room.length>0,
+        room_number: room||null,
+        notes: document.getElementById("f-notes").value.trim()||null
+      })
+    });
+    if(!res.ok) { const d=await res.json(); alert(d.detail||"Error"); btn.disabled=false; btn.textContent="Confirm Appointment"; return; }
+    document.getElementById("view-form").style.display="none";
+    document.getElementById("view-success").style.display="block";
+    [1,2,3].forEach(i=>{ document.getElementById("step-num-"+i).className="cs-step-num done"; });
+  } catch(e) {
+    alert("Connection error. Please try again.");
+    btn.disabled=false; btn.textContent="Confirm Appointment";
+  }
+}
+
+load();
+</script>
+
+</body>
+</html>

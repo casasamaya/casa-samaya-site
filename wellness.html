@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-W4KPDX4M');</script>
+<!-- End Google Tag Manager -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calma Samaya | Rooftop Wellness & Yoga in Weligama</title>
+    <meta name="description"
+        content="Experience yoga, breathwork, meditation, and massage at Calma Samaya, the rooftop wellness space of Casa Samaya in Weligama.">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Hotel",
+  "name": "Casa Samaya",
+  "description": "A beachfront sanctuary in Weligama, Sri Lanka offering boutique hotel rooms, a restaurant, and a wellness rooftop.",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Kanakamage Watha, Weligama By Pass Rd",
+    "addressLocality": "Weligama",
+    "postalCode": "81700",
+    "addressCountry": "LK"
+  },
+  "telephone": "+94 77 339 5212",
+  "url": "https://casasamaya.com/"
+}
+</script>
+</head>
+
+<body>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W2QL8VL5DM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-W2QL8VL5DM');
+</script>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W4KPDX4M"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+    <header class="scrolled" id="main-header">
+    <div class="container nav-container">
+        <a href="index.html" class="logo">
+            <img src="assets/images/logo_icon.png" alt="Casa Samaya">
+        </a>
+        <nav class="nav-links">
+            <a href="rooms.html">Rooms</a>
+            <a href="restaurant.html">Restaurant</a>
+            <a href="wellness.html">Wellness</a>
+            <a href="massage.html">Massage</a>
+            <a href="vision.html">Vision</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+        <div class="nav-cta">
+            <a href="https://live.ipms247.com/booking/book-rooms-casasamayaweligama" class="btn nav-btn"
+                target="_blank">Book
+                Now</a>
+        </div>
+        <div class="mobile-menu-btn" onclick="toggleMenu()">☰</div>
+    </div>
+</header>
+<div class="mobile-menu-overlay" id="mobile-menu">
+    <span class="close-btn" onclick="toggleMenu()">×</span>
+    <a href="rooms.html">Rooms</a>
+    <a href="restaurant.html">Restaurant</a>
+    <a href="wellness.html">Wellness</a>
+    <a href="experiences.html">Experiences</a>
+    <a href="massage.html">Massage</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="vision.html">Vision</a>
+    <a href="contact.html">Contact</a>
+    <a href="https://live.ipms247.com/booking/book-rooms-casasamayaweligama" class="btn"
+        style="color: var(--color-primary);" target="_blank">Book Now</a>
+</div>
+
+    <section class="parallax-section"
+        style="background-image: url('assets/images/calma_samaya.jpg'); background-color: #566;">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>Calma Samaya</h1>
+            <p>Reconnect to your natural rhythm</p>
+        </div>
+    </section>
+
+    <!-- Practices Section -->
+    <section class="content-section text-center">
+        <div class="container" style="max-width: 1000px;">
+            <h2>The Art of Awareness</h2>
+            <p style="margin-bottom: 2rem; max-width: 700px; margin-left: auto; margin-right: auto;">Calma Samaya is our
+                rooftop wellness space, designed to help you slow down, breathe, and find balance. We offer a holistic
+                approach to wellbeing.</p>
+            <p style="font-size: 0.9rem; color: var(--color-primary); font-weight: bold; margin-bottom: 2rem;">Open to
+                hotel guests and external visitors.</p>
+            <div id="wellness-anchor"></div>
+
+
+            <!-- Casa Samaya Wellness Widget -->
+            <div id="wellness-widget" style="max-width:1000px; margin:0 auto; font-family:'Open Sans',sans-serif;">
+              
+              <!-- Tabs: Liste / Calendrier -->
+              <div style="display:flex; gap:8px; justify-content:center; margin-bottom:24px;">
+                <button id="tab-list" onclick="switchTab('list')" style="padding:10px 28px; border-radius:50px; border:2px solid #472C15; background:#472C15; color:#fff; font-family:'Open Sans',sans-serif; font-size:13px; font-weight:600; cursor:pointer; letter-spacing:0.05em;">LIST VIEW</button>
+                <button id="tab-cal" onclick="switchTab('calendar')" style="padding:10px 28px; border-radius:50px; border:2px solid #472C15; background:transparent; color:#472C15; font-family:'Open Sans',sans-serif; font-size:13px; font-weight:600; cursor:pointer; letter-spacing:0.05em;">CALENDAR VIEW</button>
+              </div>
+
+              <!-- Filter par type -->
+              <div id="type-filters" style="display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-bottom:28px;"></div>
+
+              <!-- Vue Liste -->
+              <div id="view-list">
+                <div id="sessions-list" style="display:grid; gap:16px;"></div>
+              </div>
+
+              <!-- Vue Calendrier -->
+              <div id="view-calendar" style="display:none;">
+                <div style="display:flex; align-items:center; justify-content:center; gap:20px; margin-bottom:20px;">
+                  <button onclick="changeWeek(-1)" style="background:none; border:none; font-size:22px; cursor:pointer; color:#472C15;">&#8592;</button>
+                  <span id="week-label" style="font-size:15px; font-weight:600; color:#472C15; min-width:220px; text-align:center;"></span>
+                  <button onclick="changeWeek(1)" style="background:none; border:none; font-size:22px; cursor:pointer; color:#472C15;">&#8594;</button>
+                </div>
+                <div id="calendar-grid" style="display:grid; grid-template-columns:repeat(7,1fr); gap:8px;"></div>
+              </div>
+
+              <!-- Loading -->
+              <div id="widget-loading" style="text-align:center; padding:60px; color:#b09070;">
+                <div style="font-size:32px; margin-bottom:12px;">🧘</div>
+                <div style="font-size:14px;">Loading sessions...</div>
+              </div>
+
+              <!-- Modal Booking -->
+              <div id="booking-modal" style="display:none; position:fixed; inset:0; background:rgba(71,44,21,0.5); z-index:9999; align-items:center; justify-content:center; padding:20px;">
+                <div style="background:#fff; border-radius:16px; padding:36px; max-width:500px; width:100%; max-height:90vh; overflow-y:auto; position:relative;">
+                  <button onclick="closeModal()" style="position:absolute; top:16px; right:20px; background:none; border:none; font-size:24px; cursor:pointer; color:#b09070;">&times;</button>
+                  <div id="modal-session-info" style="margin-bottom:24px;"></div>
+                  <form id="booking-form" onsubmit="submitBooking(event)">
+                    <div style="margin-bottom:16px;">
+                      <label style="display:block; font-size:11px; font-weight:700; color:#472C15; letter-spacing:0.08em; margin-bottom:6px;">FULL NAME *</label>
+                      <input id="f-name" type="text" required placeholder="Your name" style="width:100%; padding:12px 16px; border:1.5px solid #e8ddd4; border-radius:8px; font-family:'Open Sans',sans-serif; font-size:14px; color:#472C15; box-sizing:border-box;">
+                    </div>
+                    <div style="margin-bottom:16px;">
+                      <label style="display:block; font-size:11px; font-weight:700; color:#472C15; letter-spacing:0.08em; margin-bottom:6px;">EMAIL *</label>
+                      <input id="f-email" type="email" required placeholder="your@email.com" style="width:100%; padding:12px 16px; border:1.5px solid #e8ddd4; border-radius:8px; font-family:'Open Sans',sans-serif; font-size:14px; color:#472C15; box-sizing:border-box;">
+                    </div>
+                    <div style="margin-bottom:16px;">
+                      <label style="display:block; font-size:11px; font-weight:700; color:#472C15; letter-spacing:0.08em; margin-bottom:6px;">WHATSAPP</label>
+                      <input id="f-wa" type="tel" placeholder="+94 77 000 0000" style="width:100%; padding:12px 16px; border:1.5px solid #e8ddd4; border-radius:8px; font-family:'Open Sans',sans-serif; font-size:14px; color:#472C15; box-sizing:border-box;">
+                    </div>
+                    <div style="margin-bottom:16px;">
+                      <label style="display:flex; align-items:center; gap:10px; cursor:pointer; font-size:13px; color:#7a5c3e;">
+                        <input id="f-guest" type="checkbox" style="width:16px; height:16px; accent-color:#472C15;">
+                        I am a hotel guest at Casa Samaya
+                      </label>
+                    </div>
+                    <div id="f-room-wrap" style="display:none; margin-bottom:16px;">
+                      <label style="display:block; font-size:11px; font-weight:700; color:#472C15; letter-spacing:0.08em; margin-bottom:6px;">ROOM NUMBER</label>
+                      <input id="f-room" type="text" placeholder="e.g. 103" style="width:100%; padding:12px 16px; border:1.5px solid #e8ddd4; border-radius:8px; font-family:'Open Sans',sans-serif; font-size:14px; color:#472C15; box-sizing:border-box;">
+                    </div>
+                    <div style="margin-bottom:24px;">
+                      <label style="display:block; font-size:11px; font-weight:700; color:#472C15; letter-spacing:0.08em; margin-bottom:6px;">NOTES</label>
+                      <textarea id="f-notes" placeholder="Any injuries, special requests..." rows="3" style="width:100%; padding:12px 16px; border:1.5px solid #e8ddd4; border-radius:8px; font-family:'Open Sans',sans-serif; font-size:14px; color:#472C15; resize:vertical; box-sizing:border-box;"></textarea>
+                    </div>
+                    <div id="form-error" style="display:none; color:#c0392b; font-size:13px; margin-bottom:12px;"></div>
+                    <button type="submit" id="submit-btn" style="width:100%; padding:14px; background:#472C15; color:#fff; border:none; border-radius:8px; font-family:'Open Sans',sans-serif; font-size:14px; font-weight:700; letter-spacing:0.05em; cursor:pointer;">CONFIRM BOOKING</button>
+                  </form>
+                  <div id="booking-success" style="display:none; text-align:center; padding:20px 0;">
+                    <div style="font-size:48px; margin-bottom:16px;">✅</div>
+                    <h3 style="color:#472C15; margin-bottom:8px;">Booking Confirmed!</h3>
+                    <p style="color:#7a5c3e; font-size:14px;">Check your email for confirmation details.</p>
+                    <button onclick="closeModal()" style="margin-top:20px; padding:12px 32px; background:#472C15; color:#fff; border:none; border-radius:8px; font-family:'Open Sans',sans-serif; font-weight:600; cursor:pointer;">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <script>
+            const API = 'http://localhost:8000/api';
+            let allSessions = [];
+            let currentFilter = 'all';
+            let currentWeekOffset = 0;
+            let selectedSessionId = null;
+
+            // ── Initialisation ─────────────────────────────────
+            async function loadSessions() {
+              try {
+                const r = await fetch(API + '/wellness/sessions?upcoming_only=true');
+                const data = await r.json();
+                allSessions = (data.sessions || []).map(s => ({
+                  ...s,
+                  session_type: s.type || s.session_type || 'yoga',
+                  time: s.time_start || s.time,
+                  max_participants: s.capacity || s.max_participants || 10,
+                  booked_count: s.booked_count || (s.capacity - s.spots_left) || 0,
+                  duration_minutes: s.duration_minutes || 
+                    (s.time_start && s.time_end ? 
+                      (new Date('2000-01-01T'+s.time_end) - new Date('2000-01-01T'+s.time_start))/60000 : 60),
+                }));
+                document.getElementById('widget-loading').style.display = 'none';
+                buildFilters();
+                renderList();
+                renderCalendar();
+              } catch(e) {
+                document.getElementById('widget-loading').innerHTML = '<p style="color:#c0392b;">Unable to load sessions. Please try again.</p>';
+              }
+            }
+
+            // ── Filtres par type ───────────────────────────────
+            function buildFilters() {
+              const types = ['all', ...new Set(allSessions.map(s => s.session_type))];
+              const el = document.getElementById('type-filters');
+              el.innerHTML = types.map(t => `
+                <button onclick="setFilter('${t}')" id="filter-${t}" style="padding:8px 20px; border-radius:50px; border:1.5px solid #e8ddd4; background:${t==='all'?'#472C15':'transparent'}; color:${t==='all'?'#fff':'#7a5c3e'}; font-family:'Open Sans',sans-serif; font-size:12px; font-weight:600; cursor:pointer; letter-spacing:0.04em; text-transform:capitalize;">
+                  ${t === 'all' ? 'All Classes' : t}
+                </button>`).join('');
+            }
+
+            function setFilter(type) {
+              currentFilter = type;
+              document.querySelectorAll('[id^="filter-"]').forEach(b => {
+                const t = b.id.replace('filter-','');
+                b.style.background = t === type ? '#472C15' : 'transparent';
+                b.style.color = t === type ? '#fff' : '#7a5c3e';
+              });
+              renderList();
+              renderCalendar();
+            }
+
+            function filtered() {
+              return currentFilter === 'all' ? allSessions : allSessions.filter(s => s.session_type === currentFilter);
+            }
+
+            // ── Vue Liste ──────────────────────────────────────
+            function renderList() {
+              const sessions = filtered();
+              const el = document.getElementById('sessions-list');
+              if (!sessions.length) {
+                el.innerHTML = '<p style="text-align:center;color:#b09070;padding:40px;">No upcoming sessions.</p>';
+                return;
+              }
+              // Grouper par date
+              const byDate = {};
+              sessions.forEach(s => {
+                if (!byDate[s.date]) byDate[s.date] = [];
+                byDate[s.date].push(s);
+              });
+              el.innerHTML = Object.entries(byDate).sort(([a],[b])=>a.localeCompare(b)).map(([date, list]) => `
+                <div>
+                  <div style="font-size:11px; font-weight:700; color:#472C15; letter-spacing:0.1em; text-transform:uppercase; padding:8px 0 12px; border-bottom:1px solid #e8ddd4; margin-bottom:12px;">
+                    ${formatDate(date)}
+                  </div>
+                  <div style="display:grid; gap:10px;">
+                    ${list.map(s => sessionCard(s)).join('')}
+                  </div>
+                </div>
+              `).join('');
+            }
+
+            function sessionCard(s) {
+              const spots = s.max_participants - (s.booked_count || 0);
+              const full = spots <= 0;
+              return `
+                <div style="background:#FEFAF6; border:1.5px solid #e8ddd4; border-radius:12px; padding:16px 20px;">
+                  <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+                    <!-- Gauche: emoji + infos -->
+                    <div style="display:flex; align-items:center; gap:14px; min-width:0;">
+                      <div style="width:44px; height:44px; border-radius:10px; background:#f5ede4; display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0;">${sessionEmoji(s.session_type)}</div>
+                      <div style="min-width:0;">
+                        <div style="font-size:15px; font-weight:700; color:#472C15; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${s.title}</div>
+                        <div style="font-size:13px; color:#7a5c3e; margin-top:2px;">${s.time.slice(0,5)} · ${s.duration_minutes}min${s.instructor ? ' · ' + s.instructor : ''}</div>
+                      </div>
+                    </div>
+                    <!-- Droite: bouton -->
+                    <div style="flex-shrink:0;">
+                      ${!full
+                        ? `<button onclick="openBooking(${s.id})" style="padding:10px 22px; background:#472C15; color:#fff; border:none; border-radius:50px; font-family:'Open Sans',sans-serif; font-size:12px; font-weight:700; letter-spacing:0.05em; cursor:pointer;">BOOK</button>`
+                        : `<button disabled style="padding:10px 22px; background:#e8ddd4; color:#b09070; border:none; border-radius:50px; font-family:'Open Sans',sans-serif; font-size:12px; font-weight:700; cursor:not-allowed;">FULL</button>`}
+                    </div>
+                  </div>
+                  <!-- Bas: prix + spots -->
+                  <div style="display:flex; align-items:center; justify-content:space-between; margin-top:12px; padding-top:10px; border-top:1px solid #e8ddd4;">
+                    <div style="font-size:13px; font-weight:700; color:${s.is_free ? '#2e7d52' : '#472C15'};">${s.is_free ? '✓ Free' : 'LKR ' + Number(s.price_usd).toLocaleString()}</div>
+                    <div style="font-size:12px; color:${full ? '#c0392b' : '#2e7d52'}; font-weight:600;">${full ? 'FULL' : spots + ' spots left'}</div>
+                  </div>
+                </div>`;
+            }
+
+            // ── Vue Calendrier ─────────────────────────────────
+            function renderCalendar() {
+              const today = new Date();
+              const weekStart = new Date(today);
+              weekStart.setDate(today.getDate() - today.getDay() + 1 + currentWeekOffset * 7);
+              
+              const days = Array.from({length:7}, (_,i) => {
+                const d = new Date(weekStart);
+                d.setDate(weekStart.getDate() + i);
+                return d;
+              });
+
+              document.getElementById('week-label').textContent = 
+                `${days[0].toLocaleDateString('en-GB',{day:'numeric',month:'short'})} – ${days[6].toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})}`;
+
+              const grid = document.getElementById('calendar-grid');
+              const sessions = filtered();
+
+              grid.innerHTML = days.map(d => {
+                const dateStr = d.toISOString().split('T')[0];
+                const daySessions = sessions.filter(s => s.date === dateStr);
+                const isToday = dateStr === today.toISOString().split('T')[0];
+                return `
+                  <div style="min-height:120px;">
+                    <div style="text-align:center; padding:6px; border-radius:8px; background:${isToday?'#472C15':'transparent'}; color:${isToday?'#fff':'#7a5c3e'}; font-size:12px; font-weight:600; margin-bottom:6px;">
+                      <div style="font-size:10px; letter-spacing:0.06em;">${d.toLocaleDateString('en-GB',{weekday:'short'}).toUpperCase()}</div>
+                      <div style="font-size:16px; font-weight:700;">${d.getDate()}</div>
+                    </div>
+                    ${daySessions.map(s => {
+                      const spots = s.max_participants - (s.booked_count || 0);
+                      const full = spots <= 0;
+                      return `<div onclick="${!full ? `openBooking(${s.id})` : ''}" style="background:${full?'#f5f5f5':'#f5ede4'}; border:1px solid ${full?'#e0e0e0':'#e8ddd4'}; border-radius:6px; padding:6px 8px; margin-bottom:4px; cursor:${full?'default':'pointer'}; transition:background 0.15s;" onmouseover="this.style.background='${full?'#f5f5f5':'#eee0d0'}'" onmouseout="this.style.background='${full?'#f5f5f5':'#f5ede4'}'">
+                        <div style="font-size:11px; font-weight:700; color:${full?'#b09070':'#472C15'};">${s.time.slice(0,5)}</div>
+                        <div style="font-size:10px; color:${full?'#b09070':'#7a5c3e'}; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${sessionEmoji(s.session_type)} ${s.title}</div>
+                        ${full ? '<div style="font-size:9px;color:#c0392b;font-weight:700;">FULL</div>' : ''}
+                      </div>`;
+                    }).join('')}
+                  </div>`;
+              }).join('');
+            }
+
+            function changeWeek(dir) {
+              currentWeekOffset += dir;
+              renderCalendar();
+            }
+
+            // ── Tabs ────────────────────────────────────────────
+            function switchTab(tab) {
+              const isList = tab === 'list';
+              document.getElementById('view-list').style.display = isList ? 'block' : 'none';
+              document.getElementById('view-calendar').style.display = isList ? 'none' : 'block';
+              document.getElementById('tab-list').style.background = isList ? '#472C15' : 'transparent';
+              document.getElementById('tab-list').style.color = isList ? '#fff' : '#472C15';
+              document.getElementById('tab-cal').style.background = isList ? 'transparent' : '#472C15';
+              document.getElementById('tab-cal').style.color = isList ? '#472C15' : '#fff';
+            }
+
+            // ── Booking Modal ──────────────────────────────────
+            function openBooking(sessionId) {
+              selectedSessionId = sessionId;
+              const s = allSessions.find(x => x.id === sessionId);
+              if (!s) return;
+              document.getElementById('modal-session-info').innerHTML = `
+                <div style="display:flex; align-items:center; gap:12px; padding:16px; background:#FEFAF6; border-radius:10px; border:1px solid #e8ddd4;">
+                  <div style="font-size:28px;">${sessionEmoji(s.session_type)}</div>
+                  <div>
+                    <div style="font-size:16px; font-weight:700; color:#472C15;">${s.title}</div>
+                    <div style="font-size:13px; color:#7a5c3e; margin-top:2px;">${formatDate(s.date)} · ${s.time.slice(0,5)} · ${s.duration_minutes}min</div>
+                    <div style="font-size:12px; color:#7a5c3e;">${s.instructor || 'Casa Samaya'} · ${s.location || 'Rooftop Shala'}</div>
+
+                    <div style="font-size:14px; font-weight:700; color:#472C15; margin-top:8px; padding-top:8px; border-top:1px solid #e8ddd4;">${s.is_free ? '<span style=\"color:#2e7d52;\">✓ Free session</span>' : '💳 LKR ' + Number(s.price_usd).toLocaleString() + ' — payable on arrival (cash or card)'}</div>
+                  </div>
+                </div>`;
+              document.getElementById('booking-form').style.display = 'block';
+              document.getElementById('booking-success').style.display = 'none';
+              document.getElementById('form-error').style.display = 'none';
+              document.getElementById('f-name').value = '';
+              document.getElementById('f-email').value = '';
+              document.getElementById('f-wa').value = '';
+              document.getElementById('f-notes').value = '';
+              document.getElementById('f-guest').checked = false;
+              document.getElementById('f-room-wrap').style.display = 'none';
+              const modal = document.getElementById('booking-modal');
+              modal.style.display = 'flex';
+              document.body.style.overflow = 'hidden';
+            }
+
+            document.getElementById('f-guest').addEventListener('change', function() {
+              document.getElementById('f-room-wrap').style.display = this.checked ? 'block' : 'none';
+            });
+
+            function closeModal() {
+              document.getElementById('booking-modal').style.display = 'none';
+              document.body.style.overflow = '';
+            }
+
+            async function submitBooking(e) {
+              e.preventDefault();
+              const btn = document.getElementById('submit-btn');
+              btn.textContent = 'Confirming...';
+              btn.disabled = true;
+              try {
+                const r = await fetch(API + '/wellness/bookings', {
+                  method: 'POST',
+                  headers: {'Content-Type':'application/json'},
+                  body: JSON.stringify({
+                    session_id: selectedSessionId,
+                    guest_name: document.getElementById('f-name').value,
+                    email: document.getElementById('f-email').value,
+                    whatsapp: document.getElementById('f-wa').value,
+                    is_hotel_guest: document.getElementById('f-guest').checked,
+                    room_number: document.getElementById('f-room').value,
+                    notes: document.getElementById('f-notes').value,
+                  })
+                });
+                const data = await r.json();
+                if (!r.ok) throw new Error(data.detail || 'Booking failed');
+                document.getElementById('booking-form').style.display = 'none';
+                document.getElementById('booking-success').style.display = 'block';
+                // Refresh sessions
+                await loadSessions();
+              } catch(err) {
+                const errEl = document.getElementById('form-error');
+                errEl.textContent = err.message;
+                errEl.style.display = 'block';
+              }
+              btn.textContent = 'CONFIRM BOOKING';
+              btn.disabled = false;
+            }
+
+            // ── Helpers ─────────────────────────────────────────
+            function formatDate(dateStr) {
+              return new Date(dateStr + 'T12:00:00').toLocaleDateString('en-GB', {weekday:'long', day:'numeric', month:'long'});
+            }
+
+            function sessionEmoji(type) {
+              const map = {yoga:'🧘',meditation:'🪷',breathwork:'🌬️',massage:'💆',sound:'🎵',pilates:'🤸'};
+              return map[(type||'').toLowerCase()] || '✨';
+            }
+
+            // ── Fermer modal en cliquant dehors ─────────────────
+            document.getElementById('booking-modal').addEventListener('click', function(e) {
+              if (e.target === this) closeModal();
+            });
+
+            // ── CORS — appel depuis localhost:8080 ──────────────
+            // S'assurer que le backend autorise localhost:8080
+            loadSessions();
+            </script>
+
+            <!-- Blocs de présentation dynamiques par type -->
+            <div id="types-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:1.5rem; margin:2rem 0 3rem 0; text-align:left;"></div>
+
+            <script>
+            // Charger les types depuis le back office et construire la grille
+            async function loadTypes() {
+              try {
+                const r = await fetch('http://localhost:8000/api/wellness/types');
+                const data = await r.json();
+                const grid = document.getElementById('types-grid');
+                if (!data.types || !data.types.length) return;
+                grid.innerHTML = data.types.map(t => `
+                  <div style="background:#fff; border-radius:16px; padding:2rem; border:1px solid #e8ddd4; transition:box-shadow 0.2s;" 
+                       onmouseover="this.style.boxShadow='0 8px 32px rgba(71,44,21,0.1)'" 
+                       onmouseout="this.style.boxShadow='none'">
+                    <div style="width:52px; height:52px; border-radius:12px; background:${t.bg_color||'#f5ede4'}; display:flex; align-items:center; justify-content:center; font-size:24px; margin-bottom:1rem;">${t.emoji||'✨'}</div>
+                    <h3 style="font-size:1.1rem; color:var(--color-primary); margin:0 0 0.75rem 0; font-family:'Cormorant Garamond',serif;">${t.label}</h3>
+                    <p style="font-size:0.9rem; color:#7a5c3e; line-height:1.6; margin:0;">${t.description||''}</p>
+                  </div>
+                `).join('');
+              } catch(e) {
+                console.warn('Could not load session types:', e);
+              }
+            }
+            loadTypes();
+            </script>
+</section>
+
+
+
+    <footer
+    style="background-color: var(--color-primary); padding: 4rem 0 2rem 0; margin-top: auto; color: var(--color-bg-light); font-size: 0.9rem;">
+    <div class="container">
+
+        <!-- Top Section: Logo & CTA -->
+        <div
+            style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 2rem;">
+            <h2 style="font-size: 2rem; margin-bottom: 0; color: var(--color-bg-light);">Casa Samaya</h2>
+            <a href="https://live.ipms247.com/booking/book-rooms-casasamayaweligama" class="btn footer-btn"
+                target="_blank">Book Now</a>
+        </div>
+
+        <!-- Links Grid -->
+        <div
+            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 2rem; margin-bottom: 3rem; text-align: left;">
+
+            <div>
+                <h4 style="color: var(--color-bg-light); margin-bottom: 1rem; font-size: 1rem;">Explore</h4>
+                <ul style="list-style: none; padding: 0; line-height: 2;">
+                    <li><a href="rooms.html" style="color: rgba(255,255,255,0.8); text-decoration: none;">Rooms</a></li>
+                    <li><a href="experiences.html"
+                            style="color: rgba(255,255,255,0.8); text-decoration: none;">Experiences</a></li>
+                    <li><a href="offers.html" style="color: rgba(255,255,255,0.8); text-decoration: none;">Offers</a>
+                    </li>
+                    <li><a href="weligama.html" style="color: rgba(255,255,255,0.8); text-decoration: none;">Weligama
+                            Guide</a></li>
+                    <li><a href="gallery.html" style="color: rgba(255,255,255,0.8); text-decoration: none;">Gallery</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="color: var(--color-bg-light); margin-bottom: 1rem; font-size: 1rem;">Samaya</h4>
+                <ul style="list-style: none; padding: 0; line-height: 2;">
+                    <li><a href="restaurant.html"
+                            style="color: rgba(255,255,255,0.8); text-decoration: none;">Restaurant</a></li>
+                    <li><a href="wellness.html"
+                            style="color: rgba(255,255,255,0.8); text-decoration: none;">Wellness</a></li>
+                    <li><a href="vision.html" style="color: rgba(255,255,255,0.8); text-decoration: none;">Vision</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="color: var(--color-bg-light); margin-bottom: 1rem; font-size: 1rem;">Contact</h4>
+                <ul style="list-style: none; padding: 0; line-height: 2;">
+                    <li style="color: rgba(255,255,255,0.8);">Kanakamage Watha,<br>Weligama By Pass Rd<br>Weligama
+                        81700, LK</li>
+                    <li style="margin-top: 0.5rem;"><a href="mailto:welcome@casasamaya.com"
+                            style="color: rgba(255,255,255,0.8); text-decoration: none;">welcome@casasamaya.com</a></li>
+                    <li><a href="https://wa.me/94773395212" target="_blank"
+                            style="color: rgba(255,255,255,0.8); text-decoration: none;">WhatsApp: +94 77 339 5212</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="color: var(--color-bg-light); margin-bottom: 1rem; font-size: 1rem;">Social & Legal</h4>
+                <ul style="list-style: none; padding: 0; line-height: 2;">
+                    <li><a href="https://instagram.com/casa.samaya" target="_blank"
+                            style="color: rgba(255,255,255,0.8); text-decoration: none;">@casa.samaya</a></li>
+                    <li><a href="https://instagram.com/cafesamaya" target="_blank"
+                            style="color: rgba(255,255,255,0.8); text-decoration: none;">@cafesamaya</a></li>
+                    <li><a href="https://instagram.com/calmasamaya" target="_blank"
+                            style="color: rgba(255,255,255,0.8); text-decoration: none;">@calmasamaya</a></li>
+                    <li style="margin-top: 1rem;"><a href="#"
+                            style="color: rgba(255,255,255,0.6); font-size: 0.8rem; text-decoration: none;">Privacy
+                            Policy</a></li>
+                    <li><a href="#"
+                            style="color: rgba(255,255,255,0.6); font-size: 0.8rem; text-decoration: none;">Terms &
+                            Conditions</a></li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- Copyright -->
+        <div style="border-top: 1px solid rgba(255,255,255,0.2); padding-top: 1.5rem; text-align: center;">
+            <p style="color: rgba(255,255,255,0.5); font-size: 0.8rem;">&copy; Casa Samaya. All rights reserved.</p>
+        </div>
+
+    </div>
+</footer>
+    <script src="assets/js/main.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Track Book Now Clicks
+    const bookButtons = document.querySelectorAll('a[href*="ipms247.com"]');
+    bookButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            if(window.gtag) {
+                gtag('event', 'book_now_click', {
+                    'event_category': 'Booking',
+                    'event_label': window.location.pathname
+                });
+            }
+        });
+    });
+
+    // Track WhatsApp Clicks
+    const waButtons = document.querySelectorAll('a[href*="wa.me"]');
+    waButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            if(window.gtag) {
+                gtag('event', 'whatsapp_click', {
+                    'event_category': 'Contact',
+                    'event_label': window.location.pathname
+                });
+            }
+        });
+    });
+
+    // Track Google Reviews Outbound
+    const reviewLinks = document.querySelectorAll('a[href*="share.google"]');
+    reviewLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            if(window.gtag) {
+                gtag('event', 'google_review_click', {
+                    'event_category': 'Outbound',
+                    'event_label': 'Google Reviews'
+                });
+            }
+        });
+    });
+});
+</script>
+</body>
+
+</html>

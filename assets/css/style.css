@@ -1,0 +1,590 @@
+/* Fonts: Cormorant Garamond (Headings), Montserrat (Body) & Tenor Sans (Brand) */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&family=Tenor+Sans&display=swap');
+
+:root {
+    /* "Coastal Harmony" Palette - Updated for New Logo (Earth Tones) */
+    --color-bg-light: #F9F8F6;
+    --color-bg-alt: #ffffff;
+    --color-sand: #F9F8F6;
+
+    --color-text-main: #4A403A;
+    /* Dark Earthy Grey/Brown */
+    --color-text-light: #7D7065;
+
+    /* Logo Colors */
+    --color-primary: #947e70;
+    /* Adjusted Brown to match logo background */
+    --color-accent: #E8DCC4;
+    /* Beige from Logo Text (Approx) */
+
+    /* Secondary/Action Colors */
+    --color-secondary: #A88B7D;
+    /* Lighter Brown for hover */
+
+    --color-overlay: rgba(0, 0, 0, 0.3);
+
+    /* Spacing */
+    --spacing-container: 1200px;
+    --spacing-section: 6rem;
+
+    /* Global Radius */
+    --radius-img: 10px;
+
+    /* Typography */
+    --font-heading: 'Cormorant Garamond', serif;
+    --font-body: 'Montserrat', sans-serif;
+    --font-brand: 'Tenor Sans', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-body);
+    font-weight: 300;
+    color: var(--color-text-main);
+    line-height: 1.8;
+    background-color: var(--color-sand);
+    /* Sand Base */
+    -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+    color: var(--color-primary);
+    /* Deep Ocean for Headings */
+}
+
+h1 {
+    font-size: 4rem;
+    /* Larger Cormorant looks better */
+    font-weight: 400;
+    /* Sophisticated thin/regular */
+    letter-spacing: -0.02em;
+}
+
+h2 {
+    font-size: 3rem;
+    font-weight: 400;
+}
+
+h3 {
+    font-size: 2rem;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s;
+}
+
+a:hover {
+    color: var(--color-accent);
+    /* Yellow on hover (was Terracotta) */
+    opacity: 1;
+}
+
+/* Utilities */
+.container {
+    max-width: var(--spacing-container);
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.uppercase {
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--color-text-light);
+}
+
+/* Header */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 1rem 0;
+    transition: background 0.3s, padding 0.3s;
+    background: transparent;
+    color: white;
+}
+
+header.scrolled {
+    background: var(--color-primary);
+    /* Brown to match logo background */
+    backdrop-filter: blur(10px);
+    color: var(--color-bg-light);
+    /* White/Beige text */
+    padding: 0.2rem 0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.scrolled .nav-links a {
+    font-size: 0.9rem;
+    /* Slightly smaller text on scroll */
+
+}
+
+/* Team Photo Standardization */
+.team-photo-container {
+    height: 300px;
+    width: 100%;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    border-radius: var(--radius-img);
+}
+
+.team-photo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    transition: transform 0.5s ease;
+}
+
+.card:hover .team-photo-img {
+    transform: scale(1.05);
+}
+
+/* ===== HEADER LAYOUT ===== */
+.nav-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2.5rem;
+}
+
+.logo img {
+    height: 60px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+}
+
+/* Desktop nav links */
+.nav-links {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    white-space: nowrap;
+    margin: 0 auto;
+    justify-content: center;
+}
+
+.nav-links a {
+    color: white;
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Desktop CTA button wrapper */
+.nav-cta {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+}
+
+.nav-cta .nav-btn {
+    padding: 0.6rem 1.2rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0 !important;
+}
+
+/* Burger button: hidden on desktop, shown on mobile via media query */
+.mobile-menu-btn {
+    display: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: white;
+    flex-shrink: 0;
+    z-index: 1001;
+    position: relative;
+    padding: 0.5rem;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Logo link colour */
+header.scrolled .logo,
+.logo:hover {
+    color: var(--color-accent) !important;
+}
+
+/* Hero Section / Parallax */
+.parallax-section {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    /* Parallax effect */
+}
+
+/* Internal Pages Hero Height (2/3 of screen) */
+body:not(.page-home) .parallax-section:not(.parallax-mini) {
+    height: 66vh;
+    min-height: 500px;
+    /* Ensure enough space for content */
+}
+
+/* Mobile Parallax Fix */
+@media (max-width: 768px) {
+    .parallax-section {
+        background-attachment: scroll;
+        height: 100svh;
+        /* use svh to respect mobile browser chrome */
+    }
+}
+
+.parallax-mini {
+    height: 60vh;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* Original Neutral Overlay */
+    background: rgba(0, 0, 0, 0.25);
+    pointer-events: none;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    color: white;
+    text-align: center;
+    max-width: 700px;
+    width: 90%;
+    padding: 2rem;
+    margin-top: 80px;
+    /* offset for fixed header */
+
+    /* Blurry Block Effect */
+    background-color: rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: var(--radius-img);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    /* Prevent overflow on tiny screens */
+    max-height: calc(100svh - 120px);
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+.hero-content h1,
+.hero-heading {
+    font-family: var(--font-brand);
+    font-size: 3.5rem;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    color: var(--color-accent);
+}
+
+/* Content Blocks */
+.content-section {
+    padding: var(--spacing-section) 0;
+    background-color: var(--color-bg-light);
+    /* Sand */
+}
+
+.content-section.alt {
+    background-color: #ffffff;
+    /* White contrast blocks */
+}
+
+.split-layout {
+    display: flex;
+    align-items: center;
+    gap: 5rem;
+}
+
+.split-layout.reverse {
+    flex-direction: row-reverse;
+}
+
+.split-text {
+    flex: 1;
+}
+
+.split-image {
+    flex: 1;
+    height: 550px;
+    /* Slightly taller for elegance */
+    /* Fixed height for consistency */
+    border-radius: var(--radius-img);
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    /* Subtle depth */
+}
+
+.split-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s ease;
+    /* Slower, smoother zoom */
+}
+
+.split-image:hover img {
+    transform: scale(1.03);
+    /* More subtle zoom */
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 16px 42px;
+    background-color: var(--color-accent);
+    /* Samaya Gold */
+    color: var(--color-text-main);
+    /* Charcoal Text */
+    border: none;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.75rem;
+    margin-top: 2rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: 600;
+    border-radius: var(--radius-img);
+    /* Consistent radius */
+    font-family: var(--font-body);
+}
+
+.btn:hover {
+    background-color: var(--color-secondary);
+    /* Terracotta Hover */
+    color: #fff;
+    /* White text on Terracotta */
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(231, 111, 81, 0.3);
+    /* Terracotta shadow */
+}
+
+.btn.dark {
+    background-color: var(--color-primary);
+    /* Deep Ocean */
+    color: #fff;
+}
+
+.btn.dark:hover {
+    background-color: var(--color-secondary);
+    /* Terracotta Hover */
+    color: #fff;
+    box-shadow: 0 5px 15px rgba(231, 111, 81, 0.3);
+}
+
+/* Hero Button: White BG, Brown Text -> Brown BG, White Text on Hover */
+.hero-btn {
+    background-color: #ffffff;
+    color: var(--color-primary) !important;
+    border: 1px solid #ffffff;
+    transition: all 0.3s ease;
+    font-size: 18px;
+    padding: 10px 38px;
+}
+
+.hero-btn:hover {
+    background-color: var(--color-primary);
+    /* Brown */
+    color: #ffffff !important;
+    border-color: var(--color-primary);
+}
+
+/* Nav Button: Light BG, Brown Text -> Brown BG, White Text on Hover */
+.nav-links .nav-btn {
+    margin-top: 0 !important;
+    padding: 0.5rem 1.5rem;
+    background-color: var(--color-bg-light);
+    /* Light */
+    color: var(--color-primary) !important;
+    /* Brown Text */
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid var(--color-bg-light);
+}
+
+.nav-links .nav-btn:hover {
+    background-color: #e8dcc4;
+    /* Beige */
+    color: var(--color-primary) !important;
+    /* Brown Text */
+    border-color: #e8dcc4;
+}
+
+/* Footer Button: Light BG, Brown Text -> Brown BG, White Text on Hover */
+.footer-btn {
+    background-color: var(--color-bg-light) !important;
+    color: var(--color-primary) !important;
+    border: none !important;
+    margin-top: 0 !important;
+    padding: 0.5rem 1.5rem !important;
+    transition: all 0.3s ease;
+}
+
+.footer-btn:hover {
+    background-color: var(--color-secondary) !important;
+    /* Brown/Terracotta Hover */
+    color: #ffffff !important;
+    transform: translateY(-2px);
+}
+
+/* Grid */
+.grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.card {
+    text-align: center;
+}
+
+.card-img {
+    height: 300px;
+    width: 100%;
+    object-fit: cover;
+    margin-bottom: 1.5rem;
+    border-radius: var(--radius-img);
+}
+
+/* Footer */
+footer {
+    background: var(--color-primary);
+    /* Deep Ocean Footer */
+    color: #fff;
+    /* White text */
+    padding: 5rem 0;
+    text-align: center;
+}
+
+.footer-nav {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+@media (max-width: 768px) {
+
+    .split-layout,
+    .split-layout.reverse {
+        flex-direction: column;
+    }
+
+    .grid-3 {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-content h1,
+    .hero-heading {
+        font-size: 2.2rem;
+    }
+
+    /* Hero block: scale down for small screens */
+    .hero-content {
+        padding: 1.5rem;
+        margin-top: 70px;
+        width: 92%;
+    }
+
+    .hero-content .btn {
+        padding: 10px 20px;
+        font-size: 0.7rem;
+    }
+
+    /* Hide desktop nav on mobile */
+    .nav-links,
+    .nav-cta {
+        display: none !important;
+    }
+
+    /* Show burger button on mobile */
+    .mobile-menu-btn {
+        display: flex !important;
+        align-items: center;
+    }
+
+    .nav-container {
+        padding: 0 1.5rem;
+    }
+
+    .logo img {
+        height: 50px;
+    }
+}
+
+/* ===== MOBILE MENU OVERLAY ===== */
+.mobile-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #ffffff;
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+}
+
+.mobile-menu-overlay.active {
+    transform: translateX(0);
+}
+
+.mobile-menu-overlay a {
+    font-size: 1.3rem;
+    font-family: var(--font-heading);
+    color: var(--color-primary);
+    font-weight: 600;
+    text-align: center;
+}
+
+.mobile-menu-overlay a:hover {
+    color: var(--color-secondary);
+    opacity: 1;
+}
+
+.close-btn {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    font-size: 2rem;
+    cursor: pointer;
+    color: var(--color-primary);
+    line-height: 1;
+}
