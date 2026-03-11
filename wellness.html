@@ -185,7 +185,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             </div>
 
             <script>
-            const API = 'http://localhost:8000/api';
+            const API = 'https://cockpit.casasamaya.com/api';
             let allSessions = [];
             let currentFilter = 'all';
             let currentWeekOffset = 0;
@@ -452,7 +452,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             // Charger les types depuis le back office et construire la grille
             async function loadTypes() {
               try {
-                const r = await fetch('http://localhost:8000/api/wellness/types');
+                const r = await fetch('https://cockpit.casasamaya.com/api/wellness/types');
                 const data = await r.json();
                 const grid = document.getElementById('types-grid');
                 if (!data.types || !data.types.length) return;
