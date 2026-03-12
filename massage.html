@@ -244,6 +244,9 @@
     .cs-date-btn-day { font-size:11px; color:#8a6f50; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; }
     .cs-date-btn-num { font-size:18px; font-weight:700; color:#1a1a1a; margin:2px 0; }
     .cs-date-btn-month { font-size:11px; color:#8a6f50; }
+    .cs-date-btn.disabled { opacity:0.35; cursor:default; pointer-events:none; background:#f5f2ef; }
+    .cs-date-btn.disabled .cs-date-btn-num { color:#b0a090; }
+    .cs-date-unavailable { font-size:9px; color:#c0a090; margin-top:2px; }
 
     @media(max-width:600px) {
       .cs-form-grid { grid-template-columns:1fr; }
@@ -445,21 +448,29 @@
                 <div class="cs-steps">
                     <div class="cs-step"><div class="cs-step-num active" data-w="step-num-1">1</div><span class="cs-step-label">Treatment</span></div>
                     <div class="cs-step-sep"></div>
-                    <div class="cs-step"><div class="cs-step-num" data-w="step-num-2">2</div><span class="cs-step-label">Date & Time</span></div>
+                    <div class="cs-step"><div class="cs-step-num" data-w="step-num-2">2</div><span class="cs-step-label">Date</span></div>
                     <div class="cs-step-sep"></div>
-                    <div class="cs-step"><div class="cs-step-num" data-w="step-num-3">3</div><span class="cs-step-label">Your details</span></div>
+                    <div class="cs-step"><div class="cs-step-num" data-w="step-num-3">3</div><span class="cs-step-label">Time</span></div>
+                    <div class="cs-step-sep"></div>
+                    <div class="cs-step"><div class="cs-step-num" data-w="step-num-4">4</div><span class="cs-step-label">Details</span></div>
                 </div>
                 <div data-w="view-treatments">
                     <p style="font-size:13px;color:#8a6f50;margin-bottom:20px;">Select the treatment you'd like to book.</p>
                     <div data-w="treatments-container"><div class="cs-empty">Loading treatments...</div></div>
                 </div>
-                <div data-w="view-slots" style="display:none">
+                <div data-w="view-dates" style="display:none">
                     <p style="font-size:13px;color:#8a6f50;margin-bottom:20px;">
                         <strong data-w="treatment-label"></strong> — <span data-w="treatment-duration-label"></span>
                     </p>
-                    <div data-w="date-picker" style="margin-bottom:24px;"></div>
+                    <div data-w="date-picker"></div>
+                    <button class="cs-btn-back" data-w="btn-back-dates">← Back to treatments</button>
+                </div>
+                <div data-w="view-slots" style="display:none">
+                    <p style="font-size:13px;color:#8a6f50;margin-bottom:20px;">
+                        <strong data-w="slots-date-label"></strong>
+                    </p>
                     <div data-w="slots-container"></div>
-                    <button class="cs-btn-back" data-w="btn-back-slots">← Back to treatments</button>
+                    <button class="cs-btn-back" data-w="btn-back-slots">← Back to dates</button>
                 </div>
                 <div data-w="view-form" style="display:none">
                     <div class="cs-summary" data-w="booking-summary"></div>
@@ -471,7 +482,7 @@
                         <div class="cs-field full"><label>SPECIAL REQUESTS</label><textarea data-w="f-notes" rows="3" placeholder="Any allergies, preferences or notes..."></textarea></div>
                     </div>
                     <button class="cs-btn" data-w="btn-confirm">Confirm Appointment</button>
-                    <button class="cs-btn-back" data-w="btn-back-form">← Back to date & time</button>
+                    <button class="cs-btn-back" data-w="btn-back-form">← Back to time slots</button>
                 </div>
                 <div data-w="view-success" style="display:none">
                     <div class="cs-success">
@@ -617,7 +628,6 @@ function ensureTreatments() {
     fetch(API_URL + '/spa/availability?upcoming_only=true').then(r => r.json())
   ]).then(([td, ad]) => {
     allTreatments = td.treatments || [];
-    // Extract unique future dates from availability windows
     const dates = new Set();
     (ad.availability || []).forEach(a => dates.add(a.date));
     availableDates = [...dates].sort();
@@ -625,22 +635,25 @@ function ensureTreatments() {
   return treatmentsPromise;
 }
 
-// ── SpaWidget class ────────────────────────────────────────
+// ── SpaWidget class (4 steps) ──────────────────────────────
 class SpaWidget {
   constructor(rootEl, isModal) {
     this.root    = rootEl;
     this.isModal = !!isModal;
     this.selectedTreatment = null;
     this.selectedDate      = null;
-    this.selectedSlot      = null;   // { therapist_id, therapist_name, booking_date, time_start, time_end }
+    this.selectedSlot      = null;
+    this._currentSlots     = [];
+    this._slotsCache       = {};  // date → slots[]
   }
 
   q(key) { return this.root.querySelector('[data-w="' + key + '"]'); }
 
   init() {
     this.q('btn-confirm').addEventListener('click', () => this.confirmBooking());
-    this.q('btn-back-slots').addEventListener('click', () => this.goStep(1));
-    this.q('btn-back-form').addEventListener('click', () => this.goStep(2));
+    this.q('btn-back-dates').addEventListener('click', () => this.goStep(1));
+    this.q('btn-back-slots').addEventListener('click', () => this.goStep(2));
+    this.q('btn-back-form').addEventListener('click', () => this.goStep(3));
   }
 
   // ── Step 1: Treatments ──────────────────────────────────
@@ -671,46 +684,65 @@ class SpaWidget {
     this.selectedTreatment = allTreatments.find(t => t.id === id);
     this.selectedSlot = null;
     this.selectedDate = null;
+    this._slotsCache = {};
     this.q('treatments-container').querySelectorAll('.cs-treatment').forEach(el => el.classList.remove('selected'));
     const el = this.q('treatments-container').querySelector('[data-treatment-id="' + id + '"]');
     if (el) el.classList.add('selected');
     setTimeout(() => this.goStep(2), 200);
   }
 
-  // ── Step 2: Date picker + Slots ─────────────────────────
-  renderDatePicker() {
+  // ── Step 2: Date picker (with availability check) ───────
+  async renderDatePicker() {
     const t = this.selectedTreatment;
     this.q('treatment-label').textContent = t.name;
     this.q('treatment-duration-label').textContent = t.duration_minutes + ' min · LKR ' + t.price_lkr.toLocaleString();
 
     const container = this.q('date-picker');
-    if (!availableDates.length) {
-      container.innerHTML = '<div class="cs-empty">No available dates at the moment.<br>Please check back soon.</div>';
-      this.q('slots-container').innerHTML = '';
-      return;
+
+    // Build a calendar of the next 14 days
+    const today = new Date();
+    today.setHours(0,0,0,0);
+    const days = [];
+    for (let i = 0; i < 14; i++) {
+      const d = new Date(today);
+      d.setDate(today.getDate() + i);
+      const dateStr = d.toISOString().split('T')[0];
+      days.push({ date: d, dateStr: dateStr, hasAvailability: availableDates.includes(dateStr) });
     }
+
+    // Pre-check slots for available dates to know which have slots for THIS treatment
+    container.innerHTML = '<div class="cs-empty">Checking availability...</div>';
+    const checksNeeded = days.filter(d => d.hasAvailability);
+    await Promise.all(checksNeeded.map(async (day) => {
+      if (this._slotsCache[day.dateStr] !== undefined) return;
+      try {
+        const res = await fetch(API_URL + '/spa/slots?treatment_id=' + t.id + '&booking_date=' + day.dateStr);
+        const data = await res.json();
+        this._slotsCache[day.dateStr] = data.slots || [];
+      } catch(e) {
+        this._slotsCache[day.dateStr] = [];
+      }
+    }));
+
     let html = '<div class="cs-dates">';
-    availableDates.forEach(dateStr => {
-      const d = new Date(dateStr + 'T00:00:00');
-      const sel = this.selectedDate === dateStr ? ' selected' : '';
-      html += '<div class="cs-date-btn' + sel + '" data-date="' + dateStr + '">';
+    days.forEach(day => {
+      const d = day.date;
+      const slots = this._slotsCache[day.dateStr] || [];
+      const available = slots.length > 0;
+      const sel = this.selectedDate === day.dateStr ? ' selected' : '';
+      const disabled = !available ? ' disabled' : '';
+      html += '<div class="cs-date-btn' + sel + disabled + '" data-date="' + day.dateStr + '">';
       html += '<div class="cs-date-btn-day">' + DAY_SHORT[d.getDay()] + '</div>';
       html += '<div class="cs-date-btn-num">' + d.getDate() + '</div>';
       html += '<div class="cs-date-btn-month">' + MONTH_NAMES[d.getMonth()].slice(0, 3) + '</div>';
+      if (!available) html += '<div class="cs-date-unavailable">Full</div>';
       html += '</div>';
     });
     html += '</div>';
     container.innerHTML = html;
-    container.querySelectorAll('.cs-date-btn').forEach(el => {
+    container.querySelectorAll('.cs-date-btn:not(.disabled)').forEach(el => {
       el.addEventListener('click', () => this.selectDate(el.dataset.date));
     });
-
-    // If a date was already selected, reload its slots
-    if (this.selectedDate) {
-      this.loadSlotsForDate(this.selectedDate);
-    } else {
-      this.q('slots-container').innerHTML = '<div class="cs-empty">Select a date above to see available time slots.</div>';
-    }
   }
 
   selectDate(dateStr) {
@@ -719,37 +751,36 @@ class SpaWidget {
     this.q('date-picker').querySelectorAll('.cs-date-btn').forEach(el => el.classList.remove('selected'));
     const el = this.q('date-picker').querySelector('[data-date="' + dateStr + '"]');
     if (el) el.classList.add('selected');
-    this.loadSlotsForDate(dateStr);
+    setTimeout(() => this.goStep(3), 200);
   }
 
-  async loadSlotsForDate(dateStr) {
+  // ── Step 3: Time slots ──────────────────────────────────
+  renderSlots() {
+    const d = new Date(this.selectedDate + 'T00:00:00');
+    const dateLabel = DAY_NAMES[d.getDay()] + ', ' + d.getDate() + ' ' + MONTH_NAMES[d.getMonth()];
+    this.q('slots-date-label').textContent = this.selectedTreatment.name + ' — ' + dateLabel;
+
     const container = this.q('slots-container');
-    container.innerHTML = '<div class="cs-empty">Loading available slots...</div>';
-    try {
-      const res = await fetch(API_URL + '/spa/slots?treatment_id=' + this.selectedTreatment.id + '&booking_date=' + dateStr);
-      const data = await res.json();
-      const slots = data.slots || [];
-      if (!slots.length) {
-        container.innerHTML = '<div class="cs-empty">No slots available on this date for this treatment.<br>Try another date.</div>';
-        return;
-      }
-      let html = '<div class="cs-slots">';
-      slots.forEach((s, i) => {
-        html += '<div class="cs-slot" data-slot-idx="' + i + '">';
-        html += '<div class="cs-slot-time">' + s.time_start + ' – ' + s.time_end + '</div>';
-        html += '<div class="cs-slot-therapist">' + s.therapist_name + '</div>';
-        html += '</div>';
-      });
-      html += '</div>';
-      container.innerHTML = html;
-      // Store slots for selection
-      this._currentSlots = slots;
-      container.querySelectorAll('.cs-slot').forEach(el => {
-        el.addEventListener('click', () => this.selectSlot(parseInt(el.dataset.slotIdx)));
-      });
-    } catch (e) {
-      container.innerHTML = '<div class="cs-empty">Error loading slots. Please try again.</div>';
+    const slots = this._slotsCache[this.selectedDate] || [];
+
+    if (!slots.length) {
+      container.innerHTML = '<div class="cs-empty">No slots available on this date.<br>Go back and pick another date.</div>';
+      return;
     }
+
+    let html = '<div class="cs-slots">';
+    slots.forEach((s, i) => {
+      html += '<div class="cs-slot" data-slot-idx="' + i + '">';
+      html += '<div class="cs-slot-time">' + s.time_start + ' – ' + s.time_end + '</div>';
+      html += '<div class="cs-slot-therapist">' + s.therapist_name + '</div>';
+      html += '</div>';
+    });
+    html += '</div>';
+    container.innerHTML = html;
+    this._currentSlots = slots;
+    container.querySelectorAll('.cs-slot').forEach(el => {
+      el.addEventListener('click', () => this.selectSlot(parseInt(el.dataset.slotIdx)));
+    });
   }
 
   selectSlot(idx) {
@@ -758,10 +789,10 @@ class SpaWidget {
     this.q('slots-container').querySelectorAll('.cs-slot').forEach(el => el.classList.remove('selected'));
     const el = this.q('slots-container').querySelector('[data-slot-idx="' + idx + '"]');
     if (el) el.classList.add('selected');
-    setTimeout(() => this.goStep(3), 200);
+    setTimeout(() => this.goStep(4), 200);
   }
 
-  // ── Step 3: Summary & Form ──────────────────────────────
+  // ── Step 4: Summary & Form ──────────────────────────────
   renderSummary() {
     const d = new Date(this.selectedSlot.booking_date + 'T00:00:00');
     const dateLabel = DAY_NAMES[d.getDay()] + ', ' + d.getDate() + ' ' + MONTH_NAMES[d.getMonth()];
@@ -777,18 +808,20 @@ class SpaWidget {
   // ── Navigation ──────────────────────────────────────────
   goStep(step) {
     this.q('view-treatments').style.display = step === 1 ? 'block' : 'none';
-    this.q('view-slots').style.display      = step === 2 ? 'block' : 'none';
-    this.q('view-form').style.display       = step === 3 ? 'block' : 'none';
+    this.q('view-dates').style.display      = step === 2 ? 'block' : 'none';
+    this.q('view-slots').style.display      = step === 3 ? 'block' : 'none';
+    this.q('view-form').style.display       = step === 4 ? 'block' : 'none';
     this.q('view-success').style.display    = 'none';
 
-    [1, 2, 3].forEach(i => {
+    [1, 2, 3, 4].forEach(i => {
       const numEl = this.q('step-num-' + i);
       if (numEl) numEl.className = 'cs-step-num' + (i < step ? ' done' : i === step ? ' active' : '');
     });
 
     if (step === 1) this.renderTreatments();
     if (step === 2) this.renderDatePicker();
-    if (step === 3) this.renderSummary();
+    if (step === 3) this.renderSlots();
+    if (step === 4) this.renderSummary();
 
     if (this.isModal) {
       document.getElementById('spa-modal-panel').scrollTo({ top: 0, behavior: 'smooth' });
@@ -835,11 +868,10 @@ class SpaWidget {
       }
       this.q('view-form').style.display    = 'none';
       this.q('view-success').style.display = 'block';
-      [1, 2, 3].forEach(i => {
+      [1, 2, 3, 4].forEach(i => {
         const numEl = this.q('step-num-' + i);
         if (numEl) numEl.className = 'cs-step-num done';
       });
-      // Refresh data so booked slot disappears
       treatmentsPromise = null;
       ensureTreatments();
     } catch(e) {
@@ -854,7 +886,7 @@ class SpaWidget {
     this.selectedDate      = null;
     this.selectedSlot      = null;
     this._currentSlots     = [];
-    // Pre-match treatment from API data
+    this._slotsCache       = {};
     if (preselectedName && allTreatments.length) {
       const norm = s => s.toLowerCase().replace(/[^a-z0-9]/g, '');
       this.selectedTreatment = allTreatments.find(t => norm(t.name) === norm(preselectedName)) || null;
@@ -865,7 +897,8 @@ class SpaWidget {
     this.q('f-room').value     = '';
     this.q('f-notes').value    = '';
     this.q('view-success').style.display = 'none';
-    // If treatment pre-selected, skip to step 2
+    const confirmBtn = this.q('btn-confirm');
+    if (confirmBtn) { confirmBtn.disabled = false; confirmBtn.textContent = 'Confirm Appointment'; }
     if (this.selectedTreatment) {
       this.goStep(2);
     } else {
