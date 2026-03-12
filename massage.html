@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="icon" href="assets/favicon.ico">
+    <link rel="icon" type="image/png" href="assets/images/favicon.png">
     <link rel="canonical" href="https://casasamaya.com/massage.html">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Casa Samaya">
@@ -108,6 +108,59 @@
     .massage-card:hover .card-book-btn {
         background: #c9a96e;
         color: #fff;
+    }
+
+    /* ── Variant picker ── */
+    .variant-picker {
+        position: absolute;
+        bottom: 60px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 8px 30px rgba(71,44,21,0.18);
+        padding: 16px;
+        z-index: 10;
+        min-width: 220px;
+        border: 1px solid #e8ddd4;
+    }
+    .variant-picker-title {
+        font-size: 12px;
+        font-weight: 600;
+        color: #7a5c3e;
+        text-align: center;
+        margin-bottom: 10px;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+    }
+    .variant-option {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        padding: 10px 14px;
+        border: 1.5px solid #e8ddd4;
+        border-radius: 8px;
+        background: #faf9f7;
+        cursor: pointer;
+        margin-bottom: 6px;
+        transition: all 0.15s;
+        font-family: 'Open Sans', sans-serif;
+    }
+    .variant-option:last-child { margin-bottom: 0; }
+    .variant-option:hover {
+        border-color: #c9a96e;
+        background: #fdf8f0;
+    }
+    .variant-duration {
+        font-size: 13px;
+        font-weight: 600;
+        color: #472C15;
+    }
+    .variant-price {
+        font-size: 13px;
+        font-weight: 700;
+        color: #c9a96e;
     }
 
     /* ── Widget wrapper ── */
@@ -864,8 +917,60 @@ document.addEventListener('keydown', e => {
 
 // ── Card click listeners ───────────────────────────────────
 document.querySelectorAll('.massage-card').forEach(card => {
-  card.addEventListener('click', () => openBookingModal(card.dataset.treatment));
+  card.addEventListener('click', () => {
+    const treatmentName = card.dataset.treatment;
+    // Find all treatment variants matching this card's base name
+    const norm = s => s.toLowerCase().replace(/\s*\(\d+\s*min\)\s*/g, '').replace(/[^a-z0-9]/g, '');
+    const variants = allTreatments.filter(t => norm(t.name) === norm(treatmentName));
+
+    if (variants.length > 1) {
+      // Show option picker before opening modal
+      showVariantPicker(variants, card);
+    } else {
+      openBookingModal(treatmentName);
+    }
+  });
 });
+
+// ── Variant picker for multi-option treatments ────────────
+function showVariantPicker(variants, cardEl) {
+  // Remove any existing picker
+  document.querySelectorAll('.variant-picker').forEach(el => el.remove());
+
+  const picker = document.createElement('div');
+  picker.className = 'variant-picker';
+  picker.innerHTML =
+    '<div class="variant-picker-title">Choose your option</div>' +
+    variants.map(v =>
+      '<button class="variant-option" data-name="' + v.name.replace(/"/g, '&quot;') + '">' +
+        '<span class="variant-duration">' + v.duration_minutes + ' min</span>' +
+        '<span class="variant-price">LKR ' + v.price_lkr.toLocaleString() + '</span>' +
+      '</button>'
+    ).join('');
+
+  cardEl.style.position = 'relative';
+  cardEl.appendChild(picker);
+
+  picker.querySelectorAll('.variant-option').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const name = btn.dataset.name;
+      picker.remove();
+      openBookingModal(name);
+    });
+  });
+
+  // Close picker on outside click
+  setTimeout(() => {
+    const closePicker = (e) => {
+      if (!picker.contains(e.target)) {
+        picker.remove();
+        document.removeEventListener('click', closePicker);
+      }
+    };
+    document.addEventListener('click', closePicker);
+  }, 10);
+}
 </script>
 
 </body>
