@@ -182,10 +182,22 @@
     .cs-social a { padding:10px 20px; background:#1a1a1a; color:#fff; border-radius:6px; font-size:13px; text-decoration:none; font-weight:500; }
 
     .cs-empty { text-align:center; padding:40px 0; color:#8a6f50; font-size:14px; }
+
+    /* DATE PICKER */
+    .cs-dates { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:20px; }
+    .cs-date-btn { padding:10px 16px; border:1.5px solid #e8e3dd; border-radius:8px; background:#fff; cursor:pointer; transition:all 0.2s; text-align:center; min-width:100px; }
+    .cs-date-btn:hover { border-color:#c9a96e; background:#fefcf8; }
+    .cs-date-btn.selected { border-color:#c9a96e; background:#fdf8f0; }
+    .cs-date-btn-day { font-size:11px; color:#8a6f50; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; }
+    .cs-date-btn-num { font-size:18px; font-weight:700; color:#1a1a1a; margin:2px 0; }
+    .cs-date-btn-month { font-size:11px; color:#8a6f50; }
+
     @media(max-width:600px) {
       .cs-form-grid { grid-template-columns:1fr; }
       .cs-steps { gap:0; }
       .cs-step-label { display:none; }
+      .cs-dates { gap:8px; }
+      .cs-date-btn { min-width:70px; padding:8px 10px; }
     }
 
     /* ── Booking Modal ── */
@@ -370,7 +382,7 @@
 <section class="content-section text-center" id="book">
     <div class="container" style="max-width:960px;">
         <h2>Book Your Treatment</h2>
-        <p style="max-width:540px;margin:0 auto 2.5rem;font-family:'Open Sans',sans-serif;font-size:0.95rem;color:#7a5c3e;">Choose your date, select your treatment and confirm in a few steps. No advance payment required.</p>
+        <p style="max-width:540px;margin:0 auto 2.5rem;font-family:'Open Sans',sans-serif;font-size:0.95rem;color:#7a5c3e;">Choose your treatment, pick a date and time, and confirm in a few steps. No advance payment required.</p>
         <div class="widget-wrap">
             <div class="cs-wrap" id="page-widget">
                 <div class="cs-header">
@@ -378,19 +390,23 @@
                     <p>Calma Samaya · Casa Samaya, Weligama, Sri Lanka</p>
                 </div>
                 <div class="cs-steps">
-                    <div class="cs-step"><div class="cs-step-num active" data-w="step-num-1">1</div><span class="cs-step-label">Choose a slot</span></div>
+                    <div class="cs-step"><div class="cs-step-num active" data-w="step-num-1">1</div><span class="cs-step-label">Treatment</span></div>
                     <div class="cs-step-sep"></div>
-                    <div class="cs-step"><div class="cs-step-num" data-w="step-num-2">2</div><span class="cs-step-label">Choose treatment</span></div>
+                    <div class="cs-step"><div class="cs-step-num" data-w="step-num-2">2</div><span class="cs-step-label">Date & Time</span></div>
                     <div class="cs-step-sep"></div>
                     <div class="cs-step"><div class="cs-step-num" data-w="step-num-3">3</div><span class="cs-step-label">Your details</span></div>
                 </div>
-                <div data-w="view-slots">
-                    <div data-w="slots-container"><div class="cs-empty">Loading available slots...</div></div>
+                <div data-w="view-treatments">
+                    <p style="font-size:13px;color:#8a6f50;margin-bottom:20px;">Select the treatment you'd like to book.</p>
+                    <div data-w="treatments-container"><div class="cs-empty">Loading treatments...</div></div>
                 </div>
-                <div data-w="view-treatments" style="display:none">
-                    <p style="font-size:13px;color:#8a6f50;margin-bottom:20px;">Select the treatment you'd like for your <strong data-w="slot-label"></strong> appointment.</p>
-                    <div data-w="treatments-container"></div>
-                    <button class="cs-btn-back" data-w="btn-back-treatments">← Back to slots</button>
+                <div data-w="view-slots" style="display:none">
+                    <p style="font-size:13px;color:#8a6f50;margin-bottom:20px;">
+                        <strong data-w="treatment-label"></strong> — <span data-w="treatment-duration-label"></span>
+                    </p>
+                    <div data-w="date-picker" style="margin-bottom:24px;"></div>
+                    <div data-w="slots-container"></div>
+                    <button class="cs-btn-back" data-w="btn-back-slots">← Back to treatments</button>
                 </div>
                 <div data-w="view-form" style="display:none">
                     <div class="cs-summary" data-w="booking-summary"></div>
@@ -402,7 +418,7 @@
                         <div class="cs-field full"><label>SPECIAL REQUESTS</label><textarea data-w="f-notes" rows="3" placeholder="Any allergies, preferences or notes..."></textarea></div>
                     </div>
                     <button class="cs-btn" data-w="btn-confirm">Confirm Appointment</button>
-                    <button class="cs-btn-back" data-w="btn-back-form">← Back to treatments</button>
+                    <button class="cs-btn-back" data-w="btn-back-form">← Back to date & time</button>
                 </div>
                 <div data-w="view-success" style="display:none">
                     <div class="cs-success">
@@ -429,27 +445,24 @@
                 <h1>Book a Spa Treatment</h1>
                 <p>Calma Samaya · Casa Samaya, Weligama, Sri Lanka</p>
             </div>
-            <!-- Steps 3 (normal flow) -->
-            <div class="cs-steps" data-w="steps-3">
-                <div class="cs-step"><div class="cs-step-num active" data-w="step-num-1">1</div><span class="cs-step-label">Choose a slot</span></div>
+            <div class="cs-steps">
+                <div class="cs-step"><div class="cs-step-num active" data-w="step-num-1">1</div><span class="cs-step-label">Treatment</span></div>
                 <div class="cs-step-sep"></div>
-                <div class="cs-step"><div class="cs-step-num" data-w="step-num-2">2</div><span class="cs-step-label">Choose treatment</span></div>
+                <div class="cs-step"><div class="cs-step-num" data-w="step-num-2">2</div><span class="cs-step-label">Date & Time</span></div>
                 <div class="cs-step-sep"></div>
                 <div class="cs-step"><div class="cs-step-num" data-w="step-num-3">3</div><span class="cs-step-label">Your details</span></div>
             </div>
-            <!-- Steps 2 (pre-selected treatment flow) -->
-            <div class="cs-steps" data-w="steps-2" style="display:none">
-                <div class="cs-step"><div class="cs-step-num active" data-w="step2-num-1">1</div><span class="cs-step-label">Choose a slot</span></div>
-                <div class="cs-step-sep"></div>
-                <div class="cs-step"><div class="cs-step-num" data-w="step2-num-2">2</div><span class="cs-step-label">Your details</span></div>
+            <div data-w="view-treatments">
+                <p style="font-size:13px;color:#8a6f50;margin-bottom:20px;">Select the treatment you'd like to book.</p>
+                <div data-w="treatments-container"><div class="cs-empty">Loading treatments...</div></div>
             </div>
-            <div data-w="view-slots">
-                <div data-w="slots-container"><div class="cs-empty">Loading available slots...</div></div>
-            </div>
-            <div data-w="view-treatments" style="display:none">
-                <p style="font-size:13px;color:#8a6f50;margin-bottom:20px;">Select the treatment you'd like for your <strong data-w="slot-label"></strong> appointment.</p>
-                <div data-w="treatments-container"></div>
-                <button class="cs-btn-back" data-w="btn-back-treatments">← Back to slots</button>
+            <div data-w="view-slots" style="display:none">
+                <p style="font-size:13px;color:#8a6f50;margin-bottom:20px;">
+                    <strong data-w="treatment-label"></strong> — <span data-w="treatment-duration-label"></span>
+                </p>
+                <div data-w="date-picker" style="margin-bottom:24px;"></div>
+                <div data-w="slots-container"></div>
+                <button class="cs-btn-back" data-w="btn-back-slots">← Back to treatments</button>
             </div>
             <div data-w="view-form" style="display:none">
                 <div class="cs-summary" data-w="booking-summary"></div>
@@ -461,7 +474,7 @@
                     <div class="cs-field full"><label>SPECIAL REQUESTS</label><textarea data-w="f-notes" rows="3" placeholder="Any allergies, preferences or notes..."></textarea></div>
                 </div>
                 <button class="cs-btn" data-w="btn-confirm">Confirm Appointment</button>
-                <button class="cs-btn-back" data-w="btn-back-form">← Back to treatments</button>
+                <button class="cs-btn-back" data-w="btn-back-form">← Back to date & time</button>
             </div>
             <div data-w="view-success" style="display:none">
                 <div class="cs-success">
@@ -537,89 +550,57 @@ const API_URL = window.location.hostname === 'localhost'
 
 const MONTH_NAMES = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 const DAY_NAMES   = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+const DAY_SHORT   = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 
-// ── Shared data (loaded once) ──────────────────────────────
-let allSlots = [], allTreatments = [];
-let dataPromise = null;
+// ── Shared data ────────────────────────────────────────────
+let allTreatments = [];
+let availableDates = [];   // unique dates from availability windows
+let treatmentsPromise = null;
 
-function ensureData() {
-  if (dataPromise) return dataPromise;
-  dataPromise = Promise.all([
-    fetch(API_URL + '/spa/availability?upcoming_only=true').then(r => r.json()),
-    fetch(API_URL + '/spa/treatments').then(r => r.json())
-  ]).then(([sd, td]) => {
-    allSlots      = (sd.availability || []).filter(s => !s.is_booked);
+function ensureTreatments() {
+  if (treatmentsPromise) return treatmentsPromise;
+  treatmentsPromise = Promise.all([
+    fetch(API_URL + '/spa/treatments').then(r => r.json()),
+    fetch(API_URL + '/spa/availability?upcoming_only=true').then(r => r.json())
+  ]).then(([td, ad]) => {
     allTreatments = td.treatments || [];
+    // Extract unique future dates from availability windows
+    const dates = new Set();
+    (ad.availability || []).forEach(a => dates.add(a.date));
+    availableDates = [...dates].sort();
   });
-  return dataPromise;
+  return treatmentsPromise;
 }
 
 // ── SpaWidget class ────────────────────────────────────────
 class SpaWidget {
   constructor(rootEl, isModal) {
-    this.root         = rootEl;
-    this.isModal      = !!isModal;
-    this.selectedSlot      = null;
+    this.root    = rootEl;
+    this.isModal = !!isModal;
     this.selectedTreatment = null;
-    this.preselectedName   = null;
+    this.selectedDate      = null;
+    this.selectedSlot      = null;   // { therapist_id, therapist_name, booking_date, time_start, time_end }
   }
 
-  q(key) {
-    return this.root.querySelector('[data-w="' + key + '"]');
-  }
+  q(key) { return this.root.querySelector('[data-w="' + key + '"]'); }
 
-  // Attach static event listeners (called once on init)
   init() {
     this.q('btn-confirm').addEventListener('click', () => this.confirmBooking());
-    this.q('btn-back-treatments').addEventListener('click', () => this.goStep(1));
-    // btn-back-form handler is dynamic (set in goStep)
+    this.q('btn-back-slots').addEventListener('click', () => this.goStep(1));
+    this.q('btn-back-form').addEventListener('click', () => this.goStep(2));
   }
 
-  renderSlots() {
-    const container = this.q('slots-container');
-    if (!allSlots.length) {
-      container.innerHTML = '<div class="cs-empty">No available slots at the moment.<br>Please check back soon or contact us directly.</div>';
-      return;
-    }
-    const byDate = {};
-    allSlots.forEach(s => { if (!byDate[s.date]) byDate[s.date] = []; byDate[s.date].push(s); });
-    let html = '';
-    Object.keys(byDate).sort().forEach(date => {
-      const d = new Date(date + 'T00:00:00');
-      const label = DAY_NAMES[d.getDay()] + ', ' + d.getDate() + ' ' + MONTH_NAMES[d.getMonth()];
-      html += '<div class="cs-date-group"><div class="cs-date-label">' + label + '</div><div class="cs-slots">';
-      byDate[date].forEach(slot => {
-        html += '<div class="cs-slot" data-slot-id="' + slot.id + '">';
-        html += '<div class="cs-slot-time">' + slot.time_start + ' – ' + slot.time_end + '</div>';
-        html += '<div class="cs-slot-therapist">' + slot.therapist_name + '</div>';
-        html += '</div>';
-      });
-      html += '</div></div>';
-    });
-    container.innerHTML = html;
-    container.querySelectorAll('.cs-slot').forEach(el => {
-      el.addEventListener('click', () => this.selectSlot(parseInt(el.dataset.slotId)));
-    });
-  }
-
-  selectSlot(id) {
-    this.selectedSlot = allSlots.find(s => s.id === id);
-    this.q('slots-container').querySelectorAll('.cs-slot').forEach(el => el.classList.remove('selected'));
-    const el = this.q('slots-container').querySelector('[data-slot-id="' + id + '"]');
-    if (el) el.classList.add('selected');
-    // If treatment already pre-matched, skip step 2
-    setTimeout(() => this.goStep(this.selectedTreatment ? 3 : 2), 200);
-  }
-
+  // ── Step 1: Treatments ──────────────────────────────────
   renderTreatments() {
     const container = this.q('treatments-container');
-    const d = new Date(this.selectedSlot.date + 'T00:00:00');
-    this.q('slot-label').textContent =
-      DAY_NAMES[d.getDay()] + ' ' + d.getDate() + ' ' + MONTH_NAMES[d.getMonth()] +
-      ' at ' + this.selectedSlot.time_start + ' with ' + this.selectedSlot.therapist_name;
+    if (!allTreatments.length) {
+      container.innerHTML = '<div class="cs-empty">No treatments available at the moment.<br>Please check back soon or contact us directly.</div>';
+      return;
+    }
     let html = '';
     allTreatments.forEach(t => {
-      html += '<div class="cs-treatment" data-treatment-id="' + t.id + '">';
+      const sel = this.selectedTreatment && this.selectedTreatment.id === t.id ? ' selected' : '';
+      html += '<div class="cs-treatment' + sel + '" data-treatment-id="' + t.id + '">';
       html += '<div class="cs-treatment-icon">💆</div>';
       html += '<div><div class="cs-treatment-name">' + t.name + '</div>';
       html += '<div class="cs-treatment-meta">' + t.duration_minutes + ' min' +
@@ -635,53 +616,125 @@ class SpaWidget {
 
   selectTreatment(id) {
     this.selectedTreatment = allTreatments.find(t => t.id === id);
+    this.selectedSlot = null;
+    this.selectedDate = null;
     this.q('treatments-container').querySelectorAll('.cs-treatment').forEach(el => el.classList.remove('selected'));
     const el = this.q('treatments-container').querySelector('[data-treatment-id="' + id + '"]');
+    if (el) el.classList.add('selected');
+    setTimeout(() => this.goStep(2), 200);
+  }
+
+  // ── Step 2: Date picker + Slots ─────────────────────────
+  renderDatePicker() {
+    const t = this.selectedTreatment;
+    this.q('treatment-label').textContent = t.name;
+    this.q('treatment-duration-label').textContent = t.duration_minutes + ' min · LKR ' + t.price_lkr.toLocaleString();
+
+    const container = this.q('date-picker');
+    if (!availableDates.length) {
+      container.innerHTML = '<div class="cs-empty">No available dates at the moment.<br>Please check back soon.</div>';
+      this.q('slots-container').innerHTML = '';
+      return;
+    }
+    let html = '<div class="cs-dates">';
+    availableDates.forEach(dateStr => {
+      const d = new Date(dateStr + 'T00:00:00');
+      const sel = this.selectedDate === dateStr ? ' selected' : '';
+      html += '<div class="cs-date-btn' + sel + '" data-date="' + dateStr + '">';
+      html += '<div class="cs-date-btn-day">' + DAY_SHORT[d.getDay()] + '</div>';
+      html += '<div class="cs-date-btn-num">' + d.getDate() + '</div>';
+      html += '<div class="cs-date-btn-month">' + MONTH_NAMES[d.getMonth()].slice(0, 3) + '</div>';
+      html += '</div>';
+    });
+    html += '</div>';
+    container.innerHTML = html;
+    container.querySelectorAll('.cs-date-btn').forEach(el => {
+      el.addEventListener('click', () => this.selectDate(el.dataset.date));
+    });
+
+    // If a date was already selected, reload its slots
+    if (this.selectedDate) {
+      this.loadSlotsForDate(this.selectedDate);
+    } else {
+      this.q('slots-container').innerHTML = '<div class="cs-empty">Select a date above to see available time slots.</div>';
+    }
+  }
+
+  selectDate(dateStr) {
+    this.selectedDate = dateStr;
+    this.selectedSlot = null;
+    this.q('date-picker').querySelectorAll('.cs-date-btn').forEach(el => el.classList.remove('selected'));
+    const el = this.q('date-picker').querySelector('[data-date="' + dateStr + '"]');
+    if (el) el.classList.add('selected');
+    this.loadSlotsForDate(dateStr);
+  }
+
+  async loadSlotsForDate(dateStr) {
+    const container = this.q('slots-container');
+    container.innerHTML = '<div class="cs-empty">Loading available slots...</div>';
+    try {
+      const res = await fetch(API_URL + '/spa/slots?treatment_id=' + this.selectedTreatment.id + '&booking_date=' + dateStr);
+      const data = await res.json();
+      const slots = data.slots || [];
+      if (!slots.length) {
+        container.innerHTML = '<div class="cs-empty">No slots available on this date for this treatment.<br>Try another date.</div>';
+        return;
+      }
+      let html = '<div class="cs-slots">';
+      slots.forEach((s, i) => {
+        html += '<div class="cs-slot" data-slot-idx="' + i + '">';
+        html += '<div class="cs-slot-time">' + s.time_start + ' – ' + s.time_end + '</div>';
+        html += '<div class="cs-slot-therapist">' + s.therapist_name + '</div>';
+        html += '</div>';
+      });
+      html += '</div>';
+      container.innerHTML = html;
+      // Store slots for selection
+      this._currentSlots = slots;
+      container.querySelectorAll('.cs-slot').forEach(el => {
+        el.addEventListener('click', () => this.selectSlot(parseInt(el.dataset.slotIdx)));
+      });
+    } catch (e) {
+      container.innerHTML = '<div class="cs-empty">Error loading slots. Please try again.</div>';
+    }
+  }
+
+  selectSlot(idx) {
+    const slot = this._currentSlots[idx];
+    this.selectedSlot = slot;
+    this.q('slots-container').querySelectorAll('.cs-slot').forEach(el => el.classList.remove('selected'));
+    const el = this.q('slots-container').querySelector('[data-slot-idx="' + idx + '"]');
     if (el) el.classList.add('selected');
     setTimeout(() => this.goStep(3), 200);
   }
 
+  // ── Step 3: Summary & Form ──────────────────────────────
   renderSummary() {
-    const d = new Date(this.selectedSlot.date + 'T00:00:00');
+    const d = new Date(this.selectedSlot.booking_date + 'T00:00:00');
     const dateLabel = DAY_NAMES[d.getDay()] + ', ' + d.getDate() + ' ' + MONTH_NAMES[d.getMonth()];
-    this.q('booking-summary').innerHTML = `
-      <div class="cs-summary-row"><span class="cs-summary-label">Treatment</span><strong>${this.selectedTreatment.name}</strong></div>
-      <div class="cs-summary-row"><span class="cs-summary-label">Date</span><span>${dateLabel}</span></div>
-      <div class="cs-summary-row"><span class="cs-summary-label">Time</span><span>${this.selectedSlot.time_start} – ${this.selectedSlot.time_end}</span></div>
-      <div class="cs-summary-row"><span class="cs-summary-label">Therapist</span><span>${this.selectedSlot.therapist_name}</span></div>
-      <div class="cs-summary-row"><span class="cs-summary-label">Total</span><span>LKR ${this.selectedTreatment.price_lkr.toLocaleString()}</span></div>
-    `;
+    this.q('booking-summary').innerHTML =
+      '<div class="cs-summary-row"><span class="cs-summary-label">Treatment</span><strong>' + this.selectedTreatment.name + '</strong></div>' +
+      '<div class="cs-summary-row"><span class="cs-summary-label">Duration</span><span>' + this.selectedTreatment.duration_minutes + ' min</span></div>' +
+      '<div class="cs-summary-row"><span class="cs-summary-label">Date</span><span>' + dateLabel + '</span></div>' +
+      '<div class="cs-summary-row"><span class="cs-summary-label">Time</span><span>' + this.selectedSlot.time_start + ' – ' + this.selectedSlot.time_end + '</span></div>' +
+      '<div class="cs-summary-row"><span class="cs-summary-label">Therapist</span><span>' + this.selectedSlot.therapist_name + '</span></div>' +
+      '<div class="cs-summary-row"><span class="cs-summary-label">Total</span><span>LKR ' + this.selectedTreatment.price_lkr.toLocaleString() + '</span></div>';
   }
 
+  // ── Navigation ──────────────────────────────────────────
   goStep(step) {
-    this.q('view-slots').style.display      = step === 1 ? 'block' : 'none';
-    this.q('view-treatments').style.display = step === 2 ? 'block' : 'none';
+    this.q('view-treatments').style.display = step === 1 ? 'block' : 'none';
+    this.q('view-slots').style.display      = step === 2 ? 'block' : 'none';
     this.q('view-form').style.display       = step === 3 ? 'block' : 'none';
     this.q('view-success').style.display    = 'none';
 
-    // Update back button in step 3
-    const backBtn = this.q('btn-back-form');
-    if (this.preselectedName) {
-      backBtn.textContent = '← Back to slots';
-      backBtn.onclick = () => this.goStep(1);
-    } else {
-      backBtn.textContent = '← Back to treatments';
-      backBtn.onclick = () => this.goStep(2);
-    }
-
     [1, 2, 3].forEach(i => {
-      this.q('step-num-' + i).className = 'cs-step-num' + (i < step ? ' done' : i === step ? ' active' : '');
+      const numEl = this.q('step-num-' + i);
+      if (numEl) numEl.className = 'cs-step-num' + (i < step ? ' done' : i === step ? ' active' : '');
     });
-    // 2-step indicator (modal with preselected treatment): step 3 maps to visual step 2
-    if (this.isModal && this.selectedTreatment) {
-      const v1 = step === 1 ? ' active' : ' done';
-      const v2 = step <= 2 ? '' : ' active';
-      this.q('step2-num-1').className = 'cs-step-num' + v1;
-      this.q('step2-num-2').className = 'cs-step-num' + v2;
-    }
 
-    if (step === 1) this.renderSlots();
-    if (step === 2) this.renderTreatments();
+    if (step === 1) this.renderTreatments();
+    if (step === 2) this.renderDatePicker();
     if (step === 3) this.renderSummary();
 
     if (this.isModal) {
@@ -692,6 +745,7 @@ class SpaWidget {
     }
   }
 
+  // ── Booking confirmation ────────────────────────────────
   async confirmBooking() {
     const name  = this.q('f-name').value.trim();
     const email = this.q('f-email').value.trim();
@@ -700,18 +754,24 @@ class SpaWidget {
     btn.disabled = true; btn.textContent = 'Confirming...';
     try {
       const room = this.q('f-room').value.trim();
+      const nameParts = name.split(' ');
+      const firstName = nameParts[0];
+      const lastName  = nameParts.length > 1 ? nameParts.slice(1).join(' ') : null;
       const res = await fetch(API_URL + '/spa/bookings', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          availability_id: this.selectedSlot.id,
-          treatment_id:    this.selectedTreatment.id,
-          guest_name:  name,
-          email:       email,
-          whatsapp:    this.q('f-whatsapp').value.trim() || null,
+          therapist_id:  this.selectedSlot.therapist_id,
+          treatment_id:  this.selectedTreatment.id,
+          booking_date:  this.selectedSlot.booking_date,
+          booking_start: this.selectedSlot.time_start,
+          first_name:    firstName,
+          last_name:     lastName,
+          email:         email,
+          whatsapp:      this.q('f-whatsapp').value.trim() || null,
           is_hotel_guest: room.length > 0,
-          room_number: room || null,
-          notes:       this.q('f-notes').value.trim() || null
+          room_number:   room || null,
+          notes:         this.q('f-notes').value.trim() || null
         })
       });
       if (!res.ok) {
@@ -722,23 +782,25 @@ class SpaWidget {
       }
       this.q('view-form').style.display    = 'none';
       this.q('view-success').style.display = 'block';
-      [1, 2, 3].forEach(i => { this.q('step-num-' + i).className = 'cs-step-num done'; });
-      if (this.isModal) {
-        ['step2-num-1','step2-num-2'].forEach(k => { this.q(k).className = 'cs-step-num done'; });
-      }
-      // Refresh slot data so just-booked slot is no longer available
-      dataPromise = null;
-      ensureData();
+      [1, 2, 3].forEach(i => {
+        const numEl = this.q('step-num-' + i);
+        if (numEl) numEl.className = 'cs-step-num done';
+      });
+      // Refresh data so booked slot disappears
+      treatmentsPromise = null;
+      ensureTreatments();
     } catch(e) {
       alert('Connection error. Please try again.');
       btn.disabled = false; btn.textContent = 'Confirm Appointment';
     }
   }
 
+  // ── Reset widget ────────────────────────────────────────
   reset(preselectedName) {
-    this.selectedSlot      = null;
     this.selectedTreatment = null;
-    this.preselectedName   = preselectedName || null;
+    this.selectedDate      = null;
+    this.selectedSlot      = null;
+    this._currentSlots     = [];
     // Pre-match treatment from API data
     if (preselectedName && allTreatments.length) {
       const norm = s => s.toLowerCase().replace(/[^a-z0-9]/g, '');
@@ -750,13 +812,12 @@ class SpaWidget {
     this.q('f-room').value     = '';
     this.q('f-notes').value    = '';
     this.q('view-success').style.display = 'none';
-    // Switch step indicator based on pre-selection
-    if (this.isModal) {
-      const hasPreselect = !!this.selectedTreatment;
-      this.q('steps-3').style.display = hasPreselect ? 'none' : 'flex';
-      this.q('steps-2').style.display = hasPreselect ? 'flex' : 'none';
+    // If treatment pre-selected, skip to step 2
+    if (this.selectedTreatment) {
+      this.goStep(2);
+    } else {
+      this.goStep(1);
     }
-    this.goStep(1);
   }
 }
 
@@ -767,39 +828,34 @@ const modalWidget = new SpaWidget(document.getElementById('modal-widget'), true)
 pageWidget.init();
 modalWidget.init();
 
-// Load data and render page widget
-ensureData().then(() => pageWidget.renderSlots());
+// Load data and render page widget (step 1: treatments)
+ensureTreatments().then(() => pageWidget.renderTreatments());
 
 // ── Modal open / close ─────────────────────────────────────
 function openBookingModal(treatmentName) {
   const overlay = document.getElementById('spa-modal-overlay');
   overlay.style.display = 'flex';
-  // Block background scroll (iOS-safe)
   window._scrollY = window.scrollY;
   document.body.style.position = 'fixed';
   document.body.style.top = '-' + window._scrollY + 'px';
   document.body.style.width = '100%';
 
-  ensureData().then(() => modalWidget.reset(treatmentName));
+  ensureTreatments().then(() => modalWidget.reset(treatmentName));
   document.getElementById('spa-modal-close').focus();
 }
 
 function closeBookingModal() {
   document.getElementById('spa-modal-overlay').style.display = 'none';
-  // Restore background scroll
   document.body.style.position = '';
   document.body.style.top = '';
   document.body.style.width = '';
   window.scrollTo(0, window._scrollY || 0);
 }
 
-// Close on overlay click
 document.getElementById('spa-modal-overlay').addEventListener('click', function(e) {
   if (e.target === this) closeBookingModal();
 });
 document.getElementById('spa-modal-close').addEventListener('click', closeBookingModal);
-
-// Close on Escape
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape' && document.getElementById('spa-modal-overlay').style.display !== 'none') {
     closeBookingModal();
