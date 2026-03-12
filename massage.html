@@ -214,10 +214,10 @@
     .cs-field.full { grid-column:1/-1; }
 
     /* SUMMARY BOX */
-    .cs-summary { background:#fff; border:1.5px solid #e8e3dd; border-radius:10px; padding:20px; margin-bottom:24px; }
-    .cs-summary-row { display:flex; justify-content:space-between; align-items:center; padding:6px 0; border-bottom:1px solid #f5f0ea; font-size:13px; }
-    .cs-summary-row:last-child { border-bottom:none; font-weight:700; font-size:15px; color:#c9a96e; }
-    .cs-summary-label { color:#8a6f50; }
+    .cs-summary { background:#faf7f3; border:1px solid #e8e3dd; border-radius:8px; padding:10px 14px; margin-bottom:16px; display:flex; flex-wrap:wrap; gap:4px 16px; align-items:center; }
+    .cs-summary-item { font-size:12px; color:#8a6f50; white-space:nowrap; }
+    .cs-summary-item strong { color:#472C15; font-weight:600; }
+    .cs-summary-item.cs-summary-total { color:#c9a96e; font-weight:700; font-size:13px; margin-left:auto; }
 
     /* BUTTONS */
     .cs-btn { width:100%; padding:14px; background:#c9a96e; color:#fff; border:none; border-radius:8px; font-family:'Inter',sans-serif; font-size:15px; font-weight:600; cursor:pointer; transition:background 0.2s; letter-spacing:0.02em; margin-top:8px; }
@@ -410,7 +410,7 @@
                 <button class="card-book-btn">Book this treatment →</button>
             </div>
 
-            <div class="massage-card" data-treatment="Sport Therapy, Sport Stretching">
+            <div class="massage-card" data-treatment="Sport Therapy &amp; Stretching">
                 <div class="massage-card-header">
                     <div class="massage-emoji">🤸</div>
                     <h3>Sport Therapy, Sport Stretching</h3>
@@ -512,21 +512,29 @@
             <div class="cs-steps">
                 <div class="cs-step"><div class="cs-step-num active" data-w="step-num-1">1</div><span class="cs-step-label">Treatment</span></div>
                 <div class="cs-step-sep"></div>
-                <div class="cs-step"><div class="cs-step-num" data-w="step-num-2">2</div><span class="cs-step-label">Date & Time</span></div>
+                <div class="cs-step"><div class="cs-step-num" data-w="step-num-2">2</div><span class="cs-step-label">Date</span></div>
                 <div class="cs-step-sep"></div>
-                <div class="cs-step"><div class="cs-step-num" data-w="step-num-3">3</div><span class="cs-step-label">Your details</span></div>
+                <div class="cs-step"><div class="cs-step-num" data-w="step-num-3">3</div><span class="cs-step-label">Time</span></div>
+                <div class="cs-step-sep"></div>
+                <div class="cs-step"><div class="cs-step-num" data-w="step-num-4">4</div><span class="cs-step-label">Details</span></div>
             </div>
             <div data-w="view-treatments">
                 <p style="font-size:13px;color:#8a6f50;margin-bottom:20px;">Select the treatment you'd like to book.</p>
                 <div data-w="treatments-container"><div class="cs-empty">Loading treatments...</div></div>
             </div>
-            <div data-w="view-slots" style="display:none">
+            <div data-w="view-dates" style="display:none">
                 <p style="font-size:13px;color:#8a6f50;margin-bottom:20px;">
                     <strong data-w="treatment-label"></strong> — <span data-w="treatment-duration-label"></span>
                 </p>
-                <div data-w="date-picker" style="margin-bottom:24px;"></div>
+                <div data-w="date-picker"></div>
+                <button class="cs-btn-back" data-w="btn-back-dates">← Back to treatments</button>
+            </div>
+            <div data-w="view-slots" style="display:none">
+                <p style="font-size:13px;color:#8a6f50;margin-bottom:20px;">
+                    <strong data-w="slots-date-label"></strong>
+                </p>
                 <div data-w="slots-container"></div>
-                <button class="cs-btn-back" data-w="btn-back-slots">← Back to treatments</button>
+                <button class="cs-btn-back" data-w="btn-back-slots">← Back to dates</button>
             </div>
             <div data-w="view-form" style="display:none">
                 <div class="cs-summary" data-w="booking-summary"></div>
@@ -535,10 +543,10 @@
                     <div class="cs-field"><label>EMAIL *</label><input data-w="f-email" type="email" placeholder="your@email.com" /></div>
                     <div class="cs-field"><label>WHATSAPP</label><input data-w="f-whatsapp" placeholder="+94 77 000 0000" /></div>
                     <div class="cs-field"><label>ROOM NUMBER</label><input data-w="f-room" placeholder="If staying with us" /></div>
-                    <div class="cs-field full"><label>SPECIAL REQUESTS</label><textarea data-w="f-notes" rows="3" placeholder="Any allergies, preferences or notes..."></textarea></div>
+                    <div class="cs-field full"><label>SPECIAL REQUESTS</label><textarea data-w="f-notes" rows="2" placeholder="Any allergies, preferences or notes..."></textarea></div>
                 </div>
                 <button class="cs-btn" data-w="btn-confirm">Confirm Appointment</button>
-                <button class="cs-btn-back" data-w="btn-back-form">← Back to date & time</button>
+                <button class="cs-btn-back" data-w="btn-back-form">← Back to time slots</button>
             </div>
             <div data-w="view-success" style="display:none">
                 <div class="cs-success">
@@ -797,12 +805,12 @@ class SpaWidget {
     const d = new Date(this.selectedSlot.booking_date + 'T00:00:00');
     const dateLabel = DAY_NAMES[d.getDay()] + ', ' + d.getDate() + ' ' + MONTH_NAMES[d.getMonth()];
     this.q('booking-summary').innerHTML =
-      '<div class="cs-summary-row"><span class="cs-summary-label">Treatment</span><strong>' + this.selectedTreatment.name + '</strong></div>' +
-      '<div class="cs-summary-row"><span class="cs-summary-label">Duration</span><span>' + this.selectedTreatment.duration_minutes + ' min</span></div>' +
-      '<div class="cs-summary-row"><span class="cs-summary-label">Date</span><span>' + dateLabel + '</span></div>' +
-      '<div class="cs-summary-row"><span class="cs-summary-label">Time</span><span>' + this.selectedSlot.time_start + ' – ' + this.selectedSlot.time_end + '</span></div>' +
-      '<div class="cs-summary-row"><span class="cs-summary-label">Therapist</span><span>' + this.selectedSlot.therapist_name + '</span></div>' +
-      '<div class="cs-summary-row"><span class="cs-summary-label">Total</span><span>LKR ' + this.selectedTreatment.price_lkr.toLocaleString() + '</span></div>';
+      '<span class="cs-summary-item"><strong>' + this.selectedTreatment.name + '</strong></span>' +
+      '<span class="cs-summary-item">' + this.selectedTreatment.duration_minutes + ' min</span>' +
+      '<span class="cs-summary-item">' + dateLabel + '</span>' +
+      '<span class="cs-summary-item">' + this.selectedSlot.time_start + ' – ' + this.selectedSlot.time_end + '</span>' +
+      '<span class="cs-summary-item">' + this.selectedSlot.therapist_name + '</span>' +
+      '<span class="cs-summary-item cs-summary-total">LKR ' + this.selectedTreatment.price_lkr.toLocaleString() + '</span>';
   }
 
   // ── Navigation ──────────────────────────────────────────
