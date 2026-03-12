@@ -118,14 +118,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <!-- Casa Samaya Wellness Widget -->
             <div id="wellness-widget" style="max-width:1000px; margin:0 auto; font-family:'Open Sans',sans-serif;">
               
-              <!-- Tabs: Liste / Calendrier -->
-              <div style="display:flex; gap:8px; justify-content:center; margin-bottom:24px;">
-                <button id="tab-list" onclick="switchTab('list')" style="padding:10px 28px; border-radius:50px; border:2px solid #472C15; background:#472C15; color:#fff; font-family:'Open Sans',sans-serif; font-size:13px; font-weight:600; cursor:pointer; letter-spacing:0.05em;">LIST VIEW</button>
-                <button id="tab-cal" onclick="switchTab('calendar')" style="padding:10px 28px; border-radius:50px; border:2px solid #472C15; background:transparent; color:#472C15; font-family:'Open Sans',sans-serif; font-size:13px; font-weight:600; cursor:pointer; letter-spacing:0.05em;">CALENDAR VIEW</button>
+              <!-- Filters + View toggle -->
+              <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; margin-bottom:28px;">
+                <div id="type-filters" style="display:flex; gap:8px; flex-wrap:wrap;"></div>
+                <div style="display:flex; gap:6px;">
+                  <button id="tab-list" onclick="switchTab('list')" style="padding:8px 18px; border-radius:50px; border:2px solid #472C15; background:#472C15; color:#fff; font-family:'Open Sans',sans-serif; font-size:12px; font-weight:600; cursor:pointer; letter-spacing:0.04em;">LIST</button>
+                  <button id="tab-cal" onclick="switchTab('calendar')" style="padding:8px 18px; border-radius:50px; border:2px solid #472C15; background:transparent; color:#472C15; font-family:'Open Sans',sans-serif; font-size:12px; font-weight:600; cursor:pointer; letter-spacing:0.04em;">CALENDAR</button>
+                </div>
               </div>
-
-              <!-- Filter par type -->
-              <div id="type-filters" style="display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-bottom:28px;"></div>
 
               <!-- Vue Liste -->
               <div id="view-list">
@@ -194,7 +194,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             </div>
 
             <script>
-            const API = 'https://cockpit.casasamaya.com/api';
+            const API = window.location.hostname === 'localhost' ? 'http://localhost:8000/api' : 'https://cockpit.casasamaya.com/api';
             let allSessions = [];
             let currentFilter = 'all';
             let currentWeekOffset = 0;
@@ -296,10 +296,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         : `<button disabled style="padding:10px 22px; background:#e8ddd4; color:#b09070; border:none; border-radius:50px; font-family:'Open Sans',sans-serif; font-size:12px; font-weight:700; cursor:not-allowed;">FULL</button>`}
                     </div>
                   </div>
-                  <!-- Bas: prix + spots -->
+                  <!-- Bas: prix -->
                   <div style="display:flex; align-items:center; justify-content:space-between; margin-top:12px; padding-top:10px; border-top:1px solid #e8ddd4;">
                     <div style="font-size:13px; font-weight:700; color:${s.is_free ? '#2e7d52' : '#472C15'};">${s.is_free ? '✓ Free' : 'LKR ' + Number(s.price_usd).toLocaleString()}</div>
-                    <div style="font-size:12px; color:${full ? '#c0392b' : '#2e7d52'}; font-weight:600;">${full ? 'FULL' : spots + ' spots left'}</div>
                   </div>
                 </div>`;
             }
