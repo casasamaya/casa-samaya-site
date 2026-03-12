@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="assets/images/favicon.png">
     <link rel="canonical" href="https://casasamaya.com/massage.html">
     <meta property="og:type" content="website">
@@ -73,7 +73,7 @@
         font-size: 1.05rem;
         color: #472C15;
         margin: 0;
-        font-family: 'Cormorant Garamond', serif;
+        font-family: 'Open Sans', sans-serif;
         font-weight: 600;
         line-height: 1.3;
     }
@@ -175,7 +175,7 @@
     body { background:#faf9f7; font-family:'Inter',sans-serif; color:#1a1a1a; }
     .cs-wrap { max-width:960px; margin:0 auto; padding:40px 24px; }
     .cs-header { text-align:center; margin-bottom:40px; }
-    .cs-header h1 { font-family:'Cormorant Garamond',serif; font-size:36px; font-weight:600; color:#1a1a1a; letter-spacing:0.02em; }
+    .cs-header h1 { font-family:'Open Sans',sans-serif; font-size:36px; font-weight:600; color:#1a1a1a; letter-spacing:0.02em; }
     .cs-header p { color:#8a6f50; font-size:14px; margin-top:8px; }
 
     /* STEPS */
@@ -229,7 +229,7 @@
     /* SUCCESS */
     .cs-success { text-align:center; padding:60px 20px; }
     .cs-success-icon { font-size:60px; margin-bottom:20px; }
-    .cs-success h2 { font-family:'Cormorant Garamond',serif; font-size:28px; color:#1a1a1a; margin-bottom:12px; }
+    .cs-success h2 { font-family:'Open Sans',sans-serif; font-size:28px; color:#1a1a1a; margin-bottom:12px; }
     .cs-success p { color:#8a6f50; font-size:14px; line-height:1.7; max-width:420px; margin:0 auto 24px; }
     .cs-social { display:flex; gap:12px; justify-content:center; }
     .cs-social a { padding:10px 20px; background:#1a1a1a; color:#fff; border-radius:6px; font-size:13px; text-decoration:none; font-weight:500; }
@@ -434,71 +434,6 @@
     </div>
 </section>
 
-<!-- BOOKING -->
-<section class="content-section text-center" id="book">
-    <div class="container" style="max-width:960px;">
-        <h2>Book Your Treatment</h2>
-        <p style="max-width:540px;margin:0 auto 2.5rem;font-family:'Open Sans',sans-serif;font-size:0.95rem;color:#7a5c3e;">Choose your treatment, pick a date and time, and confirm in a few steps. No advance payment required.</p>
-        <div class="widget-wrap">
-            <div class="cs-wrap" id="page-widget">
-                <div class="cs-header">
-                    <h1>Book a Spa Treatment</h1>
-                    <p>Calma Samaya · Casa Samaya, Weligama, Sri Lanka</p>
-                </div>
-                <div class="cs-steps">
-                    <div class="cs-step"><div class="cs-step-num active" data-w="step-num-1">1</div><span class="cs-step-label">Treatment</span></div>
-                    <div class="cs-step-sep"></div>
-                    <div class="cs-step"><div class="cs-step-num" data-w="step-num-2">2</div><span class="cs-step-label">Date</span></div>
-                    <div class="cs-step-sep"></div>
-                    <div class="cs-step"><div class="cs-step-num" data-w="step-num-3">3</div><span class="cs-step-label">Time</span></div>
-                    <div class="cs-step-sep"></div>
-                    <div class="cs-step"><div class="cs-step-num" data-w="step-num-4">4</div><span class="cs-step-label">Details</span></div>
-                </div>
-                <div data-w="view-treatments">
-                    <p style="font-size:13px;color:#8a6f50;margin-bottom:20px;">Select the treatment you'd like to book.</p>
-                    <div data-w="treatments-container"><div class="cs-empty">Loading treatments...</div></div>
-                </div>
-                <div data-w="view-dates" style="display:none">
-                    <p style="font-size:13px;color:#8a6f50;margin-bottom:20px;">
-                        <strong data-w="treatment-label"></strong> — <span data-w="treatment-duration-label"></span>
-                    </p>
-                    <div data-w="date-picker"></div>
-                    <button class="cs-btn-back" data-w="btn-back-dates">← Back to treatments</button>
-                </div>
-                <div data-w="view-slots" style="display:none">
-                    <p style="font-size:13px;color:#8a6f50;margin-bottom:20px;">
-                        <strong data-w="slots-date-label"></strong>
-                    </p>
-                    <div data-w="slots-container"></div>
-                    <button class="cs-btn-back" data-w="btn-back-slots">← Back to dates</button>
-                </div>
-                <div data-w="view-form" style="display:none">
-                    <div class="cs-summary" data-w="booking-summary"></div>
-                    <div class="cs-form-grid">
-                        <div class="cs-field"><label>FULL NAME *</label><input data-w="f-name" placeholder="Your name" /></div>
-                        <div class="cs-field"><label>EMAIL *</label><input data-w="f-email" type="email" placeholder="your@email.com" /></div>
-                        <div class="cs-field"><label>WHATSAPP</label><input data-w="f-whatsapp" placeholder="+94 77 000 0000" /></div>
-                        <div class="cs-field"><label>ROOM NUMBER</label><input data-w="f-room" placeholder="If staying with us" /></div>
-                        <div class="cs-field full"><label>SPECIAL REQUESTS</label><textarea data-w="f-notes" rows="3" placeholder="Any allergies, preferences or notes..."></textarea></div>
-                    </div>
-                    <button class="cs-btn" data-w="btn-confirm">Confirm Appointment</button>
-                    <button class="cs-btn-back" data-w="btn-back-form">← Back to time slots</button>
-                </div>
-                <div data-w="view-success" style="display:none">
-                    <div class="cs-success">
-                        <div class="cs-success-icon">✨</div>
-                        <h2>Your appointment is confirmed!</h2>
-                        <p>A confirmation email has been sent to you. Please arrive 10 minutes before your appointment.<br>We look forward to welcoming you.</p>
-                        <div class="cs-social">
-                            <a href="https://instagram.com/calmasamaya" target="_blank">@calmasamaya</a>
-                            <a href="https://instagram.com/casa.samaya" target="_blank">@casa.samaya</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 
 <!-- MODAL BOOKING -->
 <div id="spa-modal-overlay" style="display:none" aria-modal="true" role="dialog">
@@ -916,14 +851,12 @@ class SpaWidget {
 }
 
 // ── Instantiate widgets ────────────────────────────────────
-const pageWidget  = new SpaWidget(document.getElementById('page-widget'),  false);
 const modalWidget = new SpaWidget(document.getElementById('modal-widget'), true);
 
-pageWidget.init();
 modalWidget.init();
 
-// Load data and render page widget (step 1: treatments)
-ensureTreatments().then(() => pageWidget.renderTreatments());
+// Pre-load treatments for modal
+ensureTreatments();
 
 // ── Modal open / close ─────────────────────────────────────
 function openBookingModal(treatmentName) {

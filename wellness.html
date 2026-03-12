@@ -104,22 +104,26 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </section>
 
     <!-- Practices Section -->
-    <section class="content-section text-center">
+    <section class="content-section alt text-center" style="padding-top:3rem; padding-bottom:2rem;">
         <div class="container" style="max-width: 1000px;">
             <h2>The Art of Awareness</h2>
-            <p style="margin-bottom: 2rem; max-width: 700px; margin-left: auto; margin-right: auto;">Calma Samaya is our
+            <p style="margin-bottom: 1rem; max-width: 700px; margin-left: auto; margin-right: auto;">Calma Samaya is our
                 rooftop wellness space, designed to help you slow down, breathe, and find balance. We offer a holistic
                 approach to wellbeing.</p>
-            <p style="font-size: 0.9rem; color: var(--color-primary); font-weight: bold; margin-bottom: 2rem;">Open to
-                hotel guests and external visitors.</p>
             <div id="wellness-anchor"></div>
+        </div>
+    </section>
 
-
+    <section class="content-section text-center">
+        <div class="container" style="max-width: 1000px;">
             <!-- Casa Samaya Wellness Widget -->
             <div id="wellness-widget" style="max-width:1000px; margin:0 auto; font-family:'Open Sans',sans-serif;">
-              
+
+              <h3 style="font-size:1.6rem; font-weight:600; color:#472C15; margin-bottom:0.3rem; text-align:center;">Reserve Your Spot</h3>
+              <p style="font-size:0.9rem; color:#7a5c3e; margin-bottom:1.8rem; text-align:center;">Open to hotel guests and external visitors</p>
+
               <!-- Filters + View toggle -->
-              <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; margin-bottom:28px;">
+              <div class="ww-toolbar" style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; margin-bottom:28px;">
                 <div id="type-filters" style="display:flex; gap:8px; flex-wrap:wrap;"></div>
                 <div style="display:flex; gap:6px;">
                   <button id="tab-list" onclick="switchTab('list')" style="padding:8px 18px; border-radius:50px; border:2px solid #472C15; background:#472C15; color:#fff; font-family:'Open Sans',sans-serif; font-size:12px; font-weight:600; cursor:pointer; letter-spacing:0.04em;">LIST</button>
@@ -149,45 +153,57 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               </div>
 
               <!-- Modal Booking -->
-              <div id="booking-modal" style="display:none; position:fixed; inset:0; background:rgba(71,44,21,0.5); z-index:9999; align-items:center; justify-content:center; padding:20px;">
-                <div style="background:#fff; border-radius:16px; padding:36px; max-width:500px; width:100%; max-height:90vh; overflow-y:auto; position:relative;">
-                  <button onclick="closeModal()" style="position:absolute; top:16px; right:20px; background:none; border:none; font-size:24px; cursor:pointer; color:#b09070;">&times;</button>
-                  <div id="modal-session-info" style="margin-bottom:24px;"></div>
-                  <form id="booking-form" onsubmit="submitBooking(event)">
-                    <div style="margin-bottom:16px;">
-                      <label style="display:block; font-size:11px; font-weight:700; color:#472C15; letter-spacing:0.08em; margin-bottom:6px;">FULL NAME *</label>
-                      <input id="f-name" type="text" required placeholder="Your name" style="width:100%; padding:12px 16px; border:1.5px solid #e8ddd4; border-radius:8px; font-family:'Open Sans',sans-serif; font-size:14px; color:#472C15; box-sizing:border-box;">
+              <div id="booking-modal" style="display:none; position:fixed; inset:0; background:rgba(71,44,21,0.45); z-index:9999; align-items:center; justify-content:center; padding:16px;">
+                <div class="ww-modal" style="background:#fff; border-radius:14px; max-width:440px; width:100%; max-height:90vh; overflow-y:auto; position:relative; font-family:'Open Sans',sans-serif;">
+                  <!-- Header -->
+                  <div id="modal-session-info" style="padding:20px 24px 16px; border-bottom:1px solid #e8ddd4;"></div>
+                  <!-- Form -->
+                  <form id="booking-form" onsubmit="submitBooking(event)" style="padding:16px 24px 20px;">
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px;">
+                      <div>
+                        <label style="display:block; font-size:10px; font-weight:700; color:#7a5c3e; letter-spacing:0.08em; margin-bottom:4px;">FIRST NAME *</label>
+                        <input id="f-firstname" type="text" required placeholder="First name" style="width:100%; padding:10px 12px; border:1.5px solid #e8ddd4; border-radius:8px; font-family:'Open Sans',sans-serif; font-size:13px; color:#472C15; box-sizing:border-box;">
+                      </div>
+                      <div>
+                        <label style="display:block; font-size:10px; font-weight:700; color:#7a5c3e; letter-spacing:0.08em; margin-bottom:4px;">LAST NAME *</label>
+                        <input id="f-lastname" type="text" required placeholder="Last name" style="width:100%; padding:10px 12px; border:1.5px solid #e8ddd4; border-radius:8px; font-family:'Open Sans',sans-serif; font-size:13px; color:#472C15; box-sizing:border-box;">
+                      </div>
                     </div>
-                    <div style="margin-bottom:16px;">
-                      <label style="display:block; font-size:11px; font-weight:700; color:#472C15; letter-spacing:0.08em; margin-bottom:6px;">EMAIL *</label>
-                      <input id="f-email" type="email" required placeholder="your@email.com" style="width:100%; padding:12px 16px; border:1.5px solid #e8ddd4; border-radius:8px; font-family:'Open Sans',sans-serif; font-size:14px; color:#472C15; box-sizing:border-box;">
+                    <div style="display:grid; grid-template-columns:1fr; gap:12px; margin-bottom:12px;">
+                      <div>
+                        <label style="display:block; font-size:10px; font-weight:700; color:#7a5c3e; letter-spacing:0.08em; margin-bottom:4px;">EMAIL *</label>
+                        <input id="f-email" type="email" required placeholder="your@email.com" style="width:100%; padding:10px 12px; border:1.5px solid #e8ddd4; border-radius:8px; font-family:'Open Sans',sans-serif; font-size:13px; color:#472C15; box-sizing:border-box;">
+                      </div>
                     </div>
-                    <div style="margin-bottom:16px;">
-                      <label style="display:block; font-size:11px; font-weight:700; color:#472C15; letter-spacing:0.08em; margin-bottom:6px;">WHATSAPP</label>
-                      <input id="f-wa" type="tel" placeholder="+94 77 000 0000" style="width:100%; padding:12px 16px; border:1.5px solid #e8ddd4; border-radius:8px; font-family:'Open Sans',sans-serif; font-size:14px; color:#472C15; box-sizing:border-box;">
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px;">
+                      <div>
+                        <label style="display:block; font-size:10px; font-weight:700; color:#7a5c3e; letter-spacing:0.08em; margin-bottom:4px;">WHATSAPP</label>
+                        <input id="f-wa" type="tel" placeholder="+94 77 000 0000" style="width:100%; padding:10px 12px; border:1.5px solid #e8ddd4; border-radius:8px; font-family:'Open Sans',sans-serif; font-size:13px; color:#472C15; box-sizing:border-box;">
+                      </div>
+                      <div id="f-room-wrap" style="display:none;">
+                        <label style="display:block; font-size:10px; font-weight:700; color:#7a5c3e; letter-spacing:0.08em; margin-bottom:4px;">ROOM NUMBER</label>
+                        <input id="f-room" type="text" placeholder="e.g. 103" style="width:100%; padding:10px 12px; border:1.5px solid #e8ddd4; border-radius:8px; font-family:'Open Sans',sans-serif; font-size:13px; color:#472C15; box-sizing:border-box;">
+                      </div>
                     </div>
-                    <div style="margin-bottom:16px;">
-                      <label style="display:flex; align-items:center; gap:10px; cursor:pointer; font-size:13px; color:#7a5c3e;">
-                        <input id="f-guest" type="checkbox" style="width:16px; height:16px; accent-color:#472C15;">
+                    <div style="margin-bottom:12px;">
+                      <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-size:12px; color:#7a5c3e;">
+                        <input id="f-guest" type="checkbox" style="width:15px; height:15px; accent-color:#472C15;">
                         I am a hotel guest at Casa Samaya
                       </label>
                     </div>
-                    <div id="f-room-wrap" style="display:none; margin-bottom:16px;">
-                      <label style="display:block; font-size:11px; font-weight:700; color:#472C15; letter-spacing:0.08em; margin-bottom:6px;">ROOM NUMBER</label>
-                      <input id="f-room" type="text" placeholder="e.g. 103" style="width:100%; padding:12px 16px; border:1.5px solid #e8ddd4; border-radius:8px; font-family:'Open Sans',sans-serif; font-size:14px; color:#472C15; box-sizing:border-box;">
+                    <div style="margin-bottom:16px;">
+                      <label style="display:block; font-size:10px; font-weight:700; color:#7a5c3e; letter-spacing:0.08em; margin-bottom:4px;">NOTES</label>
+                      <textarea id="f-notes" placeholder="Any injuries, special requests..." rows="2" style="width:100%; padding:10px 12px; border:1.5px solid #e8ddd4; border-radius:8px; font-family:'Open Sans',sans-serif; font-size:13px; color:#472C15; resize:vertical; box-sizing:border-box;"></textarea>
                     </div>
-                    <div style="margin-bottom:24px;">
-                      <label style="display:block; font-size:11px; font-weight:700; color:#472C15; letter-spacing:0.08em; margin-bottom:6px;">NOTES</label>
-                      <textarea id="f-notes" placeholder="Any injuries, special requests..." rows="3" style="width:100%; padding:12px 16px; border:1.5px solid #e8ddd4; border-radius:8px; font-family:'Open Sans',sans-serif; font-size:14px; color:#472C15; resize:vertical; box-sizing:border-box;"></textarea>
-                    </div>
-                    <div id="form-error" style="display:none; color:#c0392b; font-size:13px; margin-bottom:12px;"></div>
-                    <button type="submit" id="submit-btn" style="width:100%; padding:14px; background:#472C15; color:#fff; border:none; border-radius:8px; font-family:'Open Sans',sans-serif; font-size:14px; font-weight:700; letter-spacing:0.05em; cursor:pointer;">CONFIRM BOOKING</button>
+                    <div id="form-error" style="display:none; color:#c0392b; font-size:12px; margin-bottom:10px;"></div>
+                    <button type="submit" id="submit-btn" style="width:100%; padding:12px; background:#472C15; color:#fff; border:none; border-radius:8px; font-family:'Open Sans',sans-serif; font-size:13px; font-weight:700; letter-spacing:0.05em; cursor:pointer;">CONFIRM BOOKING</button>
                   </form>
-                  <div id="booking-success" style="display:none; text-align:center; padding:20px 0;">
-                    <div style="font-size:48px; margin-bottom:16px;">✅</div>
-                    <h3 style="color:#472C15; margin-bottom:8px;">Booking Confirmed!</h3>
-                    <p style="color:#7a5c3e; font-size:14px;">Check your email for confirmation details.</p>
-                    <button onclick="closeModal()" style="margin-top:20px; padding:12px 32px; background:#472C15; color:#fff; border:none; border-radius:8px; font-family:'Open Sans',sans-serif; font-weight:600; cursor:pointer;">Close</button>
+                  <!-- Success -->
+                  <div id="booking-success" style="display:none; text-align:center; padding:32px 24px;">
+                    <div style="font-size:40px; margin-bottom:12px;">✅</div>
+                    <h3 style="color:#472C15; margin-bottom:6px; font-size:18px;">Booking Confirmed!</h3>
+                    <p style="color:#7a5c3e; font-size:13px;">Check your email for confirmation details.</p>
+                    <button onclick="closeModal()" style="margin-top:16px; padding:10px 28px; background:#472C15; color:#fff; border:none; border-radius:8px; font-family:'Open Sans',sans-serif; font-size:13px; font-weight:600; cursor:pointer;">Close</button>
                   </div>
                 </div>
               </div>
@@ -278,27 +294,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             function sessionCard(s) {
               const spots = s.max_participants - (s.booked_count || 0);
               const full = spots <= 0;
+              const priceTag = s.is_free
+                ? '<span style="color:#2e7d52; font-weight:700; font-size:12px;">Free</span>'
+                : '<span style="color:#472C15; font-weight:700; font-size:12px;">LKR ' + Number(s.price_usd).toLocaleString() + '</span>';
               return `
-                <div style="background:#FEFAF6; border:1.5px solid #e8ddd4; border-radius:12px; padding:16px 20px;">
-                  <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
-                    <!-- Gauche: emoji + infos -->
-                    <div style="display:flex; align-items:center; gap:14px; min-width:0;">
-                      <div style="width:44px; height:44px; border-radius:10px; background:#f5ede4; display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0;">${sessionEmoji(s.session_type)}</div>
-                      <div style="min-width:0;">
-                        <div style="font-size:15px; font-weight:700; color:#472C15; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${s.title}</div>
-                        <div style="font-size:13px; color:#7a5c3e; margin-top:2px;">${s.time.slice(0,5)} · ${s.duration_minutes}min${s.instructor ? ' · ' + s.instructor : ''}</div>
+                <div class="ww-card" style="background:#FEFAF6; border:1.5px solid #e8ddd4; border-radius:12px; padding:16px 20px;">
+                  <div class="ww-card-row" style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+                    <div style="display:flex; align-items:center; gap:14px; min-width:0; flex:1;">
+                      <div class="ww-card-emoji" style="width:44px; height:44px; border-radius:10px; background:#f5ede4; display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0;">${sessionEmoji(s.session_type)}</div>
+                      <div style="min-width:0; flex:1;">
+                        <div style="font-size:15px; font-weight:700; color:#472C15; text-align:left;">${s.title}</div>
+                        <div style="font-size:12px; color:#7a5c3e; text-align:center;">${formatTime(s.time)} · ${s.duration_minutes}min${s.instructor ? ' · organised by ' + s.instructor : ''} · ${priceTag}</div>
                       </div>
                     </div>
-                    <!-- Droite: bouton -->
-                    <div style="flex-shrink:0;">
+                    <div class="ww-card-action" style="flex-shrink:0;">
                       ${!full
-                        ? `<button onclick="openBooking(${s.id})" style="padding:10px 22px; background:#472C15; color:#fff; border:none; border-radius:50px; font-family:'Open Sans',sans-serif; font-size:12px; font-weight:700; letter-spacing:0.05em; cursor:pointer;">BOOK</button>`
-                        : `<button disabled style="padding:10px 22px; background:#e8ddd4; color:#b09070; border:none; border-radius:50px; font-family:'Open Sans',sans-serif; font-size:12px; font-weight:700; cursor:not-allowed;">FULL</button>`}
+                        ? '<button onclick="openBooking(' + s.id + ')" class="ww-book-btn" style="padding:10px 22px; background:#472C15; color:#fff; border:none; border-radius:50px; font-family:\'Open Sans\',sans-serif; font-size:12px; font-weight:700; letter-spacing:0.05em; cursor:pointer;">BOOK</button>'
+                        : '<button disabled style="padding:10px 22px; background:#e8ddd4; color:#b09070; border:none; border-radius:50px; font-family:\'Open Sans\',sans-serif; font-size:12px; font-weight:700; cursor:not-allowed;">FULL</button>'}
                     </div>
-                  </div>
-                  <!-- Bas: prix -->
-                  <div style="display:flex; align-items:center; justify-content:space-between; margin-top:12px; padding-top:10px; border-top:1px solid #e8ddd4;">
-                    <div style="font-size:13px; font-weight:700; color:${s.is_free ? '#2e7d52' : '#472C15'};">${s.is_free ? '✓ Free' : 'LKR ' + Number(s.price_usd).toLocaleString()}</div>
                   </div>
                 </div>`;
             }
@@ -335,7 +348,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                       const spots = s.max_participants - (s.booked_count || 0);
                       const full = spots <= 0;
                       return `<div onclick="${!full ? `openBooking(${s.id})` : ''}" style="background:${full?'#f5f5f5':'#f5ede4'}; border:1px solid ${full?'#e0e0e0':'#e8ddd4'}; border-radius:6px; padding:6px 8px; margin-bottom:4px; cursor:${full?'default':'pointer'}; transition:background 0.15s;" onmouseover="this.style.background='${full?'#f5f5f5':'#eee0d0'}'" onmouseout="this.style.background='${full?'#f5f5f5':'#f5ede4'}'">
-                        <div style="font-size:11px; font-weight:700; color:${full?'#b09070':'#472C15'};">${s.time.slice(0,5)}</div>
+                        <div style="font-size:11px; font-weight:700; color:${full?'#b09070':'#472C15'};">${formatTime(s.time)}</div>
                         <div style="font-size:10px; color:${full?'#b09070':'#7a5c3e'}; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${sessionEmoji(s.session_type)} ${s.title}</div>
                         ${full ? '<div style="font-size:9px;color:#c0392b;font-weight:700;">FULL</div>' : ''}
                       </div>`;
@@ -365,21 +378,28 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               selectedSessionId = sessionId;
               const s = allSessions.find(x => x.id === sessionId);
               if (!s) return;
+              const timeEnd = s.time_end || s.time_start;
+              const priceHtml = s.is_free
+                ? '<span style="color:#2e7d52; font-weight:700;">Free</span>'
+                : '<span style="font-weight:700;">LKR ' + Number(s.price_usd).toLocaleString() + '</span> · pay on arrival';
               document.getElementById('modal-session-info').innerHTML = `
-                <div style="display:flex; align-items:center; gap:12px; padding:16px; background:#FEFAF6; border-radius:10px; border:1px solid #e8ddd4;">
-                  <div style="font-size:28px;">${sessionEmoji(s.session_type)}</div>
-                  <div>
-                    <div style="font-size:16px; font-weight:700; color:#472C15;">${s.title}</div>
-                    <div style="font-size:13px; color:#7a5c3e; margin-top:2px;">${formatDate(s.date)} · ${s.time.slice(0,5)} · ${s.duration_minutes}min</div>
-                    <div style="font-size:12px; color:#7a5c3e;">${s.instructor || 'Casa Samaya'} · ${s.location || 'Rooftop Shala'}</div>
-
-                    <div style="font-size:14px; font-weight:700; color:#472C15; margin-top:8px; padding-top:8px; border-top:1px solid #e8ddd4;">${s.is_free ? '<span style=\"color:#2e7d52;\">✓ Free session</span>' : '💳 LKR ' + Number(s.price_usd).toLocaleString() + ' — payable on arrival (cash or card)'}</div>
+                <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+                  <div style="display:flex; align-items:center; gap:12px; min-width:0;">
+                    <div style="font-size:24px; flex-shrink:0;">${sessionEmoji(s.session_type)}</div>
+                    <div>
+                      <div style="font-size:16px; font-weight:700; color:#472C15;">${s.title}</div>
+                      <div style="font-size:12px; color:#7a5c3e; margin-top:3px;">${formatDate(s.date)} · ${formatTime(s.time)} – ${formatTime(timeEnd)}</div>
+                      ${s.instructor ? '<div style="font-size:12px; color:#7a5c3e; font-style:italic;">organised by ' + s.instructor + '</div>' : ''}
+                      <div style="font-size:12px; color:#7a5c3e;">${s.location || 'Rooftop'} · ${priceHtml}</div>
+                    </div>
                   </div>
+                  <button onclick="closeModal()" style="background:none; border:none; font-size:22px; cursor:pointer; color:#b09070; flex-shrink:0; line-height:1;">&times;</button>
                 </div>`;
               document.getElementById('booking-form').style.display = 'block';
               document.getElementById('booking-success').style.display = 'none';
               document.getElementById('form-error').style.display = 'none';
-              document.getElementById('f-name').value = '';
+              document.getElementById('f-firstname').value = '';
+              document.getElementById('f-lastname').value = '';
               document.getElementById('f-email').value = '';
               document.getElementById('f-wa').value = '';
               document.getElementById('f-notes').value = '';
@@ -410,7 +430,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                   headers: {'Content-Type':'application/json'},
                   body: JSON.stringify({
                     session_id: selectedSessionId,
-                    guest_name: document.getElementById('f-name').value,
+                    first_name: document.getElementById('f-firstname').value,
+                    last_name: document.getElementById('f-lastname').value,
                     email: document.getElementById('f-email').value,
                     whatsapp: document.getElementById('f-wa').value,
                     is_hotel_guest: document.getElementById('f-guest').checked,
@@ -439,8 +460,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             }
 
             function sessionEmoji(type) {
-              const map = {yoga:'🧘',meditation:'🪷',breathwork:'🌬️',massage:'💆',sound:'🎵',pilates:'🤸'};
+              const map = {yoga:'🧘',meditation:'🪷',breathwork:'🌬️',massage:'💆',sound_healing:'🎵',sound:'🎵',pilates:'🤸',fitness:'💪',retreat:'🌿'};
               return map[(type||'').toLowerCase()] || '✨';
+            }
+
+            function formatTime(t) {
+              if (!t) return '';
+              const [h, m] = t.slice(0,5).split(':').map(Number);
+              const ampm = h >= 12 ? 'PM' : 'AM';
+              const h12 = h % 12 || 12;
+              return h12 + (m > 0 ? ':' + String(m).padStart(2,'0') : '') + ' ' + ampm;
             }
 
             // ── Fermer modal en cliquant dehors ─────────────────
@@ -453,8 +482,28 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             loadSessions();
             </script>
 
-
+        </div>
 </section>
+
+<!-- WELLNESS WIDGET RESPONSIVE -->
+<style>
+/* Mobile */
+@media (max-width: 600px) {
+  .ww-card { padding: 14px 16px !important; }
+  .ww-card-row { flex-direction: column !important; align-items: flex-start !important; gap: 10px !important; }
+  .ww-card-action { width: 100%; }
+  .ww-card-action button { width: 100% !important; }
+  .ww-toolbar { justify-content: center !important; }
+  #type-filters { justify-content: center; }
+  #type-filters button { padding: 6px 12px !important; font-size: 11px !important; }
+  #calendar-grid { grid-template-columns: repeat(7, 1fr) !important; gap: 3px !important; }
+  #calendar-grid > div { min-height: 80px !important; }
+  .ww-modal { border-radius: 12px !important; }
+  .ww-modal form { padding: 14px 16px 16px !important; }
+  .ww-modal form > div[style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
+  #modal-session-info { padding: 16px !important; }
+}
+</style>
 
 <!-- SESSION TYPES -->
 <style>
@@ -464,7 +513,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     gap: 1.5rem;
 }
 .massage-card {
-    background: #fff;
+    background: #FEFAF6;
     border-radius: 16px;
     padding: 28px;
     border: 1px solid #e8ddd4;
@@ -494,7 +543,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     font-size: 1.05rem;
     color: #472C15;
     margin: 0;
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Open Sans', sans-serif;
     font-weight: 600;
     line-height: 1.3;
 }
@@ -507,7 +556,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 }
 </style>
 
-<section class="content-section alt">
+<section class="content-section alt" style="padding-top:3rem;">
     <div class="container" style="max-width:1100px;">
         <h2 style="text-align:center;margin-bottom:0.5rem;">Our Practices</h2>
         <p style="text-align:center;color:#7a5c3e;margin-bottom:3rem;font-size:0.9rem;font-family:'Open Sans',sans-serif;">Each session is designed to reconnect body, breath and mind</p>
