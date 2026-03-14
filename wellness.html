@@ -179,7 +179,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     </div>
                     <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px;">
                       <div>
-                        <label style="display:block; font-size:10px; font-weight:700; color:#7a5c3e; letter-spacing:0.08em; margin-bottom:4px;">WHATSAPP</label>
+                        <label style="display:block; font-size:10px; font-weight:700; color:#7a5c3e; letter-spacing:0.08em; margin-bottom:4px;">WHATSAPP *</label>
                         <input id="f-wa" type="tel" placeholder="+94 77 000 0000" style="width:100%; padding:10px 12px; border:1.5px solid #e8ddd4; border-radius:8px; font-family:'Open Sans',sans-serif; font-size:13px; color:#472C15; box-sizing:border-box;">
                       </div>
                       <div id="f-room-wrap" style="display:none;">
@@ -202,9 +202,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                   </form>
                   <!-- Success -->
                   <div id="booking-success" style="display:none; text-align:center; padding:32px 24px;">
-                    <div style="font-size:40px; margin-bottom:12px;">✅</div>
-                    <h3 style="color:#472C15; margin-bottom:6px; font-size:18px;">Booking Confirmed!</h3>
-                    <p style="color:#7a5c3e; font-size:13px;">Check your email for confirmation details.</p>
+                    <div style="font-size:40px; margin-bottom:12px;">✨</div>
+                    <h3 style="color:#472C15; margin-bottom:6px; font-size:18px;">Your session is confirmed!</h3>
+                    <p style="color:#7a5c3e; font-size:13px; line-height:1.7;">A confirmation has been sent to your email.<br>Please arrive 5 minutes before your session.<br>We look forward to welcoming you at Calma Samaya.</p>
+                    <div style="display:flex; justify-content:center; gap:12px; margin-top:16px;">
+                      <a href="https://instagram.com/calmasamaya" target="_blank" style="padding:9px 20px; background:#1a1a1a; color:#fff; border-radius:6px; font-size:13px; text-decoration:none; font-weight:500;">@calmasamaya</a>
+                      <a href="https://instagram.com/casa.samaya" target="_blank" style="padding:9px 20px; background:#1a1a1a; color:#fff; border-radius:6px; font-size:13px; text-decoration:none; font-weight:500;">@casa.samaya</a>
+                    </div>
                     <button onclick="closeModal()" style="margin-top:16px; padding:10px 28px; background:#472C15; color:#fff; border:none; border-radius:8px; font-family:'Open Sans',sans-serif; font-size:13px; font-weight:600; cursor:pointer;">Close</button>
                   </div>
                 </div>
@@ -422,6 +426,20 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
             async function submitBooking(e) {
               e.preventDefault();
+              const firstName = document.getElementById('f-firstname').value.trim();
+              const lastName  = document.getElementById('f-lastname').value.trim();
+              const email     = document.getElementById('f-email').value.trim();
+              const whatsapp  = document.getElementById('f-wa').value.trim();
+              const errEl = document.getElementById('form-error');
+              if (!firstName || !lastName || !email || !whatsapp) {
+                errEl.textContent = 'Please fill in your first name, last name, email and WhatsApp number.';
+                errEl.style.display = 'block'; return;
+              }
+              if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                errEl.textContent = 'Invalid email address.';
+                errEl.style.display = 'block'; return;
+              }
+              errEl.style.display = 'none';
               const btn = document.getElementById('submit-btn');
               btn.textContent = 'Confirming...';
               btn.disabled = true;
@@ -431,10 +449,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                   headers: {'Content-Type':'application/json'},
                   body: JSON.stringify({
                     session_id: selectedSessionId,
-                    first_name: document.getElementById('f-firstname').value,
-                    last_name: document.getElementById('f-lastname').value,
-                    email: document.getElementById('f-email').value,
-                    whatsapp: document.getElementById('f-wa').value,
+                    first_name: firstName,
+                    last_name: lastName,
+                    email: email,
+                    whatsapp: whatsapp,
                     is_hotel_guest: document.getElementById('f-guest').checked,
                     room_number: document.getElementById('f-room').value,
                     notes: document.getElementById('f-notes').value,
