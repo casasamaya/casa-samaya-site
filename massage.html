@@ -207,14 +207,11 @@
     .cs-treatment-price { margin-left:auto; font-size:16px; font-weight:700; color:#c9a96e; white-space:nowrap; }
 
     /* FORM */
-    .cs-form-fields { margin-bottom:20px; }
-    .cs-field { margin-bottom:14px; }
+    .cs-form-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px; }
     .cs-field label { display:block; font-size:11px; font-weight:600; color:#8a6f50; letter-spacing:0.06em; margin-bottom:6px; }
     .cs-field input, .cs-field textarea, .cs-field select { width:100%; padding:10px 14px; border:1.5px solid #e8e3dd; border-radius:8px; font-size:14px; font-family:'Inter',sans-serif; background:#fff; color:#1a1a1a; outline:none; transition:border 0.2s; }
     .cs-field input:focus, .cs-field textarea:focus { border-color:#c9a96e; }
-    .cs-checkbox-row { display:flex; align-items:center; gap:8px; margin-bottom:14px; }
-    .cs-checkbox-row input[type="checkbox"] { width:16px; height:16px; accent-color:#c9a96e; flex-shrink:0; }
-    .cs-checkbox-row label { font-size:13px; color:#555; cursor:pointer; }
+    .cs-field.full { grid-column:1/-1; }
 
     /* SUMMARY BOX */
     .cs-summary { background:#faf7f3; border:1px solid #e8e3dd; border-radius:8px; padding:10px 14px; margin-bottom:16px; display:flex; flex-wrap:wrap; gap:4px 16px; align-items:center; }
@@ -252,7 +249,7 @@
     .cs-date-unavailable { font-size:9px; color:#c0a090; margin-top:2px; }
 
     @media(max-width:600px) {
-      /* stacked fields already single column */
+      .cs-form-grid { grid-template-columns:1fr; }
       .cs-steps { gap:0; }
       .cs-step-label { display:none; }
       .cs-dates { gap:8px; }
@@ -476,13 +473,12 @@
             </div>
             <div data-w="view-form" style="display:none">
                 <div class="cs-summary" data-w="booking-summary"></div>
-                <div class="cs-form-fields">
+                <div class="cs-form-grid">
                     <div class="cs-field"><label>FIRST NAME *</label><input data-w="f-firstname" placeholder="Jane" /></div>
                     <div class="cs-field"><label>LAST NAME *</label><input data-w="f-lastname" placeholder="Smith" /></div>
                     <div class="cs-field"><label>EMAIL *</label><input data-w="f-email" type="email" placeholder="your@email.com" /></div>
                     <div class="cs-field"><label>WHATSAPP *</label><input data-w="f-whatsapp" type="tel" placeholder="+94 77 000 0000" /></div>
-                    <div class="cs-checkbox-row"><input type="checkbox" data-w="f-hotel-guest" id="spa-hotel-guest" onchange="this.closest('[data-w=view-form]').querySelector('[data-w=f-room-wrap]').style.display=this.checked?'block':'none'" /><label for="spa-hotel-guest">I am staying at Casa Samaya</label></div>
-                    <div data-w="f-room-wrap" style="display:none" class="cs-field"><label>ROOM NUMBER</label><input data-w="f-room" placeholder="e.g. 204" /></div>
+                    <div class="cs-field"><label>ROOM NUMBER</label><input data-w="f-room" placeholder="If staying with us" /></div>
                     <div class="cs-field full"><label>SPECIAL REQUESTS</label><textarea data-w="f-notes" rows="2" placeholder="Any allergies, preferences or notes..."></textarea></div>
                 </div>
                 <button class="cs-btn" data-w="btn-confirm">Confirm Appointment</button>
@@ -786,11 +782,9 @@ class SpaWidget {
     const email     = this.q('f-email').value.trim();
     const whatsapp  = this.q('f-whatsapp').value.trim();
     if (!firstName || !lastName || !email || !whatsapp) { alert('Please fill in your first name, last name, email and WhatsApp number.'); return; }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { alert('Invalid email address.'); return; }
     const btn = this.q('btn-confirm');
     btn.disabled = true; btn.textContent = 'Confirming...';
     try {
-      const hotelGuest = this.q('f-hotel-guest')?.checked || false;
       const room = this.q('f-room').value.trim();
       const res = await fetch(API_URL + '/spa/bookings', {
         method: 'POST',
@@ -804,7 +798,7 @@ class SpaWidget {
           last_name:     lastName,
           email:         email,
           whatsapp:      whatsapp,
-          is_hotel_guest: hotelGuest,
+          is_hotel_guest: room.length > 0,
           room_number:   room || null,
           notes:         this.q('f-notes').value.trim() || null
         })
@@ -846,10 +840,6 @@ class SpaWidget {
     this.q('f-whatsapp').value  = '';
     this.q('f-room').value      = '';
     this.q('f-notes').value     = '';
-    const hotelCb = this.q('f-hotel-guest');
-    if (hotelCb) { hotelCb.checked = false; }
-    const roomWrap = this.root.querySelector('[data-w=f-room-wrap]');
-    if (roomWrap) roomWrap.style.display = 'none';
     this.q('view-success').style.display = 'none';
     const confirmBtn = this.q('btn-confirm');
     if (confirmBtn) { confirmBtn.disabled = false; confirmBtn.textContent = 'Confirm Appointment'; }
