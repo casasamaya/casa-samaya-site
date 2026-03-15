@@ -398,13 +398,26 @@ footer a:hover {
 /* ══════════════════════════════════════
    WhatsApp button — position adjustment
    when booking bar is visible
+   Covers common GTM-injected WA widgets:
+   GetButton, Elfsight, custom iframes, etc.
    ══════════════════════════════════════ */
 @media (max-width: 768px) {
-    #whatsapp-widget-container .wa-floating-btn {
-        transition: bottom 0.5s var(--ease-premium);
-    }
-    body.bar-visible #whatsapp-widget-container .wa-floating-btn {
+    /* Generic: any fixed-position WhatsApp widget near bottom */
+    body.bar-visible [id*="whatsapp"],
+    body.bar-visible [id*="WhatsApp"],
+    body.bar-visible [id*="wa-widget"],
+    body.bar-visible [id*="getbutton"],
+    body.bar-visible [id*="GetButton"],
+    body.bar-visible [class*="whatsapp"],
+    body.bar-visible [class*="wa-float"],
+    body.bar-visible [class*="getbutton"],
+    body.bar-visible [class*="elfsight-app"],
+    body.bar-visible .wa-floating-btn,
+    body.bar-visible [data-testid*="whatsapp"],
+    body.bar-visible iframe[src*="wa.me"],
+    body.bar-visible iframe[src*="whatsapp"] {
         bottom: 70px !important;
+        transition: bottom 0.5s var(--ease-premium) !important;
     }
 }
 
