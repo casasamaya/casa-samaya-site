@@ -1,0 +1,583 @@
+/* ══════════════════════════════════════════════════════════
+   CASA SAMAYA — DESIGN ENHANCEMENT LAYER
+   Adds visual effects on top of style.css
+   Does NOT change structure, layout, colors or SEO elements
+   ══════════════════════════════════════════════════════════ */
+
+/* ── Better typography with Cormorant Garamond ── */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap');
+
+h1, h2, h3 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+}
+h1 { font-size: clamp(2.2rem, 5vw, 4rem); }
+h2 { font-size: clamp(1.75rem, 4vw, 3rem); }
+h3 { font-size: clamp(1.25rem, 3vw, 2rem); }
+
+/* Preserve widget typography — don't override inline styles */
+#wellness-widget h2,
+#wellness-widget h3,
+#spa-modal-panel h2,
+#spa-modal-panel h3,
+.massage-card h3,
+.ww-card h3,
+.cs-wrap h2,
+.cs-wrap h3 {
+    font-family: 'Open Sans', sans-serif;
+    font-size: unset;
+}
+
+body {
+    font-family: 'Inter', 'Open Sans', sans-serif;
+}
+
+/* ── Smooth ease variable ── */
+:root {
+    --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ══════════════════════════════════════
+   HEADER — Enhanced glassmorphism
+   Keeps existing brown color on scroll
+   ══════════════════════════════════════ */
+header {
+    transition: background 0.5s var(--ease-premium), padding 0.4s var(--ease-premium), box-shadow 0.4s;
+}
+header.scrolled {
+    backdrop-filter: blur(16px) saturate(160%);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* Nav link hover underline animation */
+@media (min-width: 769px) {
+    .nav-links a {
+        position: relative;
+    }
+    .nav-links a::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 0;
+        height: 1px;
+        background: currentColor;
+        transition: width 0.4s var(--ease-premium);
+    }
+    .nav-links a:hover::after {
+        width: 100%;
+    }
+    .nav-links a:hover {
+        opacity: 1;
+    }
+}
+
+/* ══════════════════════════════════════
+   MOBILE MENU — Enhanced transitions
+   ══════════════════════════════════════ */
+.mobile-menu-overlay {
+    transition: transform 0.4s var(--ease-premium);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+.mobile-menu-overlay a {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.35s var(--ease-premium), transform 0.35s var(--ease-premium), color 0.3s;
+}
+.mobile-menu-overlay.active a {
+    opacity: 1;
+    transform: translateY(0);
+}
+.mobile-menu-overlay.active a:nth-child(2) { transition-delay: 0.04s; }
+.mobile-menu-overlay.active a:nth-child(3) { transition-delay: 0.08s; }
+.mobile-menu-overlay.active a:nth-child(4) { transition-delay: 0.12s; }
+.mobile-menu-overlay.active a:nth-child(5) { transition-delay: 0.16s; }
+.mobile-menu-overlay.active a:nth-child(6) { transition-delay: 0.20s; }
+.mobile-menu-overlay.active a:nth-child(7) { transition-delay: 0.24s; }
+.mobile-menu-overlay.active a:nth-child(8) { transition-delay: 0.28s; }
+.mobile-menu-overlay.active a:nth-child(9) { transition-delay: 0.32s; }
+.mobile-menu-overlay.active a:nth-child(10) { transition-delay: 0.36s; }
+
+/* ══════════════════════════════════════
+   HERO — Ken Burns (mobile only) + keep parallax on desktop
+   ══════════════════════════════════════ */
+@keyframes kenBurns {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.06); }
+}
+/* Mobile: parallax is already scroll, so Ken Burns works via ::before */
+@media (max-width: 768px) {
+    .parallax-section {
+        overflow: hidden;
+    }
+    .parallax-section::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: inherit;
+        background-attachment: scroll;
+        animation: kenBurns 30s ease-in-out infinite alternate;
+        z-index: 0;
+    }
+}
+/* Desktop: keep native parallax (background-attachment: fixed), no ::before */
+
+/* Hero overlay gradient enhancement */
+.hero-overlay {
+    background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.15) 0%,
+        rgba(0,0,0,0.3) 50%,
+        rgba(0,0,0,0.45) 100%
+    ) !important;
+}
+
+/* Hero text entrance animation */
+.hero-heading,
+.hero-content h1 {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: heroFadeIn 1.2s var(--ease-premium) 0.3s forwards;
+}
+.hero-content .uppercase {
+    opacity: 0;
+    animation: heroFadeIn 1s var(--ease-premium) 0.1s forwards;
+}
+.hero-content > div,
+.hero-content > p:not(.uppercase) {
+    opacity: 0;
+    animation: heroFadeIn 1s var(--ease-premium) 0.6s forwards;
+}
+/* Hero content block glass effect enhancement */
+.hero-content {
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+}
+
+@keyframes heroFadeIn {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Scroll indicator */
+.scroll-indicator {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    width: 1px;
+    height: 36px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.5), transparent);
+    animation: scrollPulse 2.5s ease-in-out infinite;
+}
+@keyframes scrollPulse {
+    0%, 100% { opacity: 0.2; transform: translateX(-50%) scaleY(0.6); }
+    50% { opacity: 0.8; transform: translateX(-50%) scaleY(1); }
+}
+
+/* ══════════════════════════════════════
+   BUTTONS — Enhanced hover
+   ══════════════════════════════════════ */
+.btn {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s var(--ease-premium);
+}
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(
+        105deg,
+        transparent 40%,
+        rgba(255,255,255,0.12) 45%,
+        rgba(255,255,255,0.12) 55%,
+        transparent 60%
+    );
+    transition: left 0.6s var(--ease-premium);
+}
+.btn:hover::before {
+    left: 100%;
+}
+.btn:hover {
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+
+/* ══════════════════════════════════════
+   IMAGES — Zoom + shine on hover
+   ══════════════════════════════════════ */
+.split-image {
+    position: relative;
+    overflow: hidden;
+}
+.split-image img {
+    transition: transform 0.8s var(--ease-premium);
+}
+.split-image:hover img {
+    transform: scale(1.04);
+}
+
+/* Experience cards image hover */
+.experience-card img,
+.experience-grid .experience-card img {
+    transition: transform 0.7s var(--ease-premium);
+}
+.experience-card:hover img {
+    transform: scale(1.05);
+}
+
+/* Gallery items hover */
+.content-section img[loading="lazy"] {
+    transition: transform 0.6s var(--ease-premium), filter 0.4s;
+    cursor: pointer;
+}
+.content-section img[loading="lazy"]:hover {
+    transform: scale(1.04);
+    filter: brightness(1.03);
+}
+
+/* Instagram posts hover enhancement */
+.ig-post img {
+    transition: transform 0.7s var(--ease-premium);
+}
+.ig-post:hover img {
+    transform: scale(1.06);
+}
+.ig-overlay {
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    transition: opacity 0.4s var(--ease-premium);
+}
+
+/* ══════════════════════════════════════
+   TRUST CARDS — Glass effect
+   ══════════════════════════════════════ */
+.trust-card {
+    background: rgba(255,255,255,0.65);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.8);
+    border-radius: 14px;
+    padding: 1.75rem 1.25rem;
+    transition: transform 0.5s var(--ease-premium), box-shadow 0.5s var(--ease-premium);
+}
+.trust-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.06);
+}
+
+/* ══════════════════════════════════════
+   SECTION DIVIDER — Subtle line
+   ══════════════════════════════════════ */
+.section-divider {
+    width: 48px;
+    height: 1px;
+    background: var(--color-accent);
+    margin: 0 auto 1.5rem;
+}
+
+/* ══════════════════════════════════════
+   SCROLL REVEAL ANIMATIONS
+   ══════════════════════════════════════ */
+.reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.8s var(--ease-premium), transform 0.8s var(--ease-premium);
+}
+.reveal-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Slide from left */
+.reveal-left {
+    opacity: 0;
+    transform: translateX(-32px);
+    transition: opacity 0.8s var(--ease-premium), transform 0.8s var(--ease-premium);
+}
+.reveal-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Slide from right */
+.reveal-right {
+    opacity: 0;
+    transform: translateX(32px);
+    transition: opacity 0.8s var(--ease-premium), transform 0.8s var(--ease-premium);
+}
+.reveal-right.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Stagger children reveal */
+.stagger-reveal > * {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s var(--ease-premium), transform 0.6s var(--ease-premium);
+}
+.stagger-reveal.visible > *:nth-child(1) { transition-delay: 0s; opacity: 1; transform: translateY(0); }
+.stagger-reveal.visible > *:nth-child(2) { transition-delay: 0.12s; opacity: 1; transform: translateY(0); }
+.stagger-reveal.visible > *:nth-child(3) { transition-delay: 0.24s; opacity: 1; transform: translateY(0); }
+.stagger-reveal.visible > *:nth-child(4) { transition-delay: 0.36s; opacity: 1; transform: translateY(0); }
+.stagger-reveal.visible > *:nth-child(5) { transition-delay: 0.48s; opacity: 1; transform: translateY(0); }
+.stagger-reveal.visible > *:nth-child(6) { transition-delay: 0.60s; opacity: 1; transform: translateY(0); }
+.stagger-reveal.visible > *:nth-child(7) { transition-delay: 0.72s; opacity: 1; transform: translateY(0); }
+.stagger-reveal.visible > *:nth-child(8) { transition-delay: 0.84s; opacity: 1; transform: translateY(0); }
+
+/* ══════════════════════════════════════
+   STICKY BOOKING BAR (mobile only)
+   ══════════════════════════════════════ */
+.sticky-booking-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 900;
+    height: 54px;
+    background: var(--color-primary);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.25rem;
+    transform: translateY(100%);
+    transition: transform 0.5s var(--ease-premium);
+    box-shadow: 0 -2px 16px rgba(0,0,0,0.1);
+}
+.sticky-booking-bar.visible {
+    transform: translateY(0);
+}
+.sticky-booking-bar .bar-text {
+    color: var(--color-accent);
+    font-size: 0.85rem;
+    font-weight: 300;
+    font-family: 'Inter', 'Open Sans', sans-serif;
+}
+.sticky-booking-bar .bar-text strong {
+    font-weight: 500;
+}
+.sticky-booking-bar .bar-btn {
+    display: inline-block;
+    padding: 8px 20px;
+    background: var(--color-accent);
+    color: var(--color-text-main);
+    font-family: 'Inter', 'Open Sans', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-radius: var(--radius-img);
+    text-decoration: none;
+    transition: background 0.3s;
+}
+.sticky-booking-bar .bar-btn:hover {
+    background: #fff;
+    color: var(--color-primary);
+}
+@media (min-width: 769px) {
+    .sticky-booking-bar { display: none; }
+}
+
+/* ══════════════════════════════════════
+   FOOTER — Enhanced link hovers
+   ══════════════════════════════════════ */
+footer a {
+    transition: color 0.3s var(--ease-premium), opacity 0.3s;
+}
+footer a:hover {
+    color: #fff !important;
+    opacity: 1 !important;
+}
+
+/* ══════════════════════════════════════
+   WhatsApp button — position adjustment
+   when booking bar is visible
+   ══════════════════════════════════════ */
+@media (max-width: 768px) {
+    #whatsapp-widget-container .wa-floating-btn {
+        transition: bottom 0.5s var(--ease-premium);
+    }
+    body.bar-visible #whatsapp-widget-container .wa-floating-btn {
+        bottom: 70px !important;
+    }
+}
+
+/* ══════════════════════════════════════
+   WELLNESS WIDGET — Enhanced design
+   ══════════════════════════════════════ */
+/* Session cards — smooth hover lift */
+.ww-card {
+    transition: transform 0.4s var(--ease-premium), box-shadow 0.4s var(--ease-premium) !important;
+}
+.ww-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(71, 44, 21, 0.1) !important;
+}
+
+/* Emoji icons — subtle pulse on hover */
+.ww-card-emoji {
+    transition: transform 0.3s var(--ease-premium) !important;
+}
+.ww-card:hover .ww-card-emoji {
+    transform: scale(1.08);
+}
+
+/* Booking buttons — premium feel */
+.ww-book-btn {
+    transition: all 0.3s var(--ease-premium) !important;
+}
+.ww-book-btn:hover {
+    box-shadow: 0 4px 16px rgba(201, 169, 110, 0.3) !important;
+    transform: translateY(-1px);
+}
+
+/* Tab buttons — smooth state change */
+#tab-list, #tab-cal {
+    transition: all 0.3s var(--ease-premium) !important;
+}
+
+/* Wellness type cards (yoga, meditation, etc.) */
+.massage-grid .massage-card {
+    transition: transform 0.4s var(--ease-premium), box-shadow 0.4s var(--ease-premium);
+}
+.massage-grid .massage-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 28px rgba(71, 44, 21, 0.1);
+}
+
+/* Wellness modal — enhanced entrance */
+#booking-modal {
+    transition: opacity 0.3s var(--ease-premium) !important;
+}
+
+/* ══════════════════════════════════════
+   MASSAGE / SPA WIDGET — Enhanced design
+   ══════════════════════════════════════ */
+/* Treatment cards — hover lift */
+.massage-card {
+    transition: transform 0.4s var(--ease-premium), box-shadow 0.4s var(--ease-premium) !important;
+}
+.massage-card:hover {
+    transform: translateY(-3px) !important;
+    box-shadow: 0 8px 28px rgba(71, 44, 21, 0.1) !important;
+}
+
+/* Card emoji — subtle scale */
+.massage-emoji {
+    transition: transform 0.3s var(--ease-premium) !important;
+}
+.massage-card:hover .massage-emoji {
+    transform: scale(1.1);
+}
+
+/* Card booking buttons */
+.card-book-btn {
+    transition: all 0.3s var(--ease-premium) !important;
+}
+.card-book-btn:hover {
+    box-shadow: 0 4px 16px rgba(201, 169, 110, 0.3) !important;
+    transform: translateY(-1px) !important;
+}
+
+/* Spa modal panel — smooth slide */
+#spa-modal-panel {
+    transition: transform 0.4s var(--ease-premium), opacity 0.3s var(--ease-premium) !important;
+}
+
+/* Spa widget treatment items */
+.cs-treatment {
+    transition: transform 0.3s var(--ease-premium), box-shadow 0.3s var(--ease-premium) !important;
+}
+.cs-treatment:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px rgba(71, 44, 21, 0.08) !important;
+}
+
+/* Treatment emoji icon */
+.cs-treatment-icon {
+    transition: transform 0.3s var(--ease-premium) !important;
+}
+.cs-treatment:hover .cs-treatment-icon {
+    transform: scale(1.08);
+}
+
+/* Date picker buttons */
+.cs-date-btn {
+    transition: all 0.25s var(--ease-premium) !important;
+}
+.cs-date-btn:hover:not(.cs-date-btn--active) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(71, 44, 21, 0.08);
+}
+
+/* Time slot buttons */
+.cs-slot {
+    transition: all 0.25s var(--ease-premium) !important;
+}
+.cs-slot:hover:not(.cs-slot--active) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(71, 44, 21, 0.08);
+}
+
+/* Primary CTA buttons in spa widget */
+.cs-btn {
+    transition: all 0.3s var(--ease-premium) !important;
+}
+.cs-btn:hover {
+    box-shadow: 0 4px 16px rgba(201, 169, 110, 0.35) !important;
+    transform: translateY(-1px) !important;
+}
+
+/* Variant picker — smooth appearance */
+.variant-picker {
+    animation: fadeInUp 0.25s var(--ease-premium) !important;
+}
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateX(-50%) translateY(8px); }
+    to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* Spa modal overlay fade */
+#spa-modal-overlay {
+    transition: opacity 0.3s var(--ease-premium) !important;
+}
+
+/* Step indicator — smooth progress */
+.cs-step-num {
+    transition: all 0.35s var(--ease-premium) !important;
+}
+
+/* Form inputs — focus enhancement */
+.cs-field input:focus,
+.cs-field textarea:focus,
+.cs-field select:focus,
+#booking-form input:focus,
+#booking-form textarea:focus,
+#booking-form select:focus {
+    box-shadow: 0 0 0 3px rgba(201, 169, 110, 0.15) !important;
+    outline: none !important;
+}
+
+/* ══════════════════════════════════════
+   REDUCED MOTION — Accessibility
+   ══════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    .reveal-on-scroll,
+    .reveal-left,
+    .reveal-right,
+    .stagger-reveal > * {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+}
