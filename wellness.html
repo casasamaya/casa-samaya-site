@@ -238,16 +238,22 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               try {
                 const r = await fetch(API + '/wellness/sessions?upcoming_only=true');
                 const data = await r.json();
+                // Keep only sessions within the next 5 days
+                const today = new Date(); today.setHours(0,0,0,0);
+                const maxDate = new Date(today); maxDate.setDate(today.getDate() + 7);
+                const maxDateStr = maxDate.toISOString().split('T')[0];
+                const todayStr = today.toISOString().split('T')[0];
+
                 allSessions = (data.sessions || []).map(s => ({
                   ...s,
                   session_type: s.type || s.session_type || 'yoga',
                   time: s.time_start || s.time,
                   max_participants: s.capacity || s.max_participants || 10,
                   booked_count: s.booked_count || (s.capacity - s.spots_left) || 0,
-                  duration_minutes: s.duration_minutes || 
-                    (s.time_start && s.time_end ? 
+                  duration_minutes: s.duration_minutes ||
+                    (s.time_start && s.time_end ?
                       (new Date('2000-01-01T'+s.time_end) - new Date('2000-01-01T'+s.time_start))/60000 : 60),
-                }));
+                })).filter(s => s.date >= todayStr && s.date < maxDateStr);
                 document.getElementById('widget-loading').style.display = 'none';
                 buildFilters();
                 renderList();
@@ -337,16 +343,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             // ── Vue Calendrier ─────────────────────────────────
             function renderCalendar() {
               const today = new Date();
-              const weekStart = new Date(today);
-              weekStart.setDate(today.getDate() - today.getDay() + 1 + currentWeekOffset * 7);
-              
+              const start = new Date(today);
+              start.setDate(today.getDate() + currentWeekOffset * 7);
+
               const days = Array.from({length:7}, (_,i) => {
-                const d = new Date(weekStart);
-                d.setDate(weekStart.getDate() + i);
+                const d = new Date(start);
+                d.setDate(start.getDate() + i);
                 return d;
               });
 
-              document.getElementById('week-label').textContent = 
+              document.getElementById('week-label').textContent =
                 `${days[0].toLocaleDateString('en-GB',{day:'numeric',month:'short'})} – ${days[6].toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})}`;
 
               const grid = document.getElementById('calendar-grid');
