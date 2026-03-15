@@ -400,10 +400,10 @@ footer a:hover {
    when booking bar is visible
    ══════════════════════════════════════ */
 @media (max-width: 768px) {
-    #wa-floating-btn {
+    #whatsapp-widget-container {
         transition: bottom 0.5s var(--ease-premium) !important;
     }
-    body.bar-visible #wa-floating-btn {
+    body.bar-visible #whatsapp-widget-container {
         bottom: 70px !important;
     }
 }

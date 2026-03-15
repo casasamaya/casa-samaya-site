@@ -78,24 +78,24 @@ document.addEventListener('DOMContentLoaded', function () {
     // ── 3. Sticky Booking Bar (mobile) ──
     var bookingBar = document.getElementById('sticky-booking-bar');
     if (bookingBar) {
-        var waBtn = null;
-        var waBtnOriginalBottom = null;
+        var waContainer = null;
+        var waOriginalBottom = null;
 
         window.addEventListener('scroll', function () {
             var show = window.scrollY > window.innerHeight * 0.7;
             bookingBar.classList.toggle('visible', show);
             document.body.classList.toggle('bar-visible', show);
 
-            // Find WA button (GTM injects it async, so keep trying)
-            if (!waBtn) {
-                waBtn = document.getElementById('wa-floating-btn');
-                if (waBtn) {
-                    waBtnOriginalBottom = window.getComputedStyle(waBtn).bottom;
-                    waBtn.style.transition = 'bottom 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+            // Find WA container (GTM injects it async, so keep trying)
+            if (!waContainer) {
+                waContainer = document.getElementById('whatsapp-widget-container');
+                if (waContainer) {
+                    waOriginalBottom = window.getComputedStyle(waContainer).bottom;
+                    waContainer.style.transition = 'bottom 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
                 }
             }
-            if (waBtn) {
-                waBtn.style.bottom = show ? '70px' : waBtnOriginalBottom;
+            if (waContainer) {
+                waContainer.style.bottom = show ? '70px' : waOriginalBottom;
             }
         }, { passive: true });
     }
