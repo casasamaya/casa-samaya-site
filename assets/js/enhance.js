@@ -78,41 +78,24 @@ document.addEventListener('DOMContentLoaded', function () {
     // ── 3. Sticky Booking Bar (mobile) ──
     var bookingBar = document.getElementById('sticky-booking-bar');
     if (bookingBar) {
-        // Find any GTM-injected WhatsApp floating button (checks periodically since GTM loads async)
         var waBtn = null;
-        function findWaBtn() {
-            if (waBtn) return waBtn;
-            // Try common selectors for WhatsApp floating widgets
-            waBtn = document.querySelector(
-                '[id*="whatsapp"], [id*="WhatsApp"], [id*="getbutton"], [id*="GetButton"], ' +
-                '[class*="whatsapp"], [class*="wa-float"], [class*="getbutton"], ' +
-                '.wa-floating-btn, [class*="elfsight"]'
-            );
-            // Fallback: find any fixed element near bottom-right that looks like a floating button
-            if (!waBtn) {
-                var allFixed = document.querySelectorAll('div, a, button, iframe');
-                for (var i = 0; i < allFixed.length; i++) {
-                    var style = window.getComputedStyle(allFixed[i]);
-                    if (style.position === 'fixed' && parseInt(style.bottom) <= 30 && parseInt(style.right) <= 30 &&
-                        parseInt(style.width) <= 80 && parseInt(style.zIndex) > 100) {
-                        waBtn = allFixed[i];
-                        break;
-                    }
-                }
-            }
-            return waBtn;
-        }
+        var waBtnOriginalBottom = null;
 
         window.addEventListener('scroll', function () {
             var show = window.scrollY > window.innerHeight * 0.7;
             bookingBar.classList.toggle('visible', show);
             document.body.classList.toggle('bar-visible', show);
 
-            // Shift WhatsApp button up when booking bar is visible
-            var btn = findWaBtn();
-            if (btn) {
-                btn.style.transition = 'bottom 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
-                btn.style.bottom = show ? '70px' : '';
+            // Find WA button (GTM injects it async, so keep trying)
+            if (!waBtn) {
+                waBtn = document.getElementById('wa-floating-btn');
+                if (waBtn) {
+                    waBtnOriginalBottom = window.getComputedStyle(waBtn).bottom;
+                    waBtn.style.transition = 'bottom 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+                }
+            }
+            if (waBtn) {
+                waBtn.style.bottom = show ? '70px' : waBtnOriginalBottom;
             }
         }, { passive: true });
     }
