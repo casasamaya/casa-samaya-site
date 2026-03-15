@@ -342,10 +342,10 @@ header.scrolled {
     background: var(--color-primary);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 12px !important;
     padding: 0 1.25rem;
     transform: translateY(100%);
     transition: transform 0.5s var(--ease-premium);
