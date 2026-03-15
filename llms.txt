@@ -1,0 +1,28 @@
+# Casa Samaya
+> Boutique beachfront hotel in Weligama, Sri Lanka. Stay, eat, and reconnect.
+
+## Hotel
+- [Rooms & Suites](https://casasamaya.com/rooms.html): Four room types with ocean and garden views
+- [Special Offers](https://casasamaya.com/offers.html): Extended stays, surf, and wellness packages
+
+## Restaurant
+- [Café Samaya](https://casasamaya.com/restaurant.html): Beachfront restaurant serving Sri Lankan and international cuisine
+
+## Wellness
+- [Calma Samaya Yoga](https://casasamaya.com/wellness.html): Rooftop yoga, breathwork, and meditation
+- [Spa & Massage](https://casasamaya.com/massage.html): Therapeutic massages and spa treatments
+
+## Discover
+- [Experiences](https://casasamaya.com/experiences.html): Surfing, whale watching, safaris, and cultural tours
+- [Weligama Guide](https://casasamaya.com/weligama.html): Local guide to the southern coast
+
+## About
+- [Our Vision](https://casasamaya.com/vision.html): Philosophy and meaning behind Samaya
+- [Contact](https://casasamaya.com/contact.html): Address, phone, email, and booking
+
+## Key Facts
+- Location: Weligama, Sri Lanka (southern coast)
+- Address: Kanakamage Watha, Weligama By Pass Rd, 81700
+- Phone: +94 77 339 5212
+- Email: welcome@casasamaya.com
+- Check-in: 3 PM / Check-out: 11 AM
