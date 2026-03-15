@@ -78,24 +78,38 @@ document.addEventListener('DOMContentLoaded', function () {
     // ── 3. Sticky Booking Bar (mobile) ──
     var bookingBar = document.getElementById('sticky-booking-bar');
     if (bookingBar) {
-        var waContainer = null;
-        var waOriginalBottom = null;
+        var barVisible = false;
+
+        // Wait for GTM to inject WhatsApp widget, then patch its style
+        function patchWhatsApp() {
+            var wa = document.getElementById('whatsapp-widget-container');
+            if (wa) {
+                wa.style.transition = 'bottom 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+                if (barVisible) wa.style.bottom = '70px';
+                return wa;
+            }
+            return null;
+        }
+
+        // Poll every 500ms for up to 10s until GTM widget appears
+        var waEl = null;
+        var pollCount = 0;
+        var pollInterval = setInterval(function () {
+            waEl = patchWhatsApp();
+            pollCount++;
+            if (waEl || pollCount > 20) clearInterval(pollInterval);
+        }, 500);
 
         window.addEventListener('scroll', function () {
             var show = window.scrollY > window.innerHeight * 0.7;
+            barVisible = show;
             bookingBar.classList.toggle('visible', show);
             document.body.classList.toggle('bar-visible', show);
 
-            // Find WA container (GTM injects it async, so keep trying)
-            if (!waContainer) {
-                waContainer = document.getElementById('whatsapp-widget-container');
-                if (waContainer) {
-                    waOriginalBottom = window.getComputedStyle(waContainer).bottom;
-                    waContainer.style.transition = 'bottom 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
-                }
-            }
-            if (waContainer) {
-                waContainer.style.bottom = show ? '70px' : waOriginalBottom;
+            // Move WhatsApp widget above booking bar
+            if (!waEl) waEl = patchWhatsApp();
+            if (waEl) {
+                waEl.style.bottom = show ? '70px' : '20px';
             }
         }, { passive: true });
     }
